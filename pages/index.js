@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
-import { useLazyQuery } from '@apollo/react-hooks';
-import cookie from 'cookie';
-import { withApollo } from '../lib/apollo';
-import LoginForm from '../components/LoginForm';
-import { GET_ALL_FILES } from '../lib/queries/getAllFiles';
+import React, { useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import cookie from 'cookie'
+import { withApollo } from '../lib/apollo'
+import LoginForm from '../components/LoginForm'
+import { GET_ALL_FILES } from '../lib/queries/getAllFiles'
 
-const IndexPage = ({token}) => {
-  const [loginError, setLoginError] = useState(null);
-  const [loginData, setLoginData] = useState(token);
-  const [
-    getAllFiles,
-    { loading, data: allFilesData, error: allFilesError },
-  ] = useLazyQuery(GET_ALL_FILES);
+const IndexPage = ({ token }) => {
+  const [loginError, setLoginError] = useState(null)
+  const [loginData, setLoginData] = useState(token)
+  const [getAllFiles, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ALL_FILES)
   return (
     <div>
       <LoginForm
@@ -38,19 +35,20 @@ const IndexPage = ({token}) => {
           : JSON.stringify(loginData, null, 2)}
       </pre>
     </div>
-  );};
+  )
+}
 
 IndexPage.getInitialProps = async ctx => {
   if (typeof window === 'undefined') {
-    const { req, res } = ctx;
-    const cookies = cookie.parse(req.headers.cookie ?? '');
+    const { req, res } = ctx
+    const cookies = cookie.parse(req.headers.cookie || '')
 
     if (!cookies) {
-      res.end();
-      return {};
+      res.end()
+      return {}
     }
 
-    return { token: cookies.token };
+    return { token: cookies.token }
   }
 }
 
