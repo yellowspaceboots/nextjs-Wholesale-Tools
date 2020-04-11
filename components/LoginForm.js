@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
 import { LOGIN_USER } from '../lib/mutations/loginUser'
+import { Button } from '@material-ui/core'
 
 const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -34,12 +35,7 @@ const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
     setIsLoggedIn(!!cookie.get('token'))
   }, [])
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault()
-        loginUser()
-      }}
-    >
+    <>
       {!isLoggedIn ? (
         <>
           <label htmlFor='username'>Username:</label>
@@ -58,10 +54,11 @@ const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
             value={pwd}
             onChange={e => setPwd(e.target.value)}
           />
-          <button type='submit'>Login</button>
+          <Button id='test1' onClick={() => loginUser()}>Login</Button>
         </>
       ) : (
-        <button
+        <Button
+          id='test2'
           onClick={e => {
             e.preventDefault()
             client.resetStore()
@@ -71,9 +68,9 @@ const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
           }}
         >
           Logout
-        </button>
+        </Button>
       )}
-    </form>
+    </>
   )
 }
 

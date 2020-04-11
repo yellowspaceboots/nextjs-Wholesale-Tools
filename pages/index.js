@@ -4,13 +4,14 @@ import cookie from 'cookie'
 import { withApollo } from '../lib/apollo'
 import LoginForm from '../components/LoginForm'
 import { GET_ALL_FILES } from '../lib/queries/getAllFiles'
+import Layout from '../components/Layout'
 
 const IndexPage = ({ token }) => {
   const [loginError, setLoginError] = useState(null)
   const [loginData, setLoginData] = useState(token)
   const [getAllFiles, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ALL_FILES)
   return (
-    <div>
+    <Layout>
       <LoginForm
         setLoginError={setLoginError}
         setLoginData={setLoginData}
@@ -34,7 +35,7 @@ const IndexPage = ({ token }) => {
           ? JSON.stringify(loginError, null, 2)
           : JSON.stringify(loginData, null, 2)}
       </pre>
-    </div>
+    </Layout>
   )
 }
 
