@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import cookie from 'cookie'
-import { withApollo } from '../lib/apollo'
+import { withApollo } from '../api/apollo'
 import LoginForm from '../components/LoginForm'
-import { GET_ALL_FILES } from '../lib/queries/getAllFiles'
+import { GET_ALL_FILES } from '../api/queries/getAllFiles'
 import Layout from '../components/Layout'
 
 const IndexPage = ({ token }) => {
@@ -46,7 +46,7 @@ IndexPage.getInitialProps = async ctx => {
 
     if (!cookies) {
       res.end()
-      return {}
+      return { userLoggedIn: false }
     }
 
     return { token: cookies.token }
