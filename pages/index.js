@@ -11,7 +11,10 @@ const IndexPage = ({ token }) => {
   const [loginData, setLoginData] = useState(token)
   const [getAllFiles, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ALL_FILES)
   return (
-    <Layout>
+    <Layout
+      setLoginError={setLoginError}
+      setLoginData={setLoginData}
+    >
       <LoginForm
         setLoginError={setLoginError}
         setLoginData={setLoginData}
