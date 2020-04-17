@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Splash = ({ token }) => {
+const Login = ({ token }) => {
   // const [user, setUser] = useState()
   useEffect(() => {
     if (token) {
@@ -158,7 +158,7 @@ const Splash = ({ token }) => {
   )
 }
 
-Splash.getInitialProps = async ctx => {
+Login.getInitialProps = async ctx => {
   if (typeof window === 'undefined') {
     const { req, res } = ctx
     const cookies = servercookie.parse(req.headers.cookie || '')
@@ -172,4 +172,4 @@ Splash.getInitialProps = async ctx => {
   }
 }
 
-export default withApollo()(Splash)
+export default withApollo()(Login)
