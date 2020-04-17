@@ -34,6 +34,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
+import MyDrawer from './MyDrawer'
 
 const drawerWidth = 240
 
@@ -133,17 +134,11 @@ const Layout = ({ setLoginData, children }) => {
   const client = useApolloClient()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
-  const notificationClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const notificationClose = () => {
-    setAnchorEl(null)
-  }
+  const notificationClick = (event) => setAnchorEl(event.currentTarget)
+  const notificationClose = () => setAnchorEl(null)
   const open = Boolean(anchorEl)
-  function handleDrawerToggle () {
-    setMobileOpen(!mobileOpen)
-  }
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
+
   const drawerNavConfig = [
     {
       sectionTitle: 'Commercial Projects',
@@ -195,9 +190,8 @@ const Layout = ({ setLoginData, children }) => {
   const navPadding = 44
   const navColor = 'lightgrey'
   const drawer = (
-    <>
       <div style={{ display: 'flex', flexDirection: 'column', flex: 1, backgroundColor: theme.palette.primary.main }}>
-        <List style={{ padding: 0, marginTop: 75, flex: 1 }} subheader={<Typography variant='overline' style={{ color: navColor, fontWeight: 600, marginLeft: 18, marginBottom: 10 }}>Navigation</Typography>}>
+        <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }} subheader={<Typography variant='overline' style={{ color: navColor, fontWeight: 600, marginLeft: 18, marginBottom: 10 }}>Navigation</Typography>}>
           <ListItem button href='/' component={InternalLink}>
             <ListItemIcon style={{ minWidth: navPadding }}>{<HomeIcon style={{ color: navColor }} />}</ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' style={{ color: navColor }}>Overview</Typography>} />
@@ -231,7 +225,6 @@ const Layout = ({ setLoginData, children }) => {
           </ListItem>
         </List>
       </div>
-    </>
   )
   return (
     <div className={classes.root}>
