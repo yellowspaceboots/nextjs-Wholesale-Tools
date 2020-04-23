@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const MyDrawerConfig = ({ mobileOpen, setLoginData }) => {
+const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
   const theme = useTheme()
   const client = useApolloClient()
   const navPadding = 44
@@ -52,7 +52,7 @@ const MyDrawerConfig = ({ mobileOpen, setLoginData }) => {
         },
         {
           name: 'Material Status',
-          href: 'commercial-projects/material-status'
+          href: '/commercial-projects/material-status'
         }
       ]
     },
@@ -148,7 +148,7 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
       </Hidden>
       <Hidden xsDown implementation='css'>
         <Drawer classes={{ paper: classes.drawerPaper }} variant='permanent' open>
-          <MyDrawerConfig mobileOpen={mobileOpen} setLoginData={setLoginData} />
+          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setLoginData={setLoginData} />
         </Drawer>
       </Hidden>
     </nav>

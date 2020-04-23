@@ -68,7 +68,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.0.0-beta.23, @apollo/client@npm:^3.0.0-beta.24, @apollo/client@npm:^3.0.0-beta.43":
+"@apollo/client@npm:^3.0.0-beta.23, @apollo/client@npm:^3.0.0-beta.24":
   version: 3.0.0-beta.43
   resolution: "@apollo/client@npm:3.0.0-beta.43"
   dependencies:
@@ -88,6 +88,29 @@ __metadata:
     react:
       optional: true
   checksum: 2/89e6e380f11e849190d0a3e265b4123d524295a298a117f43b87868a3190630b168217803319f6f74178d6e564d0f8b76a331c358da22688b9e487d0769ddff8
+  languageName: node
+  linkType: hard
+
+"@apollo/client@npm:latest":
+  version: 3.0.0-beta.44
+  resolution: "@apollo/client@npm:3.0.0-beta.44"
+  dependencies:
+    "@types/zen-observable": ^0.8.0
+    "@wry/equality": ^0.1.9
+    fast-json-stable-stringify: ^2.0.0
+    graphql-tag: ^2.10.2
+    optimism: ^0.11.5
+    symbol-observable: ^1.2.0
+    ts-invariant: ^0.4.4
+    tslib: ^1.10.0
+    zen-observable: ^0.8.14
+  peerDependencies:
+    graphql: ^14.5.4
+    react: ^16.8.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+  checksum: 2/59e527a9d11cddc61116cd249a69ceb0c7dca0d852b9d0a6ed398c2b73b1070d132c45a5bd8f7f6062b8c909f24d7731d7bdcf061d800516118409aef73000a1
   languageName: node
   linkType: hard
 
@@ -9315,7 +9338,7 @@ fsevents@~2.1.2:
   version: 0.0.0-use.local
   resolution: "with-faunadb-abac-auth@workspace:."
   dependencies:
-    "@apollo/client": ^3.0.0-beta.43
+    "@apollo/client": latest
     "@apollo/link-context": ^2.0.0-beta.3
     "@apollo/react-ssr": ^4.0.0-beta.1
     "@babel/core": ^7.9.0

@@ -126,7 +126,7 @@ const MyAppBar = ({ handleDrawerToggle }) => {
         <InternalLink href='/'>
           <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ margin: 15, marginLeft: -10, marginRight: 12 }} />
         </InternalLink>
-        <div style={{ display: 'flex', flexDirection: 'column', marginTop: 6, flexGrow: 1 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <Typography variant='h5' style={{ fontWeight: 700 }}>Wholesale Electric</Typography>
           <Typography variant='caption' style={{ marginTop: -8, textTransform: 'uppercase' }}>Supply Company of Houston</Typography>
         </div>

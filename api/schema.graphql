@@ -28,6 +28,7 @@ input LoginUserInput {
 
 type Query {
   allFiles: [File!]!
+  getUser: User
 }
 
 type Mutation {

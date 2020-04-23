@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client'
 import cookie from 'cookie'
 import { withApollo } from '../api/apollo'
 import LoginForm from '../components/LoginForm'
 import { GET_ALL_FILES } from '../api/queries/getAllFiles'
+import { GET_USER } from '../api/queries/getUser'
 import Layout from '../components/Layout'
+import { redirectToLogin } from '../components/redirect'
 
-const IndexPage = ({ token }) => {
+const IndexPage = ({ userLoggedIn, token }) => {
   const [loginError, setLoginError] = useState(null)
   const [loginData, setLoginData] = useState(token)
   const [getAllFiles, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ALL_FILES)
+  const [getUser, { loading: userLoading, data: userData, error: userError }] = useLazyQuery(GET_USER)
+  useEffect(() => {
+    if (!userLoggedIn) {
+      redirectToLogin()
+    }
+  })
+  if (!userLoggedIn) return null
+  console.log(token)
   return (
     <Layout
       setLoginError={setLoginError}
@@ -38,6 +48,18 @@ const IndexPage = ({ token }) => {
           ? JSON.stringify(loginError, null, 2)
           : JSON.stringify(loginData, null, 2)}
       </pre>
+      <button onClick={() => getUser()}>Get User</button>
+      <br />
+      User Data
+      <pre>
+        {userLoading ? (
+          <div>loading...</div>
+        ) : userError ? (
+          JSON.stringify(userError, null, 2)
+        ) : (
+          JSON.stringify(userData, null, 2)
+        )}
+      </pre>
     </Layout>
   )
 }
@@ -52,7 +74,7 @@ IndexPage.getInitialProps = async ctx => {
       return { userLoggedIn: false }
     }
 
-    return { token: cookies.token }
+    return { token: cookies.token, userLoggedIn: Boolean(cookies.token) }
   }
 }
 
