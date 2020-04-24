@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Layout = ({ setLoginData, children }) => {
+const Layout = ({ children }) => {
   const classes = useStyles()
   const [mobileOpen, setMobileOpen] = useState(false)
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
@@ -41,15 +41,17 @@ const Layout = ({ setLoginData, children }) => {
   })
   return (
     <div className={classes.root}>
+      {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
       <MyAppBar handleDrawerToggle={handleDrawerToggle} />
-      <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setLoginData={setLoginData} />
+      <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {loading && <LinearProgress color='secondary' style={{ marginLeft: -25, marginTop: -14, position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
         {children}
       </main>
     </div>
   )
 }
+
+export const getLayout = page => <Layout>{page}</Layout>
 
 export default Layout

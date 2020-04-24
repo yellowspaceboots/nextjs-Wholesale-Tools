@@ -32,14 +32,14 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
+const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen }) => {
   const theme = useTheme()
   const client = useApolloClient()
   const navPadding = 44
   const navColor = 'lightgrey'
   const drawerNavConfig = [
     {
-      sectionTitle: 'Commercial Projects',
+      sectionTitle: 'Projects',
       icon: WidgetsIcon,
       linkList: [
         {
@@ -87,7 +87,7 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
   ]
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flex: 1, backgroundColor: theme.palette.primary.main }}>
-      <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }} subheader={<Typography variant='overline' style={{ color: navColor, fontWeight: 600, marginLeft: 18, marginBottom: 10 }}>Navigation</Typography>}>
+      <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
         <ListItem button href='/' component={InternalLink}>
           <ListItemIcon style={{ minWidth: navPadding }}>{<HomeIcon style={{ color: navColor }} />}</ListItemIcon>
           <ListItemText disableTypography primary={<Typography variant='body2' style={{ color: navColor }}>Overview</Typography>} />
@@ -113,7 +113,6 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
             e.preventDefault()
             client.resetStore()
             cookie.remove('token')
-            setLoginData(null)
           }}
         >
           <ListItemIcon>{<Backspace style={{ color: navColor }} />}</ListItemIcon>
@@ -124,7 +123,7 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
   )
 }
 
-const MyDrawer = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
+const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const theme = useTheme()
   const classes = useStyles()
   return (
@@ -143,12 +142,12 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, setLoginData }) => {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          <MyDrawerConfig mobileOpen={mobileOpen} setLoginData={setLoginData} />
+          <MyDrawerConfig mobileOpen={mobileOpen} />
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation='css'>
         <Drawer classes={{ paper: classes.drawerPaper }} variant='permanent' open>
-          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} setLoginData={setLoginData} />
+          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
         </Drawer>
       </Hidden>
     </nav>

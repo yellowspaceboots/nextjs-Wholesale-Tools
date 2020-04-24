@@ -7,6 +7,7 @@ import { withApollo } from '../api/apollo'
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
+  const getLayout = Component.getLayout || (page => page)
 
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -15,7 +16,6 @@ const MyApp = (props) => {
       jssStyles.parentElement.removeChild(jssStyles)
     }
   }, [])
-
   return (
     <>
       <Head>
@@ -25,7 +25,7 @@ const MyApp = (props) => {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </ThemeProvider>
     </>
   )

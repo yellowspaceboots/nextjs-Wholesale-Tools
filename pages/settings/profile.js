@@ -1,14 +1,16 @@
 import { withApollo } from '../../api/apollo'
-import Layout from '../../components/Layout'
+import { getLayout } from '../../components/Layout'
 
 const Profile = () => {
   return (
-    <Layout>
-      <div>
-        <p>Profile</p>
-      </div>
-    </Layout>
+    <div>
+      <p>Profile</p>
+    </div>
   )
 }
 
-export default withApollo()(Profile)
+const ProfileWithApollo = withApollo()(Profile)
+
+ProfileWithApollo.getLayout = getLayout
+
+export default ProfileWithApollo

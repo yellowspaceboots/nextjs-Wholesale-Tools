@@ -5,7 +5,7 @@ import { withApollo } from '../api/apollo'
 import LoginForm from '../components/LoginForm'
 import { GET_ALL_FILES } from '../api/queries/getAllFiles'
 import { GET_USER } from '../api/queries/getUser'
-import Layout from '../components/Layout'
+import { getLayout } from '../components/Layout'
 import { redirectToLogin } from '../components/redirect'
 
 const IndexPage = ({ userLoggedIn, token }) => {
@@ -19,12 +19,8 @@ const IndexPage = ({ userLoggedIn, token }) => {
     }
   })
   if (!userLoggedIn) return null
-  console.log(token)
   return (
-    <Layout
-      setLoginError={setLoginError}
-      setLoginData={setLoginData}
-    >
+    <>
       <LoginForm
         setLoginError={setLoginError}
         setLoginData={setLoginData}
@@ -60,7 +56,7 @@ const IndexPage = ({ userLoggedIn, token }) => {
           JSON.stringify(userData, null, 2)
         )}
       </pre>
-    </Layout>
+    </>
   )
 }
 
@@ -77,5 +73,8 @@ IndexPage.getInitialProps = async ctx => {
     return { token: cookies.token, userLoggedIn: Boolean(cookies.token) }
   }
 }
+const IndexPageWithApollo = withApollo()(IndexPage)
 
-export default withApollo()(IndexPage)
+IndexPageWithApollo.getLayout = getLayout
+
+export default IndexPageWithApollo

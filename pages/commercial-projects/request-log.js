@@ -1,15 +1,17 @@
 import React from 'react'
 import { withApollo } from '../../api/apollo'
-import Layout from '../../components/Layout'
+import { getLayout } from '../../components/Layout'
 
 const RequestLog = () => {
   return (
-    <Layout>
-      <div>
-        <p>Request Log</p>
-      </div>
-    </Layout>
+    <div>
+      <p>Request Log</p>
+    </div>
   )
 }
 
-export default withApollo()(RequestLog)
+const RequestLogWithApollo = withApollo()(RequestLog)
+
+RequestLogWithApollo.getLayout = getLayout
+
+export default RequestLogWithApollo

@@ -78,6 +78,7 @@ const Login = ({ token }) => {
       setLoginData(data)
       // setIsLoggedIn(true)
       setLoginError(false)
+      Router.push('/')
     },
     onError: error => {
       setLoginError(error)
