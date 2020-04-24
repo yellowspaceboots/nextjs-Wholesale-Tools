@@ -1,5 +1,4 @@
 import React from 'react'
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const RequestLog = () => {
@@ -10,8 +9,6 @@ const RequestLog = () => {
   )
 }
 
-const RequestLogWithApollo = withApollo()(RequestLog)
+RequestLog.getLayout = getLayout
 
-RequestLogWithApollo.getLayout = getLayout
-
-export default RequestLogWithApollo
+export default RequestLog

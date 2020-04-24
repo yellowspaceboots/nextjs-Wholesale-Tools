@@ -1,4 +1,3 @@
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const Account = () => {
@@ -9,8 +8,6 @@ const Account = () => {
   )
 }
 
-const AccountWithApollo = withApollo()(Account)
+Account.getLayout = getLayout
 
-AccountWithApollo.getLayout = getLayout
-
-export default AccountWithApollo
+export default Account

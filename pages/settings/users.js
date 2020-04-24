@@ -1,4 +1,3 @@
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const Users = () => {
@@ -9,8 +8,6 @@ const Users = () => {
   )
 }
 
-const UsersWithApollo = withApollo()(Users)
+Users.getLayout = getLayout
 
-UsersWithApollo.getLayout = getLayout
-
-export default UsersWithApollo
+export default Users

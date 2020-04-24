@@ -1,4 +1,3 @@
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const Calendar = () => {
@@ -9,8 +8,6 @@ const Calendar = () => {
   )
 }
 
-const CalendarWithApollo = withApollo()(Calendar)
+Calendar.getLayout = getLayout
 
-CalendarWithApollo.getLayout = getLayout
-
-export default CalendarWithApollo
+export default Calendar

@@ -1,4 +1,3 @@
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const MaterialStatusReport = () => {
@@ -9,8 +8,6 @@ const MaterialStatusReport = () => {
   )
 }
 
-const MaterialStatusReportWithApollo = withApollo()(MaterialStatusReport)
+MaterialStatusReport.getLayout = getLayout
 
-MaterialStatusReportWithApollo.getLayout = getLayout
-
-export default MaterialStatusReportWithApollo
+export default MaterialStatusReport

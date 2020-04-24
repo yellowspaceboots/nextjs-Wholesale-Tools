@@ -1,4 +1,3 @@
-import { withApollo } from '../../api/apollo'
 import { getLayout } from '../../components/Layout'
 
 const EndOfMonth = () => {
@@ -9,8 +8,6 @@ const EndOfMonth = () => {
   )
 }
 
-const EndOfMonthWithApollo = withApollo()(EndOfMonth)
+EndOfMonth.getLayout = getLayout
 
-EndOfMonthWithApollo.getLayout = getLayout
-
-export default EndOfMonthWithApollo
+export default EndOfMonth

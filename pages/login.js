@@ -15,7 +15,6 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import { useMutation } from '@apollo/client'
 import cookie from 'js-cookie'
 import { LOGIN_USER } from '../api/mutations/loginUser'
-import { withApollo } from '../api/apollo'
 import * as servercookie from 'cookie'
 
 const useStyles = makeStyles(theme => ({
@@ -173,4 +172,4 @@ Login.getInitialProps = async ctx => {
   }
 }
 
-export default withApollo()(Login)
+export default Login
