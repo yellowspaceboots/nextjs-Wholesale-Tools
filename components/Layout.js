@@ -4,6 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import { makeStyles } from '@material-ui/core/styles'
 import MyDrawer from './MyDrawer'
 import MyAppBar from './MyAppBar'
+import { useAuth } from '../components/AuthProvider'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,11 +19,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Layout = ({ children }) => {
+  const { user, checked } = useAuth()
   const classes = useStyles()
   const [mobileOpen, setMobileOpen] = useState(false)
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
   const router = useRouter()
-
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -39,6 +40,8 @@ const Layout = ({ children }) => {
       router.events.off('routeChangeError', handleComplete)
     }
   })
+  if (!checked) return null
+  if (!user) return null
   return (
     <div className={classes.root}>
       {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}

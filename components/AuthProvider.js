@@ -1,55 +1,37 @@
-import React, { createContext, useContext, useState, useEffect } from 'react'
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { useQuery } from 'react-apollo'
+import { useQuery } from '@apollo/client'
 import { GET_USER } from '../api/queries/getUser'
 
 const AuthContext = createContext()
 
-function AuthProvider ({ children }) {
-  const { pathname, events } = useRouter()
-  const [user, setUser] = useState()
-  const { loading, data } = useQuery(GET_USER)
-
-  async function getUser () {
-    try {
-      const response = await fetch('/api/me')
-      const profile = await response.json()
-      if (profile.error) {
-        setUser(null)
-      } else {
-        setUser(profile)
-      }
-    } catch (err) {
-      console.error(err)
+const AuthProvider = ({ children }) => {
+  const { pathname, push } = useRouter()
+  const [user, setUser] = useState(false)
+  const [checked, setChecked] = useState(false)
+  const userMemo = useMemo(() => ({ user, setUser }), [user, setUser])
+  const { loading, error, data } = useQuery(GET_USER, {
+    onCompleted: data => {
+      console.log('running user query')
+      setChecked(true)
+      setUser(data.currentUser)
+    },
+    onError: error => {
+      setUser(false)
+      setChecked(true)
+      console.log(error)
     }
-  }
-
+  })
   useEffect(() => {
-    getUser()
-  }, [pathname])
-
-  useEffect(() => {
-    // Check that a new route is OK
-    const handleRouteChange = url => {
-      if (url !== '/' && !user) {
-        window.location.href = '/'
-      }
+    if (pathname !== '/login' && (checked && !userMemo.user)) {
+      push('/login')
     }
-
-    // Check that initial route is OK
-    if (pathname !== '/' && user === null) {
-      window.location.href = '/'
+    if (pathname === '/login' && userMemo.user) {
+      push('/')
     }
-
-    // Monitor routes
-    events.on('routeChangeStart', handleRouteChange)
-    return () => {
-      events.off('routeChangeStart', handleRouteChange)
-    }
-  }, [user])
-
+  })
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, checked, setUser }}>{children}</AuthContext.Provider>
   )
 }
 

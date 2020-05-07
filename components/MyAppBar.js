@@ -23,6 +23,7 @@ import moment from 'moment'
 import WLogo from './WLogo'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -111,6 +112,150 @@ const MyAppBar = ({ handleDrawerToggle }) => {
   const notificationClick = (event) => setAnchorEl(event.currentTarget)
   const notificationClose = () => setAnchorEl(null)
   const open = Boolean(anchorEl)
+  const renderNotificationMenu = (
+    <Menu
+      id='fade-menu'
+      anchorEl={anchorEl}
+      keepMounted
+      open={open}
+      onClose={notificationClose}
+      TransitionComponent={Fade}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center'
+      }}
+    >
+      <Typography variant='body1' style={{ padding: 20, fontWeight: 700, width: 400 }}>Notifications</Typography>
+      <Divider />
+      <MenuItem onClick={notificationClose}>
+        <ListItemIcon>
+          <Avatar className={classes.yellowAvatar}>
+            <AlarmIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>Project Bidding Soon</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <MenuItem onClick={notificationClose}>
+        <ListItemIcon>
+          <Avatar className={classes.blueAvatar}>
+            <AssignmentLateIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>New Project Added</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <MenuItem onClick={notificationClose}>
+        <ListItemIcon>
+          <Avatar className={classes.greenAvatar}>
+            <AnnouncementIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>New Message for Project</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={notificationClose}>
+        <ListItemIcon>
+          <Avatar className={classes.avatar}>
+            <NotificationsNoneIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>See All Notifications</Typography>}
+        />
+      </MenuItem>
+    </Menu>
+  )
+  const [profileEl, setProfileEl] = useState(null)
+  const profileClick = (event) => setProfileEl(event.currentTarget)
+  const profileClose = () => setProfileEl(null)
+  const profileOpen = Boolean(profileEl)
+  const renderProfileMenu = (
+    <Menu
+      id='fade-menu'
+      anchorEl={profileEl}
+      keepMounted
+      open={profileOpen}
+      onClose={profileClose}
+      TransitionComponent={Fade}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center'
+      }}
+    >
+      <Typography variant='body1' style={{ padding: 20, fontWeight: 700, width: 400 }}>Profile</Typography>
+      <Divider />
+      <MenuItem onClick={profileClose}>
+        <ListItemIcon>
+          <Avatar className={classes.yellowAvatar}>
+            <AlarmIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>Project Bidding Soon</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <MenuItem onClick={profileClose}>
+        <ListItemIcon>
+          <Avatar className={classes.blueAvatar}>
+            <AssignmentLateIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>New Project Added</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <MenuItem onClick={profileClose}>
+        <ListItemIcon>
+          <Avatar className={classes.greenAvatar}>
+            <AnnouncementIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>New Message for Project</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+        />
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={profileClose}>
+        <ListItemIcon>
+          <Avatar className={classes.avatar}>
+            <NotificationsNoneIcon />
+          </Avatar>
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>See All Notifications</Typography>}
+        />
+      </MenuItem>
+    </Menu>
+  )
   return (
     <AppBar position='fixed' elevation={0} className={classes.appBar}>
       <Toolbar>
@@ -124,7 +269,7 @@ const MyAppBar = ({ handleDrawerToggle }) => {
           <MenuIcon />
         </IconButton>
         <InternalLink href='/'>
-          <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ margin: 15, marginLeft: -10, marginRight: 12 }} />
+          <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ margin: 15, marginLeft: -16, marginRight: 12 }} />
         </InternalLink>
         <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
           <Typography variant='h5' style={{ fontWeight: 700 }}>Wholesale Electric</Typography>
@@ -157,81 +302,23 @@ const MyAppBar = ({ handleDrawerToggle }) => {
         <IconButton
           color='inherit'
           aria-label='Notifications'
-          edge='end'
           onClick={notificationClick}
         >
           <Badge color='secondary' overlap='circle' variant='dot'>
             <NotificationsNoneIcon />
           </Badge>
         </IconButton>
-        <Menu
-          id='fade-menu'
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={notificationClose}
-          TransitionComponent={Fade}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center'
-          }}
+        {renderNotificationMenu}
+        <IconButton
+          edge='end'
+          aria-label='account of current user'
+          aria-haspopup='true'
+          onClick={profileClick}
+          color='inherit'
         >
-          <Typography variant='body1' style={{ padding: 20, fontWeight: 700, width: 400 }}>Notifications</Typography>
-          <Divider />
-          <MenuItem onClick={notificationClose}>
-            <ListItemIcon>
-              <Avatar className={classes.yellowAvatar}>
-                <AlarmIcon />
-              </Avatar>
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={<Typography variant='body2'>Project Bidding Soon</Typography>}
-              secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-            />
-          </MenuItem>
-          <MenuItem onClick={notificationClose}>
-            <ListItemIcon>
-              <Avatar className={classes.blueAvatar}>
-                <AssignmentLateIcon />
-              </Avatar>
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={<Typography variant='body2'>New Project Added</Typography>}
-              secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-            />
-          </MenuItem>
-          <MenuItem onClick={notificationClose}>
-            <ListItemIcon>
-              <Avatar className={classes.greenAvatar}>
-                <AnnouncementIcon />
-              </Avatar>
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={<Typography variant='body2'>New Message for Project</Typography>}
-              secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-            />
-          </MenuItem>
-          <Divider />
-          <MenuItem onClick={notificationClose}>
-            <ListItemIcon>
-              <Avatar className={classes.avatar}>
-                <NotificationsNoneIcon />
-              </Avatar>
-            </ListItemIcon>
-            <ListItemText
-              disableTypography
-              primary={<Typography variant='body2'>See All Notifications</Typography>}
-            />
-          </MenuItem>
-        </Menu>
+          <AccountCircle />
+        </IconButton>
+        {renderProfileMenu}
       </Toolbar>
     </AppBar>
   )

@@ -11,16 +11,24 @@ import HomeIcon from '@material-ui/icons/Home'
 import Backspace from '@material-ui/icons/Backspace'
 import NestedNavigation from './NestedNavigation'
 import WidgetsIcon from '@material-ui/icons/Widgets'
+import EventIcon from '@material-ui/icons/Event'
 import SettingsIcon from '@material-ui/icons/Settings'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
+import { useAuth } from './AuthProvider'
 
 const drawerWidth = 240
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    backgroundColor: theme.palette.primary.main
+  },
   drawer: {
     [theme.breakpoints.up('sm')]: {
       width: drawerWidth,
@@ -29,26 +37,37 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: drawerWidth
-  }
+  },
+  divider: styleProps => ({
+    backgroundColor: styleProps.navColor
+  }),
+  drawerIcon: styleProps => ({
+    color: styleProps.navColor
+  }),
+  drawerFont: styleProps => ({
+    color: styleProps.navColor
+  })
 }))
 
-const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen }) => {
-  const theme = useTheme()
+const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, mobile }) => {
+  const { setUser } = useAuth()
+  const styleProps = {
+    navColor: 'lightgrey',
+    navPadding: 44
+  }
+  const today = new Date()
+  const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/1`
+  const classes = useStyles(styleProps)
   const client = useApolloClient()
   const navPadding = 44
-  const navColor = 'lightgrey'
   const drawerNavConfig = [
     {
-      sectionTitle: 'Projects',
+      sectionTitle: 'Project Management',
       icon: WidgetsIcon,
       linkList: [
         {
           name: 'Request Log',
           href: '/commercial-projects/request-log'
-        },
-        {
-          name: 'Calendar',
-          href: '/commercial-projects/calendar'
         },
         {
           name: 'Material Status',
@@ -86,37 +105,42 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen }) => {
     }
   ]
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, backgroundColor: theme.palette.primary.main }}>
+    <div className={classes.root}>
       <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
-        <ListItem button href='/' component={InternalLink}>
-          <ListItemIcon style={{ minWidth: navPadding }}>{<HomeIcon style={{ color: navColor }} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' style={{ color: navColor }}>Overview</Typography>} />
+        <ListItem button href='/' component={InternalLink} onClick={mobile && handleDrawerToggle}>
+          <ListItemIcon style={{ minWidth: navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Overview</Typography>} />
+        </ListItem>
+        <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobile && handleDrawerToggle}>
+          <ListItemIcon style={{ minWidth: navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
         </ListItem>
         {drawerNavConfig.map(nestedNavigation => {
           const Icon = nestedNavigation.icon
           const title = nestedNavigation.sectionTitle
           return (
-            <NestedNavigation key={title} padding={navPadding} icon={<Icon style={{ color: navColor }} />} title={title} color={navColor}>
+            <NestedNavigation key={title} padding={navPadding} icon={<Icon className={classes.drawerIcon} />} title={title} color={styleProps.navColor}>
               {nestedNavigation.linkList.map(listItem => (
-                <ListItem key={listItem.name} button href={listItem.href} component={InternalLink}>
-                  <ListItemText style={{ paddingLeft: navPadding }} inset disableTypography primary={<Typography variant='body2' style={{ color: navColor }}>{listItem.name}</Typography>} />
+                <ListItem key={listItem.name} button href={listItem.href} component={InternalLink} onClick={mobile && handleDrawerToggle}>
+                  <ListItemText style={{ paddingLeft: navPadding }} inset disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>{listItem.name}</Typography>} />
                 </ListItem>
               ))}
             </NestedNavigation>
           )
         })}
       </List>
-      <Divider style={{ color: 'white' }} />
+      <Divider className={classes.divider} />
       <List>
         <ListItem
           button onClick={e => {
             e.preventDefault()
             client.resetStore()
             cookie.remove('token')
+            setUser(false)
           }}
         >
-          <ListItemIcon>{<Backspace style={{ color: navColor }} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' style={{ color: navColor }}>Log Out</Typography>} />
+          <ListItemIcon>{<Backspace className={classes.drawerIcon} />}</ListItemIcon>
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Log Out</Typography>} />
         </ListItem>
       </List>
     </div>
@@ -142,7 +166,7 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          <MyDrawerConfig mobileOpen={mobileOpen} />
+          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} mobile />
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation='css'>

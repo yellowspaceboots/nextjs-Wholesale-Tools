@@ -29,6 +29,7 @@ input LoginUserInput {
 type Query {
   allFiles: [File!]!
   getUser: User
+  currentUser: Boolean @resolver(name: "current_user")
 }
 
 type Mutation {

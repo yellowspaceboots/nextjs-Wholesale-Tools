@@ -1,3 +1,4 @@
+import React from 'react'
 import { getLayout } from '../../components/Layout'
 
 const MaterialStatusReport = () => {

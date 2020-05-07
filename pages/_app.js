@@ -4,6 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../components/theme'
 import { withApollo } from '../api/apollo'
+import { AuthProvider } from '../components/AuthProvider'
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
@@ -19,13 +20,15 @@ const MyApp = (props) => {
   return (
     <>
       <Head>
-        <title>Wholesale Tools</title>
+        <title>Wholesale Electric Tools</title>
         <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        {getLayout(<Component {...pageProps} />)}
+        <AuthProvider>
+          {getLayout(<Component {...pageProps} />)}
+        </AuthProvider>
       </ThemeProvider>
     </>
   )
