@@ -1,6 +1,5 @@
 import React from 'react'
-import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
-import IconButton from '@material-ui/core/IconButton'
+import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'

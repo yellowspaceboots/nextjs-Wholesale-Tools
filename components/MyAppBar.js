@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const MyAppBar = ({ handleDrawerToggle }) => {
+const MyAppBar = ({ handleDrawerToggle, logout }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const notificationClick = (event) => setAnchorEl(event.currentTarget)
@@ -243,7 +243,14 @@ const MyAppBar = ({ handleDrawerToggle }) => {
         />
       </MenuItem>
       <Divider />
-      <MenuItem onClick={profileClose}>
+      <MenuItem
+        onClick={(e) => {
+          e.preventDefault()
+          profileClose()
+          logout()
+        }}
+
+      >
         <ListItemIcon>
           <Avatar className={classes.avatar}>
             <NotificationsNoneIcon />
@@ -251,7 +258,7 @@ const MyAppBar = ({ handleDrawerToggle }) => {
         </ListItemIcon>
         <ListItemText
           disableTypography
-          primary={<Typography variant='body2'>See All Notifications</Typography>}
+          primary={<Typography variant='body2'>Logout</Typography>}
         />
       </MenuItem>
     </Menu>

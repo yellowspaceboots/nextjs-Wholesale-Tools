@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
@@ -16,11 +17,10 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
-import { useApolloClient } from '@apollo/client'
-import cookie from 'js-cookie'
-import { useAuth } from './AuthProvider'
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-const drawerWidth = 240
+const drawerWidth = 180
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,12 +35,27 @@ const useStyles = makeStyles(theme => ({
       flexShrink: 0
     }
   },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(7) + 1
+    }
+  },
   drawerPaper: {
     width: drawerWidth
   },
-  divider: styleProps => ({
-    backgroundColor: styleProps.navColor
-  }),
   drawerIcon: styleProps => ({
     color: styleProps.navColor
   }),
@@ -49,17 +64,16 @@ const useStyles = makeStyles(theme => ({
   })
 }))
 
-const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, mobile }) => {
-  const { setUser } = useAuth()
+const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
+  const theme = useTheme()
+  const [drawerOpen, setDrawerOpen] = useState(true)
   const styleProps = {
     navColor: 'lightgrey',
     navPadding: 44
   }
   const today = new Date()
-  const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/1`
+  const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
   const classes = useStyles(styleProps)
-  const client = useApolloClient()
-  const navPadding = 44
   const drawerNavConfig = [
     {
       sectionTitle: 'Project Management',
@@ -104,18 +118,18 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, mobile }) => {
       ]
     }
   ]
-  return (
+  const drawer = (
     <div className={classes.root}>
       <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
-        <ListItem button href='/' component={InternalLink} onClick={mobile && handleDrawerToggle}>
-          <ListItemIcon style={{ minWidth: navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Overview</Typography>} />
+        <ListItem button href='/' component={InternalLink} onClick={mobileOpen && handleDrawerToggle}>
+          <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
         </ListItem>
-        <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobile && handleDrawerToggle}>
-          <ListItemIcon style={{ minWidth: navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
+        <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobileOpen && handleDrawerToggle}>
+          <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
           <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
         </ListItem>
-        {drawerNavConfig.map(nestedNavigation => {
+        {/* drawerNavConfig.map(nestedNavigation => {
           const Icon = nestedNavigation.icon
           const title = nestedNavigation.sectionTitle
           return (
@@ -127,31 +141,18 @@ const MyDrawerConfig = ({ handleDrawerToggle, mobileOpen, mobile }) => {
               ))}
             </NestedNavigation>
           )
-        })}
+        }) */}
       </List>
-      <Divider className={classes.divider} />
       <List>
-        <ListItem
-          button onClick={e => {
-            e.preventDefault()
-            client.resetStore()
-            cookie.remove('token')
-            setUser(false)
-          }}
-        >
-          <ListItemIcon>{<Backspace className={classes.drawerIcon} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Log Out</Typography>} />
+        <ListItem button onClick={() => setDrawerOpen(!drawerOpen)}>
+          <ListItemIcon>{!drawerOpen ? <NavigateNextIcon className={classes.drawerIcon} /> : <NavigateBeforeIcon className={classes.drawerIcon} />}</ListItemIcon>
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Collapse</Typography>} />
         </ListItem>
       </List>
     </div>
   )
-}
-
-const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
-  const theme = useTheme()
-  const classes = useStyles()
   return (
-    <nav className={classes.drawer} aria-label='mailbox folders'>
+    <nav aria-label='mailbox folders'>
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       <Hidden smUp implementation='css'>
         <Drawer
@@ -166,12 +167,25 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} mobile />
+          {drawer}
         </Drawer>
       </Hidden>
       <Hidden xsDown implementation='css'>
-        <Drawer classes={{ paper: classes.drawerPaper }} variant='permanent' open>
-          <MyDrawerConfig handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
+        <Drawer
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: drawerOpen,
+            [classes.drawerClose]: !drawerOpen
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: drawerOpen,
+              [classes.drawerClose]: !drawerOpen
+            })
+          }}
+          variant='permanent'
+          open
+        >
+          {drawer}
         </Drawer>
       </Hidden>
     </nav>

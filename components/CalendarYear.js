@@ -6,8 +6,7 @@ import {
   startOfWeek,
   endOfWeek,
   eachDayOfInterval,
-  isSameDay,
-  isSameMonth
+  isSameDay
 } from 'date-fns'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'

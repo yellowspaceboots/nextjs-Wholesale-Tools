@@ -1,10 +1,10 @@
 import React from 'react'
 import { format } from 'date-fns'
 import Button from '@material-ui/core/Button'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles'
 import InternalLink from './InternalLink'
+import Status from './Status'
 
 const useStyles = makeStyles({
   root: {
@@ -38,13 +38,13 @@ const CalendarMonthEvents = ({ events }) => {
           component={InternalLink}
           onClick={(e) => e.stopPropagation()}
           variant='contained'
-          startIcon={<FiberManualRecordIcon color='secondary' style={{ fontSize: 10, marginLeft: 10 }} />}
+          startIcon={<Status status={event.status} style={{ marginLeft: 10 }} />}
           classes={{
             root: classes.root,
             label: classes.label
           }}
         >
-          {`${format(event.date, 'ha').toLowerCase()} ${event.title}`}
+          {`${format(event.dateDue, 'ha').toLowerCase()} ${event.title}`}
         </Button>
       ))}
       {sliceNumber === 3 &&

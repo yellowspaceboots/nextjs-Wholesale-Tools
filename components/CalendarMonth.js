@@ -4,10 +4,8 @@ import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import Popper from '@material-ui/core/Popper'
 import InternalLink from './InternalLink'
 import AddToCalendar from './AddToCalendar'
-import Button from '@material-ui/core/Button'
 import CalendarMonthEvents from './CalendarMonthEvents'
 
 const CalendarMonth = ({
@@ -20,18 +18,11 @@ const CalendarMonth = ({
   events
 }) => {
   const dateFormat = 'd'
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [open, setOpen] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const handleClick = () => (event) => {
-    setAnchorEl(event.currentTarget)
-    setOpen(!open)
-  }
   const handleClickOpen = (day) => {
     setDialogOpen(true)
     setSelectedDate(day)
   }
-  console.log(selectedDate)
   return (
     <>
       <GridList cellHeight='auto' cols={7} style={{ borderRight: '1px solid lightgrey' }}>
