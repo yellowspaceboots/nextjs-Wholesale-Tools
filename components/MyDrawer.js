@@ -19,6 +19,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const drawerWidth = 180
 
@@ -64,9 +65,22 @@ const useStyles = makeStyles(theme => ({
   })
 }))
 
+const DrawerTooltip = ({ children, drawerOpen, title }) => (
+  <Tooltip
+    title={title}
+    placement='right'
+    arrow
+    disableFocusListener={drawerOpen}
+    disableHoverListener={drawerOpen}
+    disableTouchListener={drawerOpen}
+  >
+    {children}
+  </Tooltip>
+)
+
 const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const theme = useTheme()
-  const [drawerOpen, setDrawerOpen] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const styleProps = {
     navColor: 'lightgrey',
     navPadding: 44
@@ -121,14 +135,24 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const drawer = (
     <div className={classes.root}>
       <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
-        <ListItem button href='/' component={InternalLink} onClick={mobileOpen && handleDrawerToggle}>
-          <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
-        </ListItem>
-        <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobileOpen && handleDrawerToggle}>
-          <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
-        </ListItem>
+        <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen || drawerOpen}>
+          <ListItem button href='/' as='/' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
+          </ListItem>
+        </DrawerTooltip>
+        <DrawerTooltip title='Projects' drawerOpen={mobileOpen || drawerOpen}>
+          <ListItem button href='/projects' as='/projects' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<WidgetsIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Projects</Typography>} />
+          </ListItem>
+        </DrawerTooltip>
+        <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
+          <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
+          </ListItem>
+        </DrawerTooltip>
         {/* drawerNavConfig.map(nestedNavigation => {
           const Icon = nestedNavigation.icon
           const title = nestedNavigation.sectionTitle

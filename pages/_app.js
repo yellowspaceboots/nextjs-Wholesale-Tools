@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
+import { LocalizationProvider } from '@material-ui/pickers'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../components/theme'
 import { withApollo } from '../api/apollo'
 import { AuthProvider } from '../components/AuthProvider'
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
@@ -27,7 +29,9 @@ const MyApp = (props) => {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <AuthProvider>
-          {getLayout(<Component {...pageProps} />)}
+          <LocalizationProvider dateAdapter={DateFnsUtils}>
+            {getLayout(<Component {...pageProps} />)}
+          </LocalizationProvider>
         </AuthProvider>
       </ThemeProvider>
     </>

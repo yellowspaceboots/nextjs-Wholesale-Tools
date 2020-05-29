@@ -8,8 +8,6 @@ import Button from '@material-ui/core/Button'
 import { eventData, comments } from '../api/mock'
 import Comment from './Comment'
 import EventTitle from './EventTitle'
-import IconButton from '@material-ui/core/IconButton'
-import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import CustomerCard from './CustomerCard'
 
 const CalendarEvent = ({ id }) => {
@@ -34,20 +32,16 @@ const CalendarEvent = ({ id }) => {
       replies
     }
   })
+  const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(event.amount / 10000)
   return (
     <>
       <EventTitle event={event} />
-      <Divider style={{ marginTop: 20, marginBottom: 15 }} />
-      <Grid item container direction='row' alignItems='center' style={{ marginBottom: 10 }}>
-        <Typography variant='subtitle1' style={{ marginRight: 10 }}>Customers</Typography>
-        <IconButton size='small' aria-label='Add'>
-          <PersonAddIcon />
-        </IconButton>
-      </Grid>
+      <Divider />
+      <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Customers</Typography>
       <Grid container spacing={2}>
         {event.customerList.map(customer =>
           <Grid item key={customer.account}>
-            <CustomerCard customer={customer} />
+            <CustomerCard customer={customer} fullAmount={fullAmount} />
           </Grid>
         )}
       </Grid>

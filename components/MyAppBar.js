@@ -24,6 +24,10 @@ import WLogo from './WLogo'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
 import AccountCircle from '@material-ui/icons/AccountCircle'
+import Backspace from '@material-ui/icons/Backspace'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import WidgetsIcon from '@material-ui/icons/Widgets'
+import AddProjectDialog from './AddProjectDialog'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -107,6 +111,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const MyAppBar = ({ handleDrawerToggle, logout }) => {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const handleClickOpen = () => {
+    setDialogOpen(true)
+  }
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const notificationClick = (event) => setAnchorEl(event.currentTarget)
@@ -130,7 +138,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         horizontal: 'center'
       }}
     >
-      <Typography variant='body1' style={{ padding: 20, fontWeight: 700, width: 400 }}>Notifications</Typography>
+      <Typography variant='body1' style={{ padding: 10, paddingLeft: 20, fontWeight: 700, width: 300 }}>Notifications</Typography>
       <Divider />
       <MenuItem onClick={notificationClose}>
         <ListItemIcon>
@@ -204,44 +212,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         horizontal: 'center'
       }}
     >
-      <Typography variant='body1' style={{ padding: 20, fontWeight: 700, width: 400 }}>Profile</Typography>
-      <Divider />
-      <MenuItem onClick={profileClose}>
-        <ListItemIcon>
-          <Avatar className={classes.yellowAvatar}>
-            <AlarmIcon />
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText
-          disableTypography
-          primary={<Typography variant='body2'>Project Bidding Soon</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-        />
-      </MenuItem>
-      <MenuItem onClick={profileClose}>
-        <ListItemIcon>
-          <Avatar className={classes.blueAvatar}>
-            <AssignmentLateIcon />
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText
-          disableTypography
-          primary={<Typography variant='body2'>New Project Added</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-        />
-      </MenuItem>
-      <MenuItem onClick={profileClose}>
-        <ListItemIcon>
-          <Avatar className={classes.greenAvatar}>
-            <AnnouncementIcon />
-          </Avatar>
-        </ListItemIcon>
-        <ListItemText
-          disableTypography
-          primary={<Typography variant='body2'>New Message for Project</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
-        />
-      </MenuItem>
+      <Typography variant='body1' style={{ padding: 10, paddingLeft: 20, fontWeight: 700, width: 200 }}>Profile</Typography>
       <Divider />
       <MenuItem
         onClick={(e) => {
@@ -252,9 +223,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
 
       >
         <ListItemIcon>
-          <Avatar className={classes.avatar}>
-            <NotificationsNoneIcon />
-          </Avatar>
+          <Backspace />
         </ListItemIcon>
         <ListItemText
           disableTypography
@@ -262,6 +231,48 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         />
       </MenuItem>
     </Menu>
+  )
+  const [addEl, setAddEl] = useState(null)
+  const addClick = (event) => setAddEl(event.currentTarget)
+  const addClose = () => setAddEl(null)
+  const addOpen = Boolean(addEl)
+  const renderAddMenu = (
+    <Menu
+      id='fade-menu'
+      anchorEl={addEl}
+      keepMounted
+      open={addOpen}
+      onClose={addClose}
+      TransitionComponent={Fade}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center'
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'center'
+      }}
+    >
+      <MenuItem
+        onClick={(e) => {
+          e.preventDefault()
+          handleClickOpen()
+          addClose()
+        }}
+      >
+        <ListItemIcon>
+          <WidgetsIcon />
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>Add Project</Typography>}
+        />
+      </MenuItem>
+    </Menu>
+  )
+  const renderAddDialog = (
+    <AddProjectDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
   )
   return (
     <AppBar position='fixed' elevation={0} className={classes.appBar}>
@@ -308,6 +319,14 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         </Hidden>
         <IconButton
           color='inherit'
+          aria-label='Add'
+          onClick={addClick}
+        >
+          <AddCircleIcon />
+        </IconButton>
+        {renderAddMenu}
+        <IconButton
+          color='inherit'
           aria-label='Notifications'
           onClick={notificationClick}
         >
@@ -327,6 +346,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         </IconButton>
         {renderProfileMenu}
       </Toolbar>
+      {renderAddDialog}
     </AppBar>
   )
 }

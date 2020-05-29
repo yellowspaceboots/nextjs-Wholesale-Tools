@@ -35,7 +35,14 @@ import { eventData } from '../api/mock'
 import { groupBy } from '../api/utils'
 
 const CommercialCalendar = ({ view, year, month, day }) => {
-  const events = groupBy(eventData, 'dateId')
+  const eventDataWithDateId = eventData.map(event => {
+    const dateId = `${event.dateDue.getFullYear()}-${event.dateDue.getMonth()}-${event.dateDue.getDate()}`
+    return {
+      ...event,
+      dateId
+    }
+  })
+  const events = groupBy(eventDataWithDateId, 'dateId')
   const router = useRouter()
   const titleFormats = {
     year: 'yyyy',

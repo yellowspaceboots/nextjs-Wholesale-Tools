@@ -1,18 +1,10 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import { getStatusColor } from '../api/utils'
 
 const Status = ({ status, includeWords, style }) => {
-  const statusColors = {
-    'On Track': 'green',
-    'At Risk': '#ffbb41',
-    'Off Track': 'red',
-    Open: '#1e3f76',
-    Pending: '#ffbb41',
-    Won: 'green',
-    Lost: 'red'
-  }
-  const statusColor = statusColors[status] || 'lightgrey'
+  const statusColor = getStatusColor(status)
   const styleCheck = style || {}
   if (includeWords) {
     return (

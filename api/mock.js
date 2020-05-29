@@ -1,32 +1,50 @@
 export const eventData = [
   {
     id: 1,
+    requestId: 423434,
     title: 'This is my project title. This is my project title',
     description: 'This is my fake description. This is my fake description. This is my fake description. This is my fake description. This is my fake description. This is my fake description',
-    dateId: '2020-4-1',
     status: 'At Risk',
-    dateAdded: new Date(),
-    dateDue: new Date(2020, 4, 1, 0, 0, 0, 0),
+    dateEntered: new Date(),
+    dateDue: new Date(2020, 5, 1, 0, 0, 0, 0),
+    amount: 100000000,
     salesman: {
-      name: 'Tex Terango'
+      number: '7213',
+      name: 'Tex Tarango',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
         name: 'Britain Electric',
-        salesman: 'Skip Peters',
         status: 'Lost'
       },
       {
-        account: 4444,
-        name: 'Trio Electric',
-        salesman: 'Skip Peters',
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
         status: 'Lost'
       },
       {
-        account: 101843,
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
         name: 'Advanced Electrical Solutions Inc.',
-        salesman: 'Skip Peters',
         status: 'Pending'
       }
     ],
@@ -34,114 +52,309 @@ export const eventData = [
   },
   {
     id: 2,
-    title: 'test2',
+    requestId: 34323,
+    title: 'Clements High School redesign',
     description: 'This is my fake description',
-    dateId: '2020-4-1',
     status: 'On Track',
-    dateAdded: new Date(),
-    dateDue: new Date(2020, 4, 1, 0, 0, 0, 0),
+    dateEntered: new Date(),
+    dateDue: new Date(2020, 4, 24, 0, 0, 0, 0),
+    amount: 45431000000,
     salesman: {
-      name: 'Place Holder'
+      number: '72GD',
+      name: 'Gail Drane',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
-        name: 'Place Holder Customer Name 1'
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
+      },
+      {
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
       }
     ],
     size: 'Medium'
   },
   {
     id: 3,
-    title: 'test3',
+    requestId: 76768,
+    title: 'Hospital Building A',
     description: 'This is my fake description',
-    dateId: '2020-4-1',
     status: 'On Track',
-    dateAdded: new Date(),
-    dateDue: new Date(2020, 4, 1, 0, 0, 0, 0),
+    dateEntered: new Date(),
+    dateDue: new Date(2020, 4, 27, 0, 0, 0, 0),
+    amount: 321000000,
     salesman: {
-      name: 'Place Holder'
+      number: '7213',
+      name: 'Tex Tarango',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
-        name: 'Place Holder Customer Name 1'
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
       },
       {
-        account: 4444,
-        name: 'Place Holder Customer Name 4'
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
       }
     ],
     size: 'Medium'
   },
   {
     id: 4,
-    title: 'test4',
+    requestId: 89797,
+    title: 'Hospital Building B',
     description: 'This is my fake description',
-    dateId: '2020-4-17',
     status: 'On Track',
-    dateAdded: new Date(),
+    dateEntered: new Date(),
     dateDue: new Date(2020, 4, 17, 0, 0, 0, 0),
+    amount: 1785785000000,
     salesman: {
-      name: 'Place Holder'
+      number: '7264',
+      name: 'Steve Roland',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
-        name: 'Place Holder Customer Name 1'
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
       },
       {
-        account: 4444,
-        name: 'Place Holder Customer Name 4'
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
       }
     ],
-    size: 'Medium'
+    size: 'Large'
   },
   {
     id: 5,
-    title: 'test5',
+    requestId: 232123,
+    title: 'Insert Project Name',
     description: 'This is my fake description',
-    dateId: '2020-4-1',
     status: 'On Track',
-    dateAdded: new Date(),
-    dateDue: new Date(2020, 4, 1, 0, 0, 0, 0),
+    dateEntered: new Date(),
+    dateDue: new Date(2020, 4, 19, 0, 0, 0, 0),
+    amount: 10767600000,
     salesman: {
-      name: 'Place Holder'
+      number: '7264',
+      name: 'Steve Roland',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
-        name: 'Place Holder Customer Name 1'
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
       },
       {
-        account: 4444,
-        name: 'Place Holder Customer Name 4'
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
       }
     ],
     size: 'Medium'
   },
   {
     id: 6,
-    title: 'test6',
+    requestId: 35423,
+    title: 'Believable Commercial Project Name',
     description: 'This is my fake description',
-    dateId: '2020-4-7',
-    status: 'On Track',
-    dateAdded: new Date(),
+    status: 'Off Track',
+    dateEntered: new Date(),
     dateDue: new Date(2020, 4, 7, 0, 0, 0, 0),
+    amount: 1000000,
     salesman: {
-      name: 'Place Holder'
+      number: '72GD',
+      name: 'Gail Drane',
+      type: 'Inside'
     },
     customerList: [
       {
-        account: 21212,
-        name: 'Place Holder Customer Name 1'
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
       },
       {
-        account: 4444,
-        name: 'Place Holder Customer Name 4'
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
       }
     ],
-    size: 'Medium'
+    size: 'Small'
+  },
+  {
+    id: 7,
+    requestId: 44423,
+    title: 'Believable Commercial Project Name2',
+    description: 'This is my fake description',
+    status: 'Off Track',
+    dateEntered: new Date(),
+    dateDue: new Date(2020, 4, 30, 0, 0, 0, 0),
+    amount: 15454545400000,
+    salesman: {
+      number: '72GD',
+      name: 'Gail Drane',
+      type: 'Inside'
+    },
+    customerList: [
+      {
+        account: '0219901',
+        salesman: {
+          number: 'RIJA',
+          name: 'Rick Jankowiak',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Britain Electric',
+        status: 'Lost'
+      },
+      {
+        account: '2018150',
+        salesman: {
+          number: '0014',
+          name: 'Jason Thrasher',
+          type: 'Outside'
+        },
+        keyAccountId: 'TRIO',
+        name: 'Trio Electric Ltd',
+        status: 'Lost'
+      },
+      {
+        account: '0101843',
+        salesman: {
+          number: '79RH',
+          name: 'Rebecca Halverson',
+          type: 'Outside'
+        },
+        keyAccountId: 'UNDEFINED',
+        name: 'Advanced Electrical Solutions Inc.',
+        status: 'Pending'
+      }
+    ],
+    size: 'Large'
   }
 ]
 

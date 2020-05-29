@@ -1,0 +1,2750 @@
+[
+  {
+    "number": "0000",
+    "name": "Unassigned",
+    "type": "None",
+    "store": "0000"
+  },
+  {
+    "number": "ECOM",
+    "name": "E-Shop",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "75YY",
+    "name": "Store Account",
+    "type": "Inside",
+    "store": "76"
+  },
+  {
+    "number": "72IA",
+    "name": "Iris Adame",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "7266",
+    "name": "Jesse Adams",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "94TA",
+    "name": "Tommy Adams",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "75BA",
+    "name": "Barry Alexander",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "71VA",
+    "name": "Vivian Alford",
+    "type": "Admin",
+    "store": "71"
+  },
+  {
+    "number": "82TA",
+    "name": "Trisk Almodovar",
+    "type": "Admin",
+    "store": "82"
+  },
+  {
+    "number": "SAMA",
+    "name": "Scott Amacker",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "93AA",
+    "name": "Abdullah Amin",
+    "type": "Admin",
+    "store": "93"
+  },
+  {
+    "number": "72CA",
+    "name": "Cassie Arce",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "70SA",
+    "name": "Steve Arce",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "CHRA",
+    "name": "Chris Archibald",
+    "type": "Admin",
+    "store": "101"
+  },
+  {
+    "number": "CHAR",
+    "name": "Chris Archibald",
+    "type": "Inside",
+    "store": "101"
+  },
+  {
+    "number": "KA",
+    "name": "Karen Archibald",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "75CA",
+    "name": "Corey Arnold",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "7241",
+    "name": "Jason Ashlock",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "MIAT",
+    "name": "Mike Atzenhoffer",
+    "type": "Purchasing",
+    "store": "73"
+  },
+  {
+    "number": "RYAU",
+    "name": "Ryan Austin",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "TAAY",
+    "name": "Tammy Ayers",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "75RA",
+    "name": "Robert Aymond",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "75DB",
+    "name": "Donald Bagala",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "SABA",
+    "name": "Sam Baker",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "DUBA",
+    "name": "Dustin Bankhead",
+    "type": "Counter",
+    "store": "79"
+  },
+  {
+    "number": "62NB",
+    "name": "Neil Barker",
+    "type": "Inside",
+    "store": "62"
+  },
+  {
+    "number": "66CB",
+    "name": "Christopher Barnett",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "73EB",
+    "name": "Eric Barnett",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "68SB",
+    "name": "Shawn Beacraft",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "0099",
+    "name": "House Account; Exxonmobil Beaumont",
+    "type": "Outside",
+    "store": "6801"
+  },
+  {
+    "number": "66GB",
+    "name": "Gary Bement",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66RB",
+    "name": "Ronnie Bement",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "74JB",
+    "name": "Johnell Benoit",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "74AB",
+    "name": "Anthony Bercier",
+    "type": "Counter",
+    "store": "74"
+  },
+  {
+    "number": "DABE",
+    "name": "Daniel Berg",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "68JB",
+    "name": "Justin Bertrand",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "68CB",
+    "name": "Casey Bonin",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "68CA",
+    "name": "Casey Bonin",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "74MB",
+    "name": "Mike Bradford",
+    "type": "Admin",
+    "store": "74"
+  },
+  {
+    "number": "66BB",
+    "name": "Barbara Brady",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0062",
+    "name": "Steven Breaux",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "72CB",
+    "name": "Charles Brooks",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66AB",
+    "name": "Angela Brown",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "KEBR",
+    "name": "Kenneth Brown",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "79RB",
+    "name": "Rebecca Brown",
+    "type": "Counter",
+    "store": "79"
+  },
+  {
+    "number": "TIBR",
+    "name": "Tiara Brown",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "75JB",
+    "name": "Joe Bruno",
+    "type": "Admin",
+    "store": "75"
+  },
+  {
+    "number": "0041",
+    "name": "Alan Bryant",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "75BB",
+    "name": "Brent Buckner",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "JOBU",
+    "name": "John Bump",
+    "type": "Counter",
+    "store": "71"
+  },
+  {
+    "number": "7204",
+    "name": "Jon Busch",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "JOBY",
+    "name": "Johnathan Byron",
+    "type": "Admin",
+    "store": "70"
+  },
+  {
+    "number": "75LC",
+    "name": "Luis Cano",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "JCAN",
+    "name": "Josh Cantu",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "72EU",
+    "name": "Eusebio Carmona",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "TICA",
+    "name": "Tim Carr",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "66CC",
+    "name": "Claudia Carvajal",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "BOCA",
+    "name": "Bob Castagna",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "77DC",
+    "name": "David Chapman",
+    "type": "Counter",
+    "store": "77"
+  },
+  {
+    "number": "BRCH",
+    "name": "Brandon Chidester",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "68KR",
+    "name": "Kourtlyn Christian",
+    "type": "Admin",
+    "store": "68"
+  },
+  {
+    "number": "JOCA",
+    "name": "John Clark",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "RYCL",
+    "name": "Ryan Clark",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "60CC",
+    "name": "Chris Clary",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0045",
+    "name": "Chris Cloninger",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "68ZZ",
+    "name": "Bar Code Scan",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "68AC",
+    "name": "Andrew Cole",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "PACO",
+    "name": "Patty Consford",
+    "type": "Inside",
+    "store": "92"
+  },
+  {
+    "number": "7254",
+    "name": "Christopher Cook",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "75KC",
+    "name": "Kurt Cook",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "7251",
+    "name": "Gillie Crabb",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "7249",
+    "name": "Jimmy Crotwell",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "66TD",
+    "name": "Taylor Danforth",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "68BD",
+    "name": "Braden Davenport",
+    "type": "Counter",
+    "store": "68"
+  },
+  {
+    "number": "74DD",
+    "name": "Doug Davenport",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "93WD",
+    "name": "Wes Davidson",
+    "type": "Inside",
+    "store": "93"
+  },
+  {
+    "number": "78DD",
+    "name": "Douglas Dawn",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66SD",
+    "name": "Sandy De Le Cruz",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "79BD",
+    "name": "Brittany De Los Santos",
+    "type": "Counter",
+    "store": "79"
+  },
+  {
+    "number": "79LD",
+    "name": "Lisa De Los Santos",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "77WD",
+    "name": "William Decker",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "72CD",
+    "name": "Curtis Dennis",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "74JD",
+    "name": "Joann Dennis",
+    "type": "Admin",
+    "store": "74"
+  },
+  {
+    "number": "68DE",
+    "name": "Derek Deplanter",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "68KD",
+    "name": "Krystle Deville",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "68DD",
+    "name": "Donald Dickerson",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "0027",
+    "name": "Donnie Dickerson",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "CHDI",
+    "name": "Chris Dinardo",
+    "type": "Inside",
+    "store": "93"
+  },
+  {
+    "number": "93DJ",
+    "name": "Dj Dobbs",
+    "type": "Outside",
+    "store": "93"
+  },
+  {
+    "number": "DADO",
+    "name": "Damon Dotson",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "66DD",
+    "name": "Dawn Douglas",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72GD",
+    "name": "Gail Drane",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "68AD",
+    "name": "Austin Duhon",
+    "type": "Counter",
+    "store": "68"
+  },
+  {
+    "number": "0018",
+    "name": "Mack Duncan",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "7292",
+    "name": "Linda Dunlap",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "66CD",
+    "name": "Cassandra Duran",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0023",
+    "name": "Rick Edwards",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "68LE",
+    "name": "Leslie Engman",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "72EX",
+    "name": "Houston Exports",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "70KR",
+    "name": "Kristin Facundo",
+    "type": "Admin",
+    "store": "70"
+  },
+  {
+    "number": "75CF",
+    "name": "Casey Fanguy",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "JBF",
+    "name": "Jordan Faris",
+    "type": "Counter",
+    "store": "66"
+  },
+  {
+    "number": "68DF",
+    "name": "Donnie Farnie",
+    "type": "Counter",
+    "store": "68"
+  },
+  {
+    "number": "KF",
+    "name": "Katie Felts",
+    "type": "Admin",
+    "store": "60"
+  },
+  {
+    "number": "7252",
+    "name": "Doris Fields",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "68JF",
+    "name": "John Figari",
+    "type": "Purchasing",
+    "store": "68"
+  },
+  {
+    "number": "66MA",
+    "name": "Mark Fisher",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66MF",
+    "name": "Mike Fisher",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66CF",
+    "name": "Claudia Flores",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "72HF",
+    "name": "Hector Flores",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "0053",
+    "name": "Jimmy Flotte",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "75JF",
+    "name": "Jimmy Flotte",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "72EF",
+    "name": "Eric Folmer",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "80BF",
+    "name": "Byron Fontenot",
+    "type": "Inside",
+    "store": "80"
+  },
+  {
+    "number": "75MF",
+    "name": "Mike Fontenot",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "74PF",
+    "name": "Paul Fontenot",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "68WF",
+    "name": "Wade Fountain",
+    "type": "Counter",
+    "store": "6801"
+  },
+  {
+    "number": "79CF",
+    "name": "Clayton Fowler",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "7202",
+    "name": "Matthew Fowler",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "LAFR",
+    "name": "Lauren Fraire",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "DEFR",
+    "name": "Devin Frantz",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "72CF",
+    "name": "Candace French",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66TF",
+    "name": "Todd French",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "DUFU",
+    "name": "Dutch Fuller",
+    "type": "Counter",
+    "store": "92"
+  },
+  {
+    "number": "66DF",
+    "name": "Dianne Fulsom",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66GA",
+    "name": "Dedra Gale",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "78GA",
+    "name": "Dedra Gale",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "82LG",
+    "name": "Lori Garcia",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "0042",
+    "name": "Rudy Garcia",
+    "type": "Outside",
+    "store": "77"
+  },
+  {
+    "number": "77RG",
+    "name": "Rudy Garcia",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "7207",
+    "name": "Earl Garrison",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "0004",
+    "name": "Richard Gary",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "62TG",
+    "name": "Tanzie Garza",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "66TG",
+    "name": "Tanzie Garza",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "78TG",
+    "name": "Tanzie Garza",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "66ZZ",
+    "name": "Customer Generated",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "73TG",
+    "name": "Tommy Gilbert",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "78DG",
+    "name": "Deborah Godwin",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "7970",
+    "name": "Dana Gollnick",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "7969",
+    "name": "Dana Gollnick",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "7972",
+    "name": "Mike Gollnick",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "STGO",
+    "name": "Stacy Gonzalez",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "BG",
+    "name": "Britney Gray",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "78JG",
+    "name": "Jennifer Gray",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "66JG",
+    "name": "Jennifer Gray",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "60JG",
+    "name": "Jennifer Gray",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "62JG",
+    "name": "Jennifer Gray",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "7943",
+    "name": "Rebecca Gray",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "SG",
+    "name": "Shana Gray",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "0050",
+    "name": "Monty Green",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "7248",
+    "name": "Will Greenshields",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "7133",
+    "name": "Joe Greer",
+    "type": "Inside",
+    "store": "71"
+  },
+  {
+    "number": "77JG",
+    "name": "Johnny Griego",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "66SG",
+    "name": "Sylvia Guerra",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "YEGU",
+    "name": "Yessica Guerra",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "HG",
+    "name": "Heath Guilbeaux",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "BRGU",
+    "name": "Bryan Gutierrez",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "70BG",
+    "name": "Buddy Gutierrez",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "JMG",
+    "name": "Jose Gutierrez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "BW01",
+    "name": "Benfield Electric H.H.",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "7977",
+    "name": "Loren Hackbarth",
+    "type": "Counter",
+    "store": "79"
+  },
+  {
+    "number": "73RH",
+    "name": "Robert Haley",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "79RH",
+    "name": "Rebecca Halverson",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "JHAM",
+    "name": "Jeff Hamilton",
+    "type": "Outside",
+    "store": "74"
+  },
+  {
+    "number": "72JH",
+    "name": "John Hardey",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66RH",
+    "name": "Rick Hardey",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "78RH",
+    "name": "Rick Hardey",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "74RH",
+    "name": "Rick Hardey",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "75GH",
+    "name": "George Harrell",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "66JH",
+    "name": "Jason Hassell",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "7291",
+    "name": "Kyle Hatcher",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "KH",
+    "name": "Kyle Hatcher",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0044",
+    "name": "Richard Hatcher",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "7290",
+    "name": "Richard Hatcher",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "0031",
+    "name": "Arthur Head",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "CHHE",
+    "name": "Chad Hebert",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "JOHE",
+    "name": "John Heiman",
+    "type": "Outside",
+    "store": "82"
+  },
+  {
+    "number": "74JH",
+    "name": "Jeff Helms",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "0060",
+    "name": "Jeffrey Helms",
+    "type": "Outside",
+    "store": "74"
+  },
+  {
+    "number": "78JH",
+    "name": "Jarrad Henery",
+    "type": "Admin",
+    "store": "78"
+  },
+  {
+    "number": "79SH",
+    "name": "Scott Henley",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "7974",
+    "name": "Clinton Herzer",
+    "type": "Counter",
+    "store": "79"
+  },
+  {
+    "number": "71JH",
+    "name": "James Hill",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "7115",
+    "name": "James Hill",
+    "type": "Inside",
+    "store": "71"
+  },
+  {
+    "number": "7217",
+    "name": "Bill Hines",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "74WH",
+    "name": "William Hines",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "7599",
+    "name": "Baton Rouge House Account",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "6899",
+    "name": "Beaumont House Account",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "6499",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "64"
+  },
+  {
+    "number": "6399",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "63"
+  },
+  {
+    "number": "6099",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "60"
+  },
+  {
+    "number": "6199",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "6299",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "62"
+  },
+  {
+    "number": "6699",
+    "name": "Cmms House Account",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "5499",
+    "name": "Cmms Baytown House Account",
+    "type": "Outside",
+    "store": "54"
+  },
+  {
+    "number": "6799",
+    "name": "Cmms-Cb&I House Account",
+    "type": "Outside",
+    "store": "67"
+  },
+  {
+    "number": "9299",
+    "name": "Conroe House Account",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "7099",
+    "name": "Deer Park House Account",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "7899",
+    "name": "Hanford Wa House Account",
+    "type": "Outside",
+    "store": "78"
+  },
+  {
+    "number": "8000",
+    "name": "House Account House Account",
+    "type": "Inside",
+    "store": "80"
+  },
+  {
+    "number": "7299",
+    "name": "Houston House Account",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "9399",
+    "name": "Joliet House Account",
+    "type": "Outside",
+    "store": "93"
+  },
+  {
+    "number": "8099",
+    "name": "Lafayette House Account",
+    "type": "Outside",
+    "store": "80"
+  },
+  {
+    "number": "9499",
+    "name": "Midland House Account",
+    "type": "Outside",
+    "store": "94"
+  },
+  {
+    "number": "7399",
+    "name": "New Orleans House Account",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "8299",
+    "name": "Northwesthoustn House Account",
+    "type": "Outside",
+    "store": "82"
+  },
+  {
+    "number": "8199",
+    "name": "Pascagoula House Account",
+    "type": "Outside",
+    "store": "81"
+  },
+  {
+    "number": "0199",
+    "name": "Shop House Account",
+    "type": "Outside",
+    "store": "101"
+  },
+  {
+    "number": "7499",
+    "name": "Sulphur House Account",
+    "type": "Outside",
+    "store": "74"
+  },
+  {
+    "number": "7799",
+    "name": "Texas City House Account",
+    "type": "Outside",
+    "store": "77"
+  },
+  {
+    "number": "7999",
+    "name": "Victoria House Account",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "6599",
+    "name": "Wholesale  / Crescent House Account",
+    "type": "Outside",
+    "store": "65"
+  },
+  {
+    "number": "7199",
+    "name": "Accounting Only House Account Clute",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "70BH",
+    "name": "Brent Howard",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "66ST",
+    "name": "Sherry Howard",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "78BH",
+    "name": "Bracey Howell",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "68KB",
+    "name": "Kelsey Hoyt",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "0071",
+    "name": "Angie Huckeby",
+    "type": "Outside",
+    "store": "81"
+  },
+  {
+    "number": "ROHU",
+    "name": "Robert Huckeby",
+    "type": "Outside",
+    "store": "81"
+  },
+  {
+    "number": "MAHU",
+    "name": "Mark Hunter",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "73EH",
+    "name": "Erich Husson",
+    "type": "Purchasing",
+    "store": "73"
+  },
+  {
+    "number": "73SH",
+    "name": "Scott Husson",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "66JI",
+    "name": "James Ibarra",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72RI",
+    "name": "Rodney Ilseng",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "66PI",
+    "name": "Perla Irias",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "70JI",
+    "name": "Jay Isbell",
+    "type": "Counter",
+    "store": "70"
+  },
+  {
+    "number": "66RJ",
+    "name": "Robert James",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "60SJ",
+    "name": "Robert (Skeeter) James",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "RIJA",
+    "name": "Rick Jankowiak",
+    "type": "Outside",
+    "store": "82"
+  },
+  {
+    "number": "82BJ",
+    "name": "Brittany Jansen",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66MJ",
+    "name": "Maria Jasso",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "7274",
+    "name": "Jones Joe",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "74CJ",
+    "name": "Cody Jones",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "70IJ",
+    "name": "Iris Jones",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "ELEC",
+    "name": "Electrico Jv Partner",
+    "type": "Outside",
+    "store": "65"
+  },
+  {
+    "number": "74CK",
+    "name": "Chris Kelley",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "75SK",
+    "name": "Shane Kennerly",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "BIKI",
+    "name": "Bianca Kirk",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66SN",
+    "name": "Seth Knox",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "79HK",
+    "name": "Hattie Krueger",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "75FL",
+    "name": "Frank Lacour",
+    "type": "Inside",
+    "store": "76"
+  },
+  {
+    "number": "68TL",
+    "name": "Tyler Lacour",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "66SL",
+    "name": "Scott Lake",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "74SL",
+    "name": "Scott Lake",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "77DL",
+    "name": "Dea Land",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "7214",
+    "name": "Rick Lathrop",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "0002",
+    "name": "Rick Lathrop",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "KULE",
+    "name": "Kurt Lear",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "0047",
+    "name": "Mike Lebkowsky",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "79CL",
+    "name": "Clint Lee",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "71ML",
+    "name": "Mickey Lester",
+    "type": "Admin",
+    "store": "71"
+  },
+  {
+    "number": "0007",
+    "name": "Morgan Lester",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "DLEW",
+    "name": "Dave Lewis",
+    "type": "Inside",
+    "store": "101"
+  },
+  {
+    "number": "66KL",
+    "name": "Kevin Lieb",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "70GL",
+    "name": "Gina Lindsay",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "70JL",
+    "name": "Jake Linhart",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "75DL",
+    "name": "Donnie Liotto",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "0057",
+    "name": "Donnie Liotto",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "75HL",
+    "name": "Hunter Liotto",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "68LL",
+    "name": "Lisa Little",
+    "type": "Admin",
+    "store": "68"
+  },
+  {
+    "number": "7226",
+    "name": "Rita Lloyd",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "77DR",
+    "name": "Dawn Longcoy",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "77CL",
+    "name": "Dawn Longcoy",
+    "type": "Admin",
+    "store": "77"
+  },
+  {
+    "number": "68JL",
+    "name": "Johnathan Lyle",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "66RM",
+    "name": "Ruben Maldonado",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "71AM",
+    "name": "Andrew Manwarren",
+    "type": "Counter",
+    "store": "71"
+  },
+  {
+    "number": "7273",
+    "name": "Dave Mark",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "74AM",
+    "name": "Adam Martin",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "7225",
+    "name": "Mike Martin",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "80SM",
+    "name": "Susan Martin",
+    "type": "Admin",
+    "store": "80"
+  },
+  {
+    "number": "94JM",
+    "name": "Jaime Martinez",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "JEMA",
+    "name": "Jessie Martinez",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66MM",
+    "name": "Melody Massa",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72TM",
+    "name": "Tim Matejka",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "71NM",
+    "name": "Nancy Mathis",
+    "type": "Admin",
+    "store": "71"
+  },
+  {
+    "number": "70MM",
+    "name": "Michael Matthews",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "GLMA",
+    "name": "Glenn Maxwell",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "MONT",
+    "name": "Montana May",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "72AM",
+    "name": "Andrea Mccall",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "JEMC",
+    "name": "Jeff Mccoy",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "68TM",
+    "name": "Taylor Mcdonald",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "TOMC",
+    "name": "Tommy Mcdonald",
+    "type": "Outside",
+    "store": "92"
+  },
+  {
+    "number": "7910",
+    "name": "Jeremy Mcintosh",
+    "type": "Purchasing",
+    "store": "79"
+  },
+  {
+    "number": "72PM",
+    "name": "Pam Mckellop",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "7265",
+    "name": "Rick Mckellop",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "BRMC",
+    "name": "Brandi Mckinley",
+    "type": "Inside",
+    "store": "92"
+  },
+  {
+    "number": "DEMC",
+    "name": "Devin Mckinney",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "68BR",
+    "name": "Brian Mcwade",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "77NM",
+    "name": "Nathan Medina",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "AP",
+    "name": "Ashley Melchor",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "ANME",
+    "name": "Anthony Mengarelli",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66VM",
+    "name": "Veronika Merchant",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "74JM",
+    "name": "Jason Miller",
+    "type": "Admin",
+    "store": "74"
+  },
+  {
+    "number": "66KM",
+    "name": "Kyle Mohr",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72LM",
+    "name": "Lily Mora",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "66PM",
+    "name": "Pete Mora",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "82JE",
+    "name": "Jessica Moran",
+    "type": "Admin",
+    "store": "82"
+  },
+  {
+    "number": "82JM",
+    "name": "John Morley",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "81PM",
+    "name": "Phillp Mullen",
+    "type": "Inside",
+    "store": "81"
+  },
+  {
+    "number": "TAMZ",
+    "name": "Taylor Munoz",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "85KM",
+    "name": "Ken Munsey",
+    "type": "Outside",
+    "store": "85"
+  },
+  {
+    "number": "77SM",
+    "name": "Scott Muraca",
+    "type": "Inside",
+    "store": "77"
+  },
+  {
+    "number": "0034",
+    "name": "Derek Musso",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "72BN",
+    "name": "Blake Nash",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "74CN",
+    "name": "Chris Nelson",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "0029",
+    "name": "Chris Nelson",
+    "type": "Outside",
+    "store": "74"
+  },
+  {
+    "number": "7281",
+    "name": "Bob Nichols",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "93DN",
+    "name": "Debbie Nichols",
+    "type": "Admin",
+    "store": "93"
+  },
+  {
+    "number": "74KN",
+    "name": "Klaudia Nichols",
+    "type": "Admin",
+    "store": "74"
+  },
+  {
+    "number": "61CN",
+    "name": "Cynthia Nunez",
+    "type": "Admin",
+    "store": "61"
+  },
+  {
+    "number": "60CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "65CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "78CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "67CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "62CN",
+    "name": "Cynthia Nunez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66MN",
+    "name": "Maria Nunez",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "0063",
+    "name": "Nick Odell",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "66RO",
+    "name": "Richard Ornelas",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "60RO",
+    "name": "Richard Ornelas",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72RO",
+    "name": "Richard Ornelas",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66LO",
+    "name": "Luis Orozco",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "66CO",
+    "name": "Cheryl Orsak",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "66JO",
+    "name": "James Orsak",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "60JO",
+    "name": "James Orsak",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "66AO",
+    "name": "Armando Ortiz",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "NIOR",
+    "name": "Nic Ortuza",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "70DP",
+    "name": "David Palasios",
+    "type": "Counter",
+    "store": "70"
+  },
+  {
+    "number": "66DJ",
+    "name": "Dave Patterson",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0019",
+    "name": "David C. Patterson",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "70DE",
+    "name": "Devin Patterson",
+    "type": "Admin",
+    "store": "70"
+  },
+  {
+    "number": "0010",
+    "name": "Jimmie Pavlu",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "7975",
+    "name": "Jimmie Pavlu",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "73TP",
+    "name": "Travis Payne",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "75SP",
+    "name": "Steffan Peltier",
+    "type": "Counter",
+    "store": "75"
+  },
+  {
+    "number": "82AP",
+    "name": "Andreiana Perez",
+    "type": "Admin",
+    "store": "82"
+  },
+  {
+    "number": "7280",
+    "name": "Evelyn Perez",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "JUPE",
+    "name": "Julio Perez",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "70JP",
+    "name": "Justin Peters",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "0008",
+    "name": "Skip Peters",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "7234",
+    "name": "Skip Peters",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "JAPE",
+    "name": "James Pettit",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "72CP",
+    "name": "Connor Phillips",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "MIPH",
+    "name": "Mike Phillips",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "80CP",
+    "name": "Carole Primeaux",
+    "type": "Admin",
+    "store": "80"
+  },
+  {
+    "number": "68JP",
+    "name": "Jeff Pringle",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "68JW",
+    "name": "Jeremy Prisock",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "CIQU",
+    "name": "Cindy Quintero",
+    "type": "Admin",
+    "store": "82"
+  },
+  {
+    "number": "60RR",
+    "name": "Russell Raborn",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "DARA",
+    "name": "Damian Raley",
+    "type": "Counter",
+    "store": "92"
+  },
+  {
+    "number": "66MR",
+    "name": "Malinda Ralston",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "AR",
+    "name": "Armando Ramirez",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0173",
+    "name": "Patrick Rapp",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "72DR",
+    "name": "Don Reeves",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "GARE",
+    "name": "Garland Reid",
+    "type": "Admin",
+    "store": "94"
+  },
+  {
+    "number": "94DR",
+    "name": "Daniel Reyes",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "MR",
+    "name": "Melissa Reyes",
+    "type": "Admin",
+    "store": "60"
+  },
+  {
+    "number": "75JR",
+    "name": "Jason Richard",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "75NR",
+    "name": "Nolan Richard",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "80WR",
+    "name": "Winston Richard",
+    "type": "Inside",
+    "store": "80"
+  },
+  {
+    "number": "70AR",
+    "name": "Amanda Richardson",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "7211",
+    "name": "Stephen Riley",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "7286",
+    "name": "Adriana Rios",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66AR",
+    "name": "Adriana Rios",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "72JR",
+    "name": "Jorge Rivera",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "0011",
+    "name": "Kenneth Roberts",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "72CR",
+    "name": "Cherri Robertson",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "7246",
+    "name": "Maximo Rocha Jr",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "81KR",
+    "name": "Karen Roche",
+    "type": "Admin",
+    "store": "81"
+  },
+  {
+    "number": "70JO",
+    "name": "Joe Roden",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "7264",
+    "name": "Steve Roland",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "77TS",
+    "name": "Thomas Salcedo",
+    "type": "Counter",
+    "store": "77"
+  },
+  {
+    "number": "72IN",
+    "name": "International Sales",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "GS66",
+    "name": "Gina Salinas",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "STSA",
+    "name": "Steven Salinas",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "66MS",
+    "name": "Mike Sampson",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "7215",
+    "name": "Mike Sampson Jr",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "72SM",
+    "name": "Mike Sampson Jr",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "82SS",
+    "name": "Steve Sanchez",
+    "type": "Counter",
+    "store": "82"
+  },
+  {
+    "number": "78DS",
+    "name": "Darcy Sanders",
+    "type": "Inside",
+    "store": "78"
+  },
+  {
+    "number": "66JS",
+    "name": "Jerry Schock",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "JHS",
+    "name": "James Schoppe",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "73DS",
+    "name": "Dario Scott",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "JASC",
+    "name": "James Scott",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "70DS",
+    "name": "Devona Sharp",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "93CS",
+    "name": "Chris Shell",
+    "type": "Inside",
+    "store": "93"
+  },
+  {
+    "number": "73TS",
+    "name": "Tom Shepard",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "73RS",
+    "name": "Ralph Shotts",
+    "type": "Purchasing",
+    "store": "73"
+  },
+  {
+    "number": "7257",
+    "name": "Billy Singletary",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "0012",
+    "name": "Mark Sitterle",
+    "type": "Outside",
+    "store": "66"
+  },
+  {
+    "number": "72TS",
+    "name": "Trey Sitterle",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "62AS",
+    "name": "Adam Slaughter",
+    "type": "Inside",
+    "store": "62"
+  },
+  {
+    "number": "7973",
+    "name": "Allen Slavik",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "0064",
+    "name": "Allen Slavik",
+    "type": "Outside",
+    "store": "79"
+  },
+  {
+    "number": "74BS",
+    "name": "Blake Smith",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "7120",
+    "name": "Shawn Smith",
+    "type": "Inside",
+    "store": "71"
+  },
+  {
+    "number": "74MS",
+    "name": "Mike Soileau",
+    "type": "Inside",
+    "store": "74"
+  },
+  {
+    "number": "73JA",
+    "name": "Jason Songer",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "66RS",
+    "name": "Ryan Spilker",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "7220",
+    "name": "Scott Spilker",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "0003",
+    "name": "Scott Spilker",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "77DS",
+    "name": "Danny Staley",
+    "type": "Counter",
+    "store": "77"
+  },
+  {
+    "number": "TYST",
+    "name": "Tyler Stephens",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "66DS",
+    "name": "Dennis Stevenson",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "0043",
+    "name": "Cliff Stockstill",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "73YY",
+    "name": "Store Account Store 73",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "7269",
+    "name": "Bill Strait",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "75WS",
+    "name": "Wade Sullivan",
+    "type": "Purchasing",
+    "store": "75"
+  },
+  {
+    "number": "66KS",
+    "name": "Kary Sutton",
+    "type": "Counter",
+    "store": "66"
+  },
+  {
+    "number": "93RS",
+    "name": "Randy Swaim",
+    "type": "Inside",
+    "store": "93"
+  },
+  {
+    "number": "7213",
+    "name": "Tex Tarango",
+    "type": "Inside",
+    "store": "82"
+  },
+  {
+    "number": "0049",
+    "name": "Will Tarver",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "79PT",
+    "name": "Pam Tatum",
+    "type": "Inside",
+    "store": "79"
+  },
+  {
+    "number": "70AT",
+    "name": "Andrew Tempel",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "71JT",
+    "name": "James Thevenet",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "68BY",
+    "name": "Bryan Thibodaux",
+    "type": "Outside",
+    "store": "68"
+  },
+  {
+    "number": "68BT",
+    "name": "Bryan Thibodaux",
+    "type": "Inside",
+    "store": "68"
+  },
+  {
+    "number": "7238",
+    "name": "Jim Thierheimer",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "66KT",
+    "name": "Ken Thomas",
+    "type": "Inside",
+    "store": "60"
+  },
+  {
+    "number": "70LT",
+    "name": "Larry Thomas",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "72ZT",
+    "name": "Zach Thomas",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0014",
+    "name": "Jason Thrasher",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "66MT",
+    "name": "Mark Tinney",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "7209",
+    "name": "Andy Torres",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "70MT",
+    "name": "Michael Torres",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "MITR",
+    "name": "Michelle Trejo",
+    "type": "Purchasing",
+    "store": "72"
+  },
+  {
+    "number": "75JT",
+    "name": "Jimmy Trisler",
+    "type": "Inside",
+    "store": "76"
+  },
+  {
+    "number": "1083",
+    "name": "Martha Vargas",
+    "type": "Admin",
+    "store": "101"
+  },
+  {
+    "number": "FLVZ",
+    "name": "Fidel Vasquez",
+    "type": "Inside",
+    "store": "94"
+  },
+  {
+    "number": "71RV",
+    "name": "Randy Viktorin",
+    "type": "Inside",
+    "store": "71"
+  },
+  {
+    "number": "TAVI",
+    "name": "Tanner Viktorin",
+    "type": "Purchasing",
+    "store": "70"
+  },
+  {
+    "number": "66JV",
+    "name": "James Villarreal",
+    "type": "Admin",
+    "store": "66"
+  },
+  {
+    "number": "70DV",
+    "name": "Debbie Vining",
+    "type": "Inside",
+    "store": "70"
+  },
+  {
+    "number": "VMI",
+    "name": "Vmi Vmi",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "71EV",
+    "name": "Eric Voncannon",
+    "type": "Outside",
+    "store": "71"
+  },
+  {
+    "number": "7130",
+    "name": "Eric Voncannon",
+    "type": "Inside",
+    "store": "71"
+  },
+  {
+    "number": "94RV",
+    "name": "Ryne Vyles",
+    "type": "Outside",
+    "store": "94"
+  },
+  {
+    "number": "CW",
+    "name": "Colin Waddell",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "68BW",
+    "name": "Brent Walker",
+    "type": "Counter",
+    "store": "68"
+  },
+  {
+    "number": "CAWA",
+    "name": "Caysea Walker",
+    "type": "Purchasing",
+    "store": "70"
+  },
+  {
+    "number": "PW60",
+    "name": "Pamela Walker",
+    "type": "Admin",
+    "store": "60"
+  },
+  {
+    "number": "72GW",
+    "name": "Gary Wardwell",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "ROWA",
+    "name": "Robert Watford",
+    "type": "Outside",
+    "store": "75"
+  },
+  {
+    "number": "66JW",
+    "name": "Jared West",
+    "type": "Inside",
+    "store": "66"
+  },
+  {
+    "number": "GAWI",
+    "name": "Garland Wiener",
+    "type": "Inside",
+    "store": "101"
+  },
+  {
+    "number": "74DW",
+    "name": "Don Williams",
+    "type": "Counter",
+    "store": "74"
+  },
+  {
+    "number": "GRWL",
+    "name": "Grayson Williams",
+    "type": "Counter",
+    "store": "72"
+  },
+  {
+    "number": "7227",
+    "name": "Donnie Williams  Jr",
+    "type": "Admin",
+    "store": "72"
+  },
+  {
+    "number": "0025",
+    "name": "Charlie Willis",
+    "type": "Outside",
+    "store": "74"
+  },
+  {
+    "number": "93BW",
+    "name": "Brandon Wilson",
+    "type": "Counter",
+    "store": "93"
+  },
+  {
+    "number": "73BW",
+    "name": "Bryan Windmann",
+    "type": "Outside",
+    "store": "73"
+  },
+  {
+    "number": "73EW",
+    "name": "Earl Witt",
+    "type": "Inside",
+    "store": "73"
+  },
+  {
+    "number": "70JW",
+    "name": "Jeff Woodward",
+    "type": "Outside",
+    "store": "70"
+  },
+  {
+    "number": "KIYA",
+    "name": "Kimberly Yarbrough",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "75BY",
+    "name": "Brandon Young",
+    "type": "Inside",
+    "store": "75"
+  },
+  {
+    "number": "73KZ",
+    "name": "Kimberly Zacharczyk",
+    "type": "Purchasing",
+    "store": "73"
+  },
+  {
+    "number": "7228",
+    "name": "John Zawacki",
+    "type": "Inside",
+    "store": "72"
+  },
+  {
+    "number": "LIZE",
+    "name": "Linda Zenith",
+    "type": "Admin",
+    "store": "82"
+  }
+]

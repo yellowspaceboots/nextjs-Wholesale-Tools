@@ -11,7 +11,6 @@ import cookie from 'js-cookie'
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    flexGrow: 1,
     height: '100vh'
   },
   toolbar: theme.mixins.toolbar,
@@ -22,24 +21,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Layout = ({ children }) => {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [loading, setLoading] = useState(false)
-
-  const { user, checked, setUser } = useAuth()
-  const client = useApolloClient()
-  const classes = useStyles()
   const router = useRouter()
-
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
-  const logout = () => {
-    client.resetStore()
-    cookie.remove('token')
-    setUser(false)
-  }
-
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
-    const handleStart = (url) => (url !== router.pathname) && setLoading(true)
-    const handleComplete = (url) => (url !== router.pathname) && setLoading(false)
+    const handleStart = (url) => setLoading(true)
+    const handleComplete = (url) => setLoading(false)
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleComplete)
@@ -51,6 +37,16 @@ const Layout = ({ children }) => {
       router.events.off('routeChangeError', handleComplete)
     }
   })
+  const { user, checked, setUser } = useAuth()
+  const client = useApolloClient()
+  const classes = useStyles()
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
+  const logout = () => {
+    client.resetStore()
+    cookie.remove('token')
+    setUser(false)
+  }
   if (!checked) return null
   if (!user) return null
   return (
