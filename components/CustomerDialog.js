@@ -61,7 +61,7 @@ const CustomerCard = ({ customer, open, setOpen }) => {
   const statusColor = getStatusColor(customer.status)
   return (
     <Dialog aria-labelledby='simple-dialog-title' onClose={() => setOpen(false)} open={open}>
-      <DialogTitle id='simple-dialog-title'>{customer.name}</DialogTitle>
+      <DialogTitle id='simple-dialog-title'>Edit Customer</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus

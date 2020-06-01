@@ -8,11 +8,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import TextField from '@material-ui/core/TextField'
 import { useTheme } from '@material-ui/core/styles'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
 import customers from '../api/customers.json'
 import salesmen from '../api/salesmen.json'
 import parse from 'autosuggest-highlight/parse'
@@ -26,22 +22,24 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import ListboxComponent from './VirtualizedList'
+import MenuItem from '@material-ui/core/MenuItem'
+import Grid from '@material-ui/core/Grid'
 
 const EditProjectDialog = ({ event, dialogOpen, setDialogOpen }) => {
-  const formMargin = 14
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const intialState = {
     projectName: event.title,
     amount: event.amount / 10000,
     size: event.size,
+    status: event.status,
     salesman: event.salesman,
     description: event.description,
     customers: [...event.customerList],
     dateEntered: event.dateEntered,
     dateDue: event.dateDue
   }
-  const { register, errors, control, handleSubmit } = useForm({
+  const { register, errors, control, handleSubmit, formState } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: intialState
@@ -54,7 +52,6 @@ const EditProjectDialog = ({ event, dialogOpen, setDialogOpen }) => {
   const onSubmit = (data, e) => {
     console.log('Initial State', intialState)
     console.log('Data', data)
-    console.log(customers)
   }
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
   return (
@@ -69,181 +66,233 @@ const EditProjectDialog = ({ event, dialogOpen, setDialogOpen }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogTitle id='responsive-dialog-title'>Edit Project</DialogTitle>
           <DialogContent>
-            <TextField
-              autoFocus
-              required
-              variant='outlined'
-              name='projectName'
-              id='project-name'
-              label='Name'
-              fullWidth
-              style={{ marginBottom: formMargin }}
-              error={!!errors.projectName}
-              helperText={!!errors.projectName && 'Name Cannot Be Blank'}
-              inputRef={register({ required: true })}
-            />
-            <Controller
-              as={
-                <Autocomplete
-                  id='customers'
-                  multiple
-                  options={customers}
-                  filterOptions={filterOptions}
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete='off'
+                  variant='outlined'
+                  name='projectName'
+                  id='project-name'
+                  label='Name'
                   fullWidth
-                  getOptionSelected={(option, value) => option.account === value.account}
-                  getOptionLabel={(option) => option.name}
-                  ListboxComponent={ListboxComponent}
-                  renderInput={(params) => <TextField {...params} error={!!errors.customers} helperText={!!errors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-                  style={{ marginBottom: formMargin }}
-                  renderOption={(option, { inputValue }) => {
-                    const fullOption = `${option.account}-${option.name}`
-                    const matches = match(fullOption.trim(), inputValue)
-                    const parts = parse(fullOption.trim(), matches)
-                    return (
-                      <div>
-                        {parts.map((part, index) => (
-                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    )
-                  }}
+                  error={!!errors.projectName}
+                  helperText={!!errors.projectName && 'Name Cannot Be Blank'}
+                  inputRef={register({ required: true })}
                 />
-              }
-              onChange={([, data]) => data}
-              name='customers'
-              rules={{
-                validate: value => {
-                  return value.length > 0
-                }
-              }}
-              control={control}
-              defaultValue={intialState.customers}
-            />
-            <Controller
-              as={
-                <Autocomplete
-                  id='salesmen'
-                  options={insideSalesmen}
-                  getOptionLabel={(option) => option.name}
-                  getOptionSelected={(option, value) => option.number === value.number}
-                  renderInput={(params) => <TextField {...params} error={!!errors.salesmen} helperText={!!errors.salesmen && 'Salesman Cannot Be Blank'} label='Inside Salesman' variant='outlined' />}
-                  style={{ marginBottom: formMargin }}
-                  ListboxComponent={ListboxComponent}
-                  renderOption={(option, { inputValue }) => {
-                    const fullOption = `${option.number}-${option.name}`
-                    const matches = match(fullOption.trim(), inputValue)
-                    const parts = parse(fullOption.trim(), matches)
-                    return (
-                      <div>
-                        {parts.map((part, index) => (
-                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    )
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  as={
+                    <Autocomplete
+                      id='customers'
+                      multiple
+                      options={customers}
+                      filterOptions={filterOptions}
+                      fullWidth
+                      getOptionSelected={(option, value) => option.account === value.account}
+                      getOptionLabel={(option) => option.name}
+                      ListboxComponent={ListboxComponent}
+                      renderInput={(params) => <TextField {...params} error={!!errors.customers} helperText={!!errors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
+                      renderOption={(option, { inputValue }) => {
+                        const fullOption = `${option.account}-${option.name}`
+                        const matches = match(fullOption.trim(), inputValue)
+                        const parts = parse(fullOption.trim(), matches)
+                        return (
+                          <div>
+                            {parts.map((part, index) => (
+                              <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                                {part.text}
+                              </span>
+                            ))}
+                          </div>
+                        )
+                      }}
+                    />
+                  }
+                  onChange={([, data]) => data}
+                  name='customers'
+                  rules={{
+                    validate: value => {
+                      return value.length > 0
+                    }
                   }}
+                  control={control}
+                  defaultValue={intialState.customers}
                 />
-              }
-              onChange={([, data]) => data}
-              name='salesmen'
-              rules={{
-                validate: value => {
-                  return !!value
-                }
-              }}
-              control={control}
-              defaultValue={intialState.salesman}
-            />
-            <div style={{ display: 'flex' }}>
-              <Controller
-                as={
-                  <MobileDatePicker
-                    label='Date Entered'
-                    disabled
-                    renderInput={props => <TextField {...props} style={{ flex: 1, marginRight: formMargin / 2 }} variant='outlined' />}
-                  />
-                }
-                name='dateEntered'
-                rules={{
-                  validate: value => {
-                    return !!value
+              </Grid>
+              <Grid item xs={12}>
+                <Controller
+                  as={
+                    <Autocomplete
+                      id='salesmen'
+                      options={insideSalesmen}
+                      getOptionLabel={(option) => option.name}
+                      getOptionSelected={(option, value) => option.number === value.number}
+                      renderInput={(params) => <TextField {...params} error={!!errors.salesmen} helperText={!!errors.salesmen && 'Salesman Cannot Be Blank'} label='Inside Salesman' variant='outlined' />}
+                      ListboxComponent={ListboxComponent}
+                      renderOption={(option, { inputValue }) => {
+                        const fullOption = `${option.number}-${option.name}`
+                        const matches = match(fullOption.trim(), inputValue)
+                        const parts = parse(fullOption.trim(), matches)
+                        return (
+                          <div>
+                            {parts.map((part, index) => (
+                              <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                                {part.text}
+                              </span>
+                            ))}
+                          </div>
+                        )
+                      }}
+                    />
                   }
-                }}
-                control={control}
-                defaultValue={intialState.dateEntered}
-              />
-              <Controller
-                as={
-                  <MobileDateTimePicker
-                    label='Date Due'
-                    renderInput={props => <TextField {...props} style={{ flex: 1, marginLeft: formMargin / 2 }} variant='outlined' />}
-                  />
-                }
-                name='dateDue'
-                rules={{
-                  validate: value => {
-                    return !!value
+                  onChange={([, data]) => data}
+                  name='salesmen'
+                  rules={{
+                    validate: value => {
+                      return !!value
+                    }
+                  }}
+                  control={control}
+                  defaultValue={intialState.salesman}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  as={
+                    <MobileDatePicker
+                      label='Date Entered'
+                      disabled
+                      renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
+                    />
                   }
-                }}
-                control={control}
-                defaultValue={intialState.dateDue}
-              />
-            </div>
-            <FormControl error={!!errors.amount} variant='outlined' fullWidth style={{ marginTop: formMargin, marginBottom: formMargin }}>
-              <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
-              <Controller
-                as={
-                  <OutlinedInput
-                    id='outlined-adornment-amount'
-                    startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                    aria-describedby='outlined-adornment-amount'
-                    inputProps={{
-                      'aria-label': 'amount'
-                    }}
-                    labelWidth={70}
-                    type='number'
+                  name='dateEntered'
+                  rules={{
+                    validate: value => {
+                      return !!value
+                    }
+                  }}
+                  control={control}
+                  defaultValue={intialState.dateEntered}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <Controller
+                  as={
+                    <MobileDateTimePicker
+                      label='Date Due'
+                      renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
+                    />
+                  }
+                  name='dateDue'
+                  rules={{
+                    validate: value => {
+                      return !!value
+                    }
+                  }}
+                  control={control}
+                  defaultValue={intialState.dateDue}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl error={!!errors.amount} variant='outlined' fullWidth>
+                  <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
+                  <Controller
+                    as={
+                      <OutlinedInput
+                        autoComplete='off'
+                        id='outlined-adornment-amount'
+                        startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                        aria-describedby='outlined-adornment-amount'
+                        inputProps={{
+                          'aria-label': 'amount'
+                        }}
+                        labelWidth={70}
+                        type='number'
+                      />
+                    }
+                    name='amount'
+                    control={control}
+                    defaultValue={intialState.amount}
                   />
-                }
-                name='amount'
-                control={control}
-                defaultValue={intialState.amount}
-              />
 
-              {!!errors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
-            </FormControl>
-            <FormControl component='fieldset' fullWidth>
-              <FormLabel>Size</FormLabel>
-              <Controller
-                as={
-                  <RadioGroup row aria-label='size'>
-                    <FormControlLabel value='Small' control={<Radio />} label='Small' />
-                    <FormControlLabel value='Medium' control={<Radio />} label='Medium' />
-                    <FormControlLabel value='Large' control={<Radio />} label='Large' />
-                  </RadioGroup>
-                }
-                name='size'
-                control={control}
-                defaultValue={intialState.size}
-              />
-            </FormControl>
-            <TextField
-              id='standard-multiline-static'
-              label='Description'
-              multiline
-              name='description'
-              rows={4}
-              variant='outlined'
-              fullWidth
-              style={{ marginTop: formMargin }}
-              error={!!errors.description}
-              inputRef={register()}
-            />
+                  {!!errors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
+                </FormControl>
+              </Grid>
+              <Grid item xs={3}>
+                <Controller
+                  as={
+                    <TextField
+                      id='outlined-select-size'
+                      select
+                      fullWidth
+                      label='Size'
+                      variant='outlined'
+                      error={!!errors.size}
+                      helperText={!!errors.size && 'Size Cannot Be Blank'}
+                    >
+                      <MenuItem value='Small'>
+                  Small
+                      </MenuItem>
+                      <MenuItem value='Medium'>
+                  Medium
+                      </MenuItem>
+                      <MenuItem value='Large'>
+                  Large
+                      </MenuItem>
+                    </TextField>
+                  }
+                  name='size'
+                  control={control}
+                  defaultValue={intialState.size}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Controller
+                  as={
+                    <TextField
+                      id='outlined-select-size'
+                      select
+                      fullWidth
+                      label='Status'
+                      variant='outlined'
+                      error={!!errors.status}
+                      helperText={!!errors.status && 'Status Cannot Be Blank'}
+                    >
+                      <MenuItem value='On Track'>
+                    On Track
+                      </MenuItem>
+                      <MenuItem value='At Risk'>
+                    At Risk
+                      </MenuItem>
+                      <MenuItem value='Off Track'>
+                    Off Track
+                      </MenuItem>
+                    </TextField>
+                  }
+                  name='status'
+                  control={control}
+                  defaultValue={intialState.status}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id='standard-multiline-static'
+                  label='Description'
+                  multiline
+                  autoComplete='off'
+                  name='description'
+                  rows={4}
+                  variant='outlined'
+                  fullWidth
+                  error={!!errors.description}
+                  inputRef={register()}
+                />
+              </Grid>
+            </Grid>
           </DialogContent>
           <DialogActions>
-            <Button type='submit' color='primary'>
+            <Button disabled={!formState.isValid} type='submit' color='primary'>
             Save
             </Button>
             <Button onClick={handleClose} color='primary' autoFocus>

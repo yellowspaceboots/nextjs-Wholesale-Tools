@@ -4136,16 +4136,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-standard@npm:14.1.0":
-  version: 14.1.0
-  resolution: "eslint-config-standard@npm:14.1.0"
+"eslint-config-standard@npm:14.1.1":
+  version: 14.1.1
+  resolution: "eslint-config-standard@npm:14.1.1"
   peerDependencies:
     eslint: ">=6.2.2"
     eslint-plugin-import: ">=2.18.0"
     eslint-plugin-node: ">=9.1.0"
     eslint-plugin-promise: ">=4.2.1"
     eslint-plugin-standard: ">=4.0.0"
-  checksum: 2/bd91c0491809d00d96aad2046f5caea6182bb51a92265cff0ae2d1d2dece1586a5842a62f951c8f068f09cbcfc8261a913454e072ff66fe322f5b28086152a47
+  checksum: 2/779f599c458425ac453dcfe32c50384e093415fcbf6a90be2501914bccc287aa90de90fd5a914585b1810317a5c13600c157f4cbea4f82a4be09692e91eb9051
   languageName: node
   linkType: hard
 
@@ -8992,12 +8992,12 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"standard@npm:^14.3.3":
-  version: 14.3.3
-  resolution: "standard@npm:14.3.3"
+"standard@npm:^14.3.4":
+  version: 14.3.4
+  resolution: "standard@npm:14.3.4"
   dependencies:
     eslint: ~6.8.0
-    eslint-config-standard: 14.1.0
+    eslint-config-standard: 14.1.1
     eslint-config-standard-jsx: 8.1.0
     eslint-plugin-import: ~2.18.0
     eslint-plugin-node: ~10.0.0
@@ -9007,7 +9007,7 @@ fsevents@~2.1.2:
     standard-engine: ^12.0.0
   bin:
     standard: bin/cmd.js
-  checksum: 2/70640f1b63e5722aaedb5cabe1d8cd3bc6ad8afe652618049ebbd6ea530e6db7b6976a4a3f24cb9c6282274ed852ce3c6a007257e1b79f074986db8c1de5d534
+  checksum: 2/d8181ce0d0a90396256bd249c322e717d1182bc69dc4590a4c563d752a65db32a9895ab14dd655f1a640f06abc393ebc44eba5cd7f2aa86e75e10c786654c071
   languageName: node
   linkType: hard
 
@@ -10072,7 +10072,7 @@ fsevents@~2.1.2:
     react-hook-form-devtools: ^1.2.0
     react-number-format: ^4.4.1
     react-window: ^1.8.5
-    standard: ^14.3.3
+    standard: ^14.3.4
   languageName: unknown
   linkType: soft
 

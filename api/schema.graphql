@@ -9,6 +9,61 @@ enum UserRole {
   EMPLOYEE
 }
 
+type Salesmen {
+  number: String
+  name: String
+  type: String
+  store: String
+}
+
+type Projects {
+  requestId: Int!
+  title: String!
+  createdBy: User!
+  description: String!
+  status: String!
+  dateEntered: String!
+  dateDue: String!
+  amount: Int!
+  salesman: Salesmen!
+  customerList: [CustomerProjectState!] @relation
+  size: String!
+  comments: [Comments!] @relation
+}
+
+type Comments {
+  project: Project!
+  dateCreated: String!
+  message: String!
+  user: User!
+  edited: Boolean!
+}
+
+
+type CustomerProjectState {
+  project: Project!
+  customer: Customers!
+  status: String!
+  amount: Int
+  dateDue: String
+}
+
+type Customers {
+  account: String
+  storeNumber: String
+  accountId: String
+  customerType: String
+  accountType: String
+  salesmanNumber: String
+  salesmanNumber2: String
+  salesmanNumber3: String
+  salesmanNumber4: String
+  alphaKey: String
+  keyAccountId: String
+  name: String
+}
+
+
 type File {
   content: String!
   confidential: Boolean!
@@ -30,6 +85,10 @@ type Query {
   allFiles: [File!]!
   getUser: User
   currentUser: Boolean @resolver(name: "current_user")
+  getAllSalesmen: [Salesmen!]!
+  getAllCustomers: [Customers!]!
+  getAllProjects: [Projects!]!
+  getSalesmenByType(type: String!): [Salesmen!]!
 }
 
 type Mutation {

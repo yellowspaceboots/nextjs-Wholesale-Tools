@@ -9,6 +9,7 @@ import { eventData, comments } from '../api/mock'
 import Comment from './Comment'
 import EventTitle from './EventTitle'
 import CustomerCard from './CustomerCard'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const CalendarEvent = ({ id }) => {
   const temp = [
@@ -32,46 +33,64 @@ const CalendarEvent = ({ id }) => {
       replies
     }
   })
+  const pageVariants = {
+    initial: {
+      opacity: 0
+    },
+    in: {
+      opacity: 1
+    },
+    out: {
+      opacity: 0
+    }
+  }
   const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(event.amount / 10000)
   return (
-    <>
-      <EventTitle event={event} />
-      <Divider />
-      <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Customers</Typography>
-      <Grid container spacing={2}>
-        {event.customerList.map(customer =>
-          <Grid item key={customer.account}>
-            <CustomerCard customer={customer} fullAmount={fullAmount} />
-          </Grid>
-        )}
-      </Grid>
-      <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-      <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{myComments.length + myReplies.length} Comments</Typography>
-      <Grid item style={{ marginBottom: 20, marginLeft: -8 }}>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Avatar alt='Jon Busch' src='/broken-image.jpg' style={{ marginRight: 12 }} />
-          <TextField
-            id='standard-basic'
-            label='Add A Comment...'
-            variant='outlined'
-            autoComplete='off'
-            fullWidth
-            value={comment}
-            onChange={handleChange}
-          />
-        </div>
-        {comment &&
-          <div style={{ marginTop: 10, float: 'right' }}>
-            <Button style={{ marginRight: 10 }} onClick={() => setComment('')}>Cancel</Button>
-            <Button variant='contained' color='primary'>Submit</Button>
-          </div>}
-      </Grid>
-      <Grid container spacing={2}>
-        {fullComments.map(comment =>
-          <Comment key={comment.id} comment={comment} />
-        )}
-      </Grid>
-    </>
+    <AnimatePresence>
+      <motion.div
+        initial='initial'
+        animate='in'
+        exit='out'
+        variants={pageVariants}
+      >
+        <EventTitle event={event} />
+        <Divider />
+        <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Customers</Typography>
+        <Grid container spacing={2} direction='row' alignItems='stretch'>
+          {event.customerList.map(customer =>
+            <Grid item key={customer.account}>
+              <CustomerCard customer={customer} fullAmount={fullAmount} />
+            </Grid>
+          )}
+        </Grid>
+        <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+        <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{myComments.length + myReplies.length} Comments</Typography>
+        <Grid item style={{ marginBottom: 20, marginLeft: -8 }}>
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Avatar alt='Jon Busch' src='/broken-image.jpg' style={{ marginRight: 12 }} />
+            <TextField
+              id='standard-basic'
+              label='Add A Comment...'
+              variant='outlined'
+              autoComplete='off'
+              fullWidth
+              value={comment}
+              onChange={handleChange}
+            />
+          </div>
+          {comment &&
+            <div style={{ marginTop: 10, float: 'right' }}>
+              <Button style={{ marginRight: 10 }} onClick={() => setComment('')}>Cancel</Button>
+              <Button variant='contained' color='primary'>Submit</Button>
+            </div>}
+        </Grid>
+        <Grid container spacing={2}>
+          {fullComments.map(comment =>
+            <Comment key={comment.id} comment={comment} />
+          )}
+        </Grid>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 

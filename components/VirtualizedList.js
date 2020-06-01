@@ -1,14 +1,8 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import { useTheme } from '@material-ui/core/styles'
 import { VariableSizeList } from 'react-window'
-import customers from '../api/customers'
-import parse from 'autosuggest-highlight/parse'
-import match from 'autosuggest-highlight/match'
-import matchSorter from 'match-sorter'
 
 const LISTBOX_PADDING = 8 // px
 
@@ -87,38 +81,3 @@ const ListboxComponent = React.forwardRef(function ListboxComponent (props, ref)
 })
 
 export default ListboxComponent
-/*
-export default function Virtualize ({ errors, formMargin }) {
-  const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
-  return (
-    <>
-      <Autocomplete
-        id='customers'
-        multiple
-        options={customers}
-        filterOptions={filterOptions}
-        fullWidth
-        style={{ marginBottom: formMargin }}
-        ListboxComponent={ListboxComponent}
-        getOptionSelected={(option, value) => option.account === value.account}
-        getOptionLabel={(option) => option.name}
-        renderInput={(params) => <TextField {...params} error={!!errors.customers} helperText={!!errors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-        renderOption={(option, { inputValue }) => {
-          const fullOption = `${option.account}-${option.name}`
-          const matches = match(fullOption.trim(), inputValue)
-          const parts = parse(fullOption.trim(), matches)
-          return (
-            <div>
-              {parts.map((part, index) => (
-                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                  {part.text}
-                </span>
-              ))}
-            </div>
-          )
-        }}
-      />
-    </>
-  )
-}
-*/

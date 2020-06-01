@@ -34,7 +34,7 @@
     "react-hook-form": "^5.7.2",
     "react-number-format": "^4.4.1",
     "react-window": "^1.8.5",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "license": "ISC",
   "devDependencies": {
