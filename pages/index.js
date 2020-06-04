@@ -1,13 +1,13 @@
 import React from 'react'
 import { useLazyQuery } from '@apollo/client'
-import { GET_ALL_FILES } from '../api/queries/getAllFiles'
+import { GET_ACTIVE_PROJECTS } from '../api/queries/getActiveProjects'
 import { getLayout } from '../components/Layout'
 
 const IndexPage = () => {
-  const [getAllFiles, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ALL_FILES)
+  const [getActiveProjects, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ACTIVE_PROJECTS)
   return (
     <>
-      <button onClick={() => getAllFiles()}>Get All Files</button>
+      <button onClick={() => getActiveProjects()}>Get All Files</button>
       <br />
       File Data
       <pre>

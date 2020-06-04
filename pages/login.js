@@ -55,7 +55,7 @@ const Login = () => {
   const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN_USER, {
     variables: {
       input: {
-        username: email,
+        email,
         password
       }
     },

@@ -10,6 +10,11 @@ import Comment from './Comment'
 import EventTitle from './EventTitle'
 import CustomerCard from './CustomerCard'
 import { motion, AnimatePresence } from 'framer-motion'
+import EditProjectDialog from './EditProjectDialog'
+import EditIcon from '@material-ui/icons/Edit'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+
 
 const CalendarEvent = ({ id }) => {
   const temp = [
@@ -22,6 +27,10 @@ const CalendarEvent = ({ id }) => {
   const [comment, setComment] = useState()
   const handleChange = (event) => {
     setComment(event.target.value)
+  }
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const handleClickOpen = () => {
+    setDialogOpen(true)
   }
   const event = eventData.find(event => String(event.id) === String(id))
   const myComments = comments.filter(comment => String(comment.eventId) === String(id) && comment.replyTo === null)
@@ -53,6 +62,15 @@ const CalendarEvent = ({ id }) => {
         exit='out'
         variants={pageVariants}
       >
+        <Grid container alignItems='center'>
+          <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Current Project Value: {fullAmount}</Typography>
+          <Tooltip title='Edit Project' placement='right'>
+            <IconButton aria-label='edit' onClick={() => handleClickOpen()}>
+              <EditIcon fontSize='small' />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+        <Divider style={{ marginBottom: 12, marginTop: 4 }} />
         <EventTitle event={event} />
         <Divider />
         <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Customers</Typography>
@@ -90,6 +108,7 @@ const CalendarEvent = ({ id }) => {
           )}
         </Grid>
       </motion.div>
+      <EditProjectDialog event={event} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
     </AnimatePresence>
   )
 }

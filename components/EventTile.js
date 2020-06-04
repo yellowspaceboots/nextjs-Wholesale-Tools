@@ -12,9 +12,7 @@ import InternalLink from './InternalLink'
 
 const EventTile = ({ event }) => {
   return (
-    <Grid
-      item
-    >
+    <Grid item>
       <motion.div whileHover={{ y: -10 }}>
         <Button
           href='/event/[id]'

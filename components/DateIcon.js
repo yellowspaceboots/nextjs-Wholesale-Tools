@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import { format, isAfter } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles'
 import Badge from '@material-ui/core/Badge'
-import { getStatusColor, amountShortFormat } from '../api/utils'
+import { getStatusColor, amountShortFormat, pad } from '../api/utils'
 
 const useStyles = makeStyles(theme => ({
   customBadge: {
@@ -46,10 +46,11 @@ const DateIcon = ({ event, status }) => {
   const isLate = isAfter(new Date(), event.dateDue)
   const classes = useStyles({ color: statusColor, isLate })
   const formattedAmount = amountShortFormat(event.amount)
+  const formattedId = pad(event.id, 5)
   return (
-    <div style={{ position: 'relative', padding: 22, textTransform: 'uppercase' }}>
+    <div style={{ position: 'relative', padding: 22, textTransform: 'uppercase', paddingBottom: !status ? 0 : 22 }}>
       <Typography variant='body2' color='textSecondary' style={{ position: 'absolute', left: 6, top: 0, fontWeight: 'bold' }}>#</Typography>
-      <Typography variant='body2' color='textSecondary' style={{ position: 'absolute', left: 24, top: 0, fontWeight: 'bold' }}>{event.requestId}</Typography>
+      <Typography variant='body2' color='textSecondary' style={{ position: 'absolute', left: 24, top: 0, fontWeight: 'bold' }}>{formattedId}</Typography>
       <Typography variant='caption' color='textSecondary' style={{ position: 'absolute', left: 0, top: 22, writingMode: 'vertical-rl', textOrientation: 'upright' }}>{event.size}</Typography>
       <div style={{ position: 'relative' }}>
         <div style={{ position: 'absolute', right: 0, bottom: 0, borderRight: 'solid 2px grey', borderBottom: 'solid 2px grey', borderRadius: '10%', height: 80, width: 85 }} />

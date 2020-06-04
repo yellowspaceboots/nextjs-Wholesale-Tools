@@ -1,8 +1,14 @@
 [
   {
-    "number": "0000",
+    "number": "0000-I",
     "name": "Unassigned",
-    "type": "None",
+    "type": "Inside",
+    "store": "0000"
+  },
+  {
+    "number": "0000-O",
+    "name": "Unassigned",
+    "type": "Outside",
     "store": "0000"
   },
   {

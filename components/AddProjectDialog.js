@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
@@ -12,10 +12,14 @@ import { useMutation } from '@apollo/client'
 const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const [error, setError] = useState()
   const handleClose = () => {
     setDialogOpen(false)
+    setError()
   }
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT)
+  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT, {
+    onError: (error) => setError(error)
+  })
   return (
     <>
       <Dialog
@@ -46,7 +50,7 @@ const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
             {mutationError && <p>Error :( Please try again</p>}
           </div>}
         <DialogTitle id='responsive-dialog-title'>New Project</DialogTitle>
-        <AddProjectForm handleClose={handleClose} createProject={createProject} />
+        <AddProjectForm handleClose={handleClose} createProject={createProject} mutationError={error} />
       </Dialog>
     </>
   )

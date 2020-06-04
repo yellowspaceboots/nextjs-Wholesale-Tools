@@ -17,12 +17,13 @@ import ListboxComponent from './VirtualizedList'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from 'react-hook-form-devtools'
-import { useQuery } from '@apollo/client'
 import Button from '@material-ui/core/Button'
-import { GET_SALESMEN_BY_TYPE } from '../api/queries/getSalesmenByType'
-import { GET_ALL_CUSTOMERS } from '../api/queries/getAllCustomers'
+import customers from '../api/houstonCustomers.json'
+import salesmen from '../api/salesmen.json'
+// import { useQuery } from '@apollo/client'
+// import { GET_SALESMEN_AND_CUSTOMERS } from '../api/queries/getSalesmenAndCustomers'
 
-const AddProjectForm = ({ handleClose, createProject }) => {
+const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
   const intialState = {
     projectName: '',
@@ -48,8 +49,8 @@ const AddProjectForm = ({ handleClose, createProject }) => {
   })
   const onSubmit = (data, e) => {
     const payload = {
-      title: data.projectName,
-      description: data.description,
+      title: data.projectName.trim(),
+      description: data.description.trim(),
       status: data.status,
       dateEntered: data.dateEntered.toISOString(),
       dateDue: data.dateDue.toISOString(),
@@ -63,11 +64,11 @@ const AddProjectForm = ({ handleClose, createProject }) => {
       }),
       size: data.size
     }
-    console.log('Initial State', intialState)
-    console.log('Data', data)
     console.log('Payload', payload)
-    // createProject({ variables: { input: payload } })
+    createProject({ variables: { input: payload } })
   }
+  /* )
+  const { loading, error, data } = useQuery(GET_SALESMEN_AND_CUSTOMERS)
   const { loading: customerLoading, error: customerError, data: dataC } = useQuery(GET_ALL_CUSTOMERS)
   const { loading: salesmenLoading, error: salesmenError, data: dataS } = useQuery(GET_SALESMEN_BY_TYPE, {
     variables: { type: 'Inside' }
@@ -75,8 +76,10 @@ const AddProjectForm = ({ handleClose, createProject }) => {
   if (customerLoading || salesmenLoading) return 'Loading...'
   if (customerError) return `Error! ${customerError.message}`
   if (salesmenError) return `Error! ${salesmenError.message}`
-  const insideSalesmen = dataS.getSalesmenByType.data
-  const customers = dataC.getAllCustomers.data
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+  */
+  const insideSalesmen = salesmen.filter(salesman => salesman.type === 'Inside')
   return (
     <form onSubmit={addHandleSubmit(onSubmit)}>
       <DevTool control={addControl} />
@@ -90,8 +93,8 @@ const AddProjectForm = ({ handleClose, createProject }) => {
               id='project-name'
               label='Name'
               fullWidth
-              error={!!addErrors.projectName}
-              helperText={!!addErrors.projectName && 'Name Cannot Be Blank'}
+              error={!!addErrors.projectName || mutationError}
+              helperText={addErrors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
               inputRef={addRegister({ required: true })}
             />
           </Grid>

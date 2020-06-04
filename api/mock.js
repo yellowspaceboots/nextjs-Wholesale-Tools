@@ -57,7 +57,7 @@ export const eventData = [
     description: 'This is my fake description',
     status: 'On Track',
     dateEntered: new Date(),
-    dateDue: new Date(2020, 4, 24, 0, 0, 0, 0),
+    dateDue: new Date(2020, 5, 24, 0, 0, 0, 0),
     amount: 45431000000,
     salesman: {
       number: '72GD',

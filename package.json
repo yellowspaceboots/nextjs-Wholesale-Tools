@@ -7,13 +7,13 @@
     "start": "next start"
   },
   "dependencies": {
-    "@apollo/client": "3.0.0-beta.39",
+    "@apollo/client": "latest",
     "@apollo/link-context": "^2.0.0-beta.3",
     "@apollo/react-ssr": "^4.0.0-beta.1",
-    "@material-ui/core": "^4.10.0",
+    "@material-ui/core": "^4.10.1",
     "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.54",
-    "@material-ui/pickers": "next",
+    "@material-ui/lab": "^4.0.0-alpha.55",
+    "@material-ui/pickers": "4.0.0-alpha.8",
     "autosuggest-highlight": "^3.1.1",
     "clsx": "^1.1.0",
     "cookie": "^0.4.0",

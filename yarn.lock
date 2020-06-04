@@ -68,29 +68,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:3.0.0-beta.39":
-  version: 3.0.0-beta.39
-  resolution: "@apollo/client@npm:3.0.0-beta.39"
-  dependencies:
-    "@types/zen-observable": ^0.8.0
-    "@wry/equality": ^0.1.9
-    fast-json-stable-stringify: ^2.0.0
-    graphql-tag: ^2.10.2
-    optimism: ^0.11.5
-    symbol-observable: ^1.2.0
-    ts-invariant: ^0.4.4
-    tslib: ^1.10.0
-    zen-observable: ^0.8.14
-  peerDependencies:
-    graphql: ^14.5.4
-    react: ^16.8.0
-  peerDependenciesMeta:
-    react:
-      optional: true
-  checksum: 2/bd9c85db47fcd4355fef9c85e3d818d6f97490af8e9e8f401c36392432e67a4dda7da67940f48b4d25a373d0f773364a9759005450e1544aca0d4d10b2f03a97
-  languageName: node
-  linkType: hard
-
 "@apollo/client@npm:^3.0.0-beta.23, @apollo/client@npm:^3.0.0-beta.24":
   version: 3.0.0-beta.43
   resolution: "@apollo/client@npm:3.0.0-beta.43"
@@ -111,6 +88,29 @@ __metadata:
     react:
       optional: true
   checksum: 2/89e6e380f11e849190d0a3e265b4123d524295a298a117f43b87868a3190630b168217803319f6f74178d6e564d0f8b76a331c358da22688b9e487d0769ddff8
+  languageName: node
+  linkType: hard
+
+"@apollo/client@npm:latest":
+  version: 3.0.0-rc.0
+  resolution: "@apollo/client@npm:3.0.0-rc.0"
+  dependencies:
+    "@types/zen-observable": ^0.8.0
+    "@wry/equality": ^0.1.9
+    fast-json-stable-stringify: ^2.0.0
+    graphql-tag: ^2.10.2
+    optimism: ^0.12.1
+    symbol-observable: ^1.2.0
+    ts-invariant: ^0.4.4
+    tslib: ^1.10.0
+    zen-observable: ^0.8.14
+  peerDependencies:
+    graphql: ^14.0.0 || ^15.0.0
+    react: ^16.8.0
+  peerDependenciesMeta:
+    react:
+      optional: true
+  checksum: 2/e91f43cd34f97badf9bea0499aeda080e42bc56f751c7057a0f4e90789ec16a142e74316c8fef71e23f19ef0a10c7aec8a3d01fc92f9e8e90253d2f734d090f8
   languageName: node
   linkType: hard
 
@@ -1322,6 +1322,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:*":
+  version: 7.10.2
+  resolution: "@babel/runtime@npm:7.10.2"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 2/0f3466d63518eca76e58ee523a21d9181949e10eb6d51d4e84d42702da5fae06f90f5e1e0a8e51420feb432ee73d7b6aae4a03d2210ac5c8aeaba3d2de7f2bf9
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:7.7.2":
   version: 7.7.2
   resolution: "@babel/runtime@npm:7.7.2"
@@ -1597,9 +1606,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material-ui/core@npm:^4.10.0":
-  version: 4.10.0
-  resolution: "@material-ui/core@npm:4.10.0"
+"@material-ui/core@npm:^4.10.1":
+  version: 4.10.1
+  resolution: "@material-ui/core@npm:4.10.1"
   dependencies:
     "@babel/runtime": ^7.4.4
     "@material-ui/styles": ^4.10.0
@@ -1609,7 +1618,7 @@ __metadata:
     "@types/react-transition-group": ^4.2.0
     clsx: ^1.0.4
     hoist-non-react-statics: ^3.3.2
-    popper.js: ^1.16.1-lts
+    popper.js: 1.16.1-lts
     prop-types: ^15.7.2
     react-is: ^16.8.0
     react-transition-group: ^4.4.0
@@ -1620,7 +1629,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 2/93ce2f91e26869ca4b1c28f3556e3ef886dd43669829de5146a1d303eb91d211420726d2a657248297da5778d2e4202aa9c43f5c64fb5ebaf54d2bbedfecf913
+  checksum: 2/3a0390f8f40a62b5d4f8b5c6b29588102e222a99d276f0865bcfca688a7eef6f26e70bd370fbc29bf984e6b9d4463523fafe1c8670970f0c4e975560c6ae799c
   languageName: node
   linkType: hard
 
@@ -1641,9 +1650,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material-ui/lab@npm:^4.0.0-alpha.54":
-  version: 4.0.0-alpha.54
-  resolution: "@material-ui/lab@npm:4.0.0-alpha.54"
+"@material-ui/lab@npm:^4.0.0-alpha.55":
+  version: 4.0.0-alpha.55
+  resolution: "@material-ui/lab@npm:4.0.0-alpha.55"
   dependencies:
     "@babel/runtime": ^7.4.4
     "@material-ui/utils": ^4.9.6
@@ -1658,36 +1667,38 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 2/6758737d755dab1be0a18f334e7563872a28810e554637afbb2b65679256629262b59d914d753702650ae30bf3a5a07583dc0603ad3cad8f29660b3dcc6ad18f
+  checksum: 2/7611e0fe8ecfb91c5454f413dd6d46b4e5751c5e943ccc8b608cd522946e5a262db01516758d624a7b441be2bc425e3d3314d8e737f51102cacf75b2f255098f
   languageName: node
   linkType: hard
 
-"@material-ui/pickers@npm:next":
-  version: 4.0.0-alpha.7
-  resolution: "@material-ui/pickers@npm:4.0.0-alpha.7"
+"@material-ui/pickers@npm:4.0.0-alpha.8":
+  version: 4.0.0-alpha.8
+  resolution: "@material-ui/pickers@npm:4.0.0-alpha.8"
   dependencies:
-    "@babel/runtime": ^7.8.4
     "@date-io/date-fns": ^2.6.0
     "@date-io/dayjs": ^2.6.0
     "@date-io/luxon": ^2.6.0
     "@date-io/moment": ^2.6.0
     clsx: ^1.0.2
     prop-types: ^15.7.2
-    react-transition-group: ^4.0.0
+    react-transition-group: ^4.4.1
     rifm: ^0.11.0
   peerDependencies:
-    "@material-ui/core": ^4.9.11
+    "@material-ui/core": ^4.10.1
+    "@material-ui/lab": ^4.0.0-alpha.54
     "@types/react": ^16.8.6
     react: ^16.8.4
     react-dom: ^16.8.4
   peerDependenciesMeta:
+    "@material-ui/lab":
+      optional: true
     "@types/react":
       optional: true
-  checksum: 2/5d8e21a88fbd35213a8730b2e1db9b5205b889844da854274dcd1e2233c01bb7a253cb5d58ff08a7879052f267142d4e857db27caa2b47cb78c5be90c925fd9e
+  checksum: 2/5f47cacbfd695676ce70ee76859b9f27867b6d50825e7cfe961b21f82c4756aeb4bc5acbd520a811d8e4a06d7633af2812796e2bfd0b46c01a1bc68f1a977488
   languageName: node
   linkType: hard
 
-"@material-ui/styles@npm:^4.10.0":
+"@material-ui/styles@npm:*, @material-ui/styles@npm:^4.10.0":
   version: 4.10.0
   resolution: "@material-ui/styles@npm:4.10.0"
   dependencies:
@@ -2061,7 +2072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wry/context@npm:^0.5.0":
+"@wry/context@npm:^0.5.0, @wry/context@npm:^0.5.2":
   version: 0.5.2
   resolution: "@wry/context@npm:0.5.2"
   dependencies:
@@ -6977,6 +6988,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"optimism@npm:^0.12.1":
+  version: 0.12.1
+  resolution: "optimism@npm:0.12.1"
+  dependencies:
+    "@wry/context": ^0.5.2
+  checksum: 2/3e2a62ca68bd766087b814782ec174f49863b8419af1db5ac6325803041799bd9c04e288ec1ec37f05d82072f5ae0194d0df095fb169eb639fee03f3986be868
+  languageName: node
+  linkType: hard
+
 "optionator@npm:^0.8.3":
   version: 0.8.3
   resolution: "optionator@npm:0.8.3"
@@ -7346,7 +7366,14 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"popper.js@npm:^1.15.0, popper.js@npm:^1.16.1-lts":
+"popper.js@npm:1.16.1-lts":
+  version: 1.16.1-lts
+  resolution: "popper.js@npm:1.16.1-lts"
+  checksum: 2/93704853f7e737e3f34cf16d72556a28ccdb041f9046e1f205566d1577132c871a7f0168cb77d8b9a3854f280b03722485231666555f149ae4330beddde70a7b
+  languageName: node
+  linkType: hard
+
+"popper.js@npm:^1.15.0":
   version: 1.16.1
   resolution: "popper.js@npm:1.16.1"
   checksum: 2/eb53806fb7680e31c7d1db096f95438a40a7cb869f7ee0e27100c0860f11583a0d322606c6073618e7fe8865f834ec36482901b547256d9a0cf2b22434bca75d
@@ -8129,7 +8156,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"react-transition-group@npm:^4.0.0, react-transition-group@npm:^4.4.0":
+"react-transition-group@npm:^4.4.0, react-transition-group@npm:^4.4.1":
   version: 4.4.1
   resolution: "react-transition-group@npm:4.4.1"
   dependencies:
@@ -10041,15 +10068,15 @@ fsevents@~2.1.2:
   version: 0.0.0-use.local
   resolution: "with-faunadb-abac-auth@workspace:."
   dependencies:
-    "@apollo/client": 3.0.0-beta.39
+    "@apollo/client": latest
     "@apollo/link-context": ^2.0.0-beta.3
     "@apollo/react-ssr": ^4.0.0-beta.1
     "@babel/core": ^7.9.0
     "@babel/helper-plugin-utils": ^7.8.3
-    "@material-ui/core": ^4.10.0
+    "@material-ui/core": ^4.10.1
     "@material-ui/icons": ^4.9.1
-    "@material-ui/lab": ^4.0.0-alpha.54
-    "@material-ui/pickers": next
+    "@material-ui/lab": ^4.0.0-alpha.55
+    "@material-ui/pickers": 4.0.0-alpha.8
     autosuggest-highlight: ^3.1.1
     babel-plugin-graphql-tag: ^2.5.0
     clsx: ^1.1.0

@@ -1,12 +1,17 @@
 type User {
-  username: String! @unique
+  email: String! @unique
   role: UserRole!
-  files: [File!]!
+  name: String
+  salesNumber: String
+  salesRef: Salesmen
 }
 
 enum UserRole {
   MANAGER
   EMPLOYEE
+  ADMIN
+  INSIDESALES
+  OUTSIDESALES
 }
 
 type Salesmen {
@@ -17,22 +22,24 @@ type Salesmen {
 }
 
 type Projects {
-  requestId: Int!
-  title: String!
+  requestId: Long!
+  title: String! @unique
   createdBy: User!
+  active: Boolean!
   description: String!
   status: String!
   dateEntered: String!
   dateDue: String!
-  amount: Int!
-  salesman: Salesmen!
-  customerList: [CustomerProjectState!] @relation
+  amount: Long!
+  salesman: String!
+  salesRef: Salesmen!
   size: String!
-  comments: [Comments!] @relation
+  customerList: [CustomerProjectState] @relation
+  comments: [Comments]! @relation
 }
 
 type Comments {
-  project: Project!
+  project: Projects!
   dateCreated: String!
   message: String!
   user: User!
@@ -41,10 +48,10 @@ type Comments {
 
 
 type CustomerProjectState {
-  project: Project!
-  customer: Customers!
+  projectRef: Projects!
+  customerRef: Customers!
   status: String!
-  amount: Int
+  amount: Long
   dateDue: String
 }
 
@@ -63,35 +70,48 @@ type Customers {
   name: String
 }
 
+input CreateProjectInput {
+  title: String!
+  description: String
+  status: String!
+  dateEntered: String!
+  dateDue: String!
+  amount: Long!
+  size: String!
+  salesman: String!
+  customerList: [CustomerProjectStateInput]!
+}
 
-type File {
-  content: String!
-  confidential: Boolean!
-  owner: User
+input CustomerProjectStateInput {
+  account: String!
+  name: String!
 }
 
 input CreateUserInput {
-  username: String!
+  email: String!
   password: String!
   role: UserRole!
+  name: String
+  salesNumber: String
 }
 
 input LoginUserInput {
-  username: String!
+  email: String!
   password: String!
 }
 
 type Query {
-  allFiles: [File!]!
   getUser: User
   currentUser: Boolean @resolver(name: "current_user")
   getAllSalesmen: [Salesmen!]!
   getAllCustomers: [Customers!]!
   getAllProjects: [Projects!]!
+  getActiveProjects(active: Boolean! = true): [Projects!]!
   getSalesmenByType(type: String!): [Salesmen!]!
 }
 
 type Mutation {
   createUser(input: CreateUserInput): User! @resolver(name: "create_user")
   loginUser(input: LoginUserInput): String! @resolver(name: "login_user")
+  createProject(input: CreateProjectInput): Projects @resolver(name: "create_project")
 }
