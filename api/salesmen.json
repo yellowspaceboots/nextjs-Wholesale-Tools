@@ -12,6 +12,60 @@
     "store": "0000"
   },
   {
+    "number": "0017",
+    "name": "Larry Cuccinello",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0015",
+    "name": "Pat McLarty",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0020",
+    "name": "Andrew Pratt",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0040",
+    "name": "Mario Cantu",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0009",
+    "name": "Jim Thierheimer",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0039",
+    "name": "Pablo Rivera",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0058",
+    "name": "Ricardo Belmarez",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "0059",
+    "name": "Eric Strever",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
+    "number": "72HK",
+    "name": "Hunter Kenney",
+    "type": "Outside",
+    "store": "72"
+  },
+  {
     "number": "ECOM",
     "name": "E-Shop",
     "type": "Admin",
@@ -181,7 +235,7 @@
   },
   {
     "number": "0099",
-    "name": "House Account; Exxonmobil Beaumont",
+    "name": "House Account Exxonmobil Beaumont",
     "type": "Outside",
     "store": "6801"
   },

@@ -16,7 +16,7 @@ const EventTile = ({ event }) => {
       <motion.div whileHover={{ y: -10 }}>
         <Button
           href='/event/[id]'
-          as={`/event/${event.id}`}
+          as={`/event/${event._id}`}
           component={InternalLink}
           onClick={(e) => e.stopPropagation()}
           style={{ borderRadius: '20px', display: 'flex', alignItems: 'flex-start' }}
@@ -36,14 +36,14 @@ const EventTile = ({ event }) => {
             <Grid item>
               <DateIcon event={event} status />
             </Grid>
-            <Typography variant='caption' color='textSecondary'>{event.salesman.name}</Typography>
+            <Typography variant='caption' color='textSecondary'>{event.salesRef.name}</Typography>
             <Grid item>
               <AvatarGroup max={4}>
-                {event.customerList.map(customer => {
+                {event.customerList.data.map(customer => {
                   const customerStatusColor = getStatusColor(customer.status)
                   return (
-                    <Tooltip key={customer.account} title={customer.name}>
-                      <Avatar alt={customer.name} src='/none' style={{ height: 30, width: 30, backgroundColor: customerStatusColor }} />
+                    <Tooltip key={customer.customerRef.account} title={customer.customerRef.name}>
+                      <Avatar alt={customer.customerRef.name} src='/none' style={{ backgroundColor: customerStatusColor }} />
                     </Tooltip>
                   )
                 })}
@@ -56,7 +56,6 @@ const EventTile = ({ event }) => {
         </Button>
       </motion.div>
     </Grid>
-
   )
 }
 

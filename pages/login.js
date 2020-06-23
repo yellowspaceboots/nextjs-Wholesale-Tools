@@ -15,6 +15,7 @@ import { useMutation } from '@apollo/client'
 import cookie from 'js-cookie'
 import { LOGIN_USER } from '../api/mutations/loginUser'
 import { useAuth } from '../components/AuthProvider'
+import Router from 'next/router'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Login = () => {
-  const { user, checked, setUser } = useAuth()
+  const { user } = useAuth()
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
   const classes = useStyles()
@@ -60,12 +61,12 @@ const Login = () => {
       }
     },
     onCompleted: data => {
-      cookie.set('token', data.loginUser, {
+      cookie.set('token', data.loginUser.token, {
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
         expires: 2
       })
-      setUser(true)
+      Router.reload(window.location.pathname)
     }
   })
   if (user) return null

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { CREATE_PROJECT } from '../api/mutations/createProject'
 import { useMutation } from '@apollo/client'
 
-const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
+const AddProjectDialog = ({ dialogOpen, setDialogOpen, query, variables }) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [error, setError] = useState()
@@ -18,7 +18,12 @@ const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
     setError()
   }
   const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT, {
-    onError: (error) => setError(error)
+    onError: (error) => setError(error),
+    refetchQueries: [{ query, variables }],
+    awaitRefetchQueries: true,
+    onCompleted: () => {
+      handleClose()
+    }
   })
   return (
     <>

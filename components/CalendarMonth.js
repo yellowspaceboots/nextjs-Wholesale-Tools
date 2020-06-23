@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { isSameMonth, isSameDay, format } from 'date-fns'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
 import InternalLink from './InternalLink'
-import AddToCalendar from './AddToCalendar'
 import CalendarMonthEvents from './CalendarMonthEvents'
 
 const CalendarMonth = ({
@@ -18,11 +17,7 @@ const CalendarMonth = ({
   events
 }) => {
   const dateFormat = 'd'
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const handleClickOpen = (day) => {
-    setDialogOpen(true)
-    setSelectedDate(day)
-  }
+  const handleClickOpen = (day) => setSelectedDate(day)
   return (
     <>
       <GridList cellHeight='auto' cols={7} style={{ borderRight: '1px solid lightgrey' }}>
@@ -68,7 +63,6 @@ const CalendarMonth = ({
           </GridListTile>
         ))}
       </GridList>
-      <AddToCalendar open={dialogOpen} setOpen={setDialogOpen} setSelectedDate={setSelectedDate} />
     </>
   )
 }

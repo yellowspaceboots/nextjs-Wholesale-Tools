@@ -28,6 +28,7 @@ import Backspace from '@material-ui/icons/Backspace'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import WidgetsIcon from '@material-ui/icons/Widgets'
 import AddProjectDialog from './AddProjectDialog'
+import { useProjects } from './ProjectProvider'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -110,6 +111,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const DialogWithRefetch = ({ dialogOpen, setDialogOpen }) => {
+  const { loading, error, query, variables } = useProjects()
+  if (loading) return null
+  if (error) return `Error! ${error.message}`
+  return <AddProjectDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} query={query} variables={variables} />
+}
+
 const MyAppBar = ({ handleDrawerToggle, logout }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const handleClickOpen = () => {
@@ -131,11 +139,11 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       getContentAnchorEl={null}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
     >
       <Typography variant='body1' style={{ padding: 10, paddingLeft: 20, fontWeight: 700, width: 300 }}>Notifications</Typography>
@@ -205,11 +213,11 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       getContentAnchorEl={null}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
     >
       <Typography variant='body1' style={{ padding: 10, paddingLeft: 20, fontWeight: 700, width: 200 }}>Profile</Typography>
@@ -247,11 +255,11 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       getContentAnchorEl={null}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
       transformOrigin={{
         vertical: 'top',
-        horizontal: 'center'
+        horizontal: 'right'
       }}
     >
       <MenuItem
@@ -272,7 +280,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
     </Menu>
   )
   const renderAddDialog = (
-    <AddProjectDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
+    <DialogWithRefetch dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
   )
   return (
     <AppBar position='fixed' elevation={0} className={classes.appBar}>

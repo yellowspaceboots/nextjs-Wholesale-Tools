@@ -25,10 +25,12 @@ type Projects {
   requestId: Long!
   title: String! @unique
   createdBy: User!
+  editedBy: User!
   active: Boolean!
   description: String!
   status: String!
   dateEntered: String!
+  dateEdited: String!
   dateDue: String!
   amount: Long!
   salesman: String!
@@ -39,11 +41,12 @@ type Projects {
 }
 
 type Comments {
-  project: Projects!
-  dateCreated: String!
-  message: String!
-  user: User!
-  edited: Boolean!
+  project: Projects
+  dateCreated: String
+  message: String
+  user: User
+  edited: Boolean
+  replyTo: String
 }
 
 
@@ -51,6 +54,7 @@ type CustomerProjectState {
   projectRef: Projects!
   customerRef: Customers!
   status: String!
+  active: Boolean
   amount: Long
   dateDue: String
 }
@@ -68,6 +72,12 @@ type Customers {
   alphaKey: String
   keyAccountId: String
   name: String
+  salesRef: Salesmen
+}
+
+type LoginResult @embedded {
+  token: String!
+  user: User
 }
 
 input CreateProjectInput {
@@ -81,10 +91,16 @@ input CreateProjectInput {
   salesman: String!
   customerList: [CustomerProjectStateInput]!
 }
+input AddCustomerToProjectInput @embedded {
+  projectId: String!
+  customerList: [CustomerProjectStateInput]!
+}
 
 input CustomerProjectStateInput {
-  account: String!
-  name: String!
+  account: String
+  name: String
+  status: String
+  amount: Long
 }
 
 input CreateUserInput {
@@ -101,17 +117,23 @@ input LoginUserInput {
 }
 
 type Query {
+  currentUser: Boolean! @resolver(name: "current_user")
   getUser: User
-  currentUser: Boolean @resolver(name: "current_user")
+  getMe: User @resolver(name: "get_me")
   getAllSalesmen: [Salesmen!]!
   getAllCustomers: [Customers!]!
   getAllProjects: [Projects!]!
+  activeCustomerState(active: Boolean! = true): [CustomerProjectState!]!
+  getActiveProjectsBySalesNumber(active: Boolean! = true, salesman: String!): [Projects!]!
+  getActiveProjectsByOutsideSalesman(salesman: String!): [Projects!]! @resolver(name: "get_outside_salesman_projects", paginated: true)
+  getCustomerProjectStateByActiveProjects: [CustomerProjectState!]! @resolver(name: "get_cps_by_active_projects", paginated: true)
   getActiveProjects(active: Boolean! = true): [Projects!]!
   getSalesmenByType(type: String!): [Salesmen!]!
 }
 
 type Mutation {
   createUser(input: CreateUserInput): User! @resolver(name: "create_user")
-  loginUser(input: LoginUserInput): String! @resolver(name: "login_user")
+  loginUser(input: LoginUserInput): LoginResult! @resolver(name: "login_user")
   createProject(input: CreateProjectInput): Projects @resolver(name: "create_project")
+  addCustomersToProject(input: AddCustomerToProjectInput!): Projects! @resolver(name: "add_customers_to_project", paginated: true)
 }

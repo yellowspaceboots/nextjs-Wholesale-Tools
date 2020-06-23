@@ -31,18 +31,10 @@ import CalendarDay from './CalendarDay'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Button from '@material-ui/core/Button'
-import { eventData } from '../api/mock'
 import { groupBy } from '../api/utils'
+import { useProjects } from './ProjectProvider'
 
 const CommercialCalendar = ({ view, year, month, day }) => {
-  const eventDataWithDateId = eventData.map(event => {
-    const dateId = `${event.dateDue.getFullYear()}-${event.dateDue.getMonth()}-${event.dateDue.getDate()}`
-    return {
-      ...event,
-      dateId
-    }
-  })
-  const events = groupBy(eventDataWithDateId, 'dateId')
   const router = useRouter()
   const titleFormats = {
     year: 'yyyy',
@@ -101,6 +93,19 @@ const CommercialCalendar = ({ view, year, month, day }) => {
       opacity: 0
     }
   }
+  const { loading, error, data, refetch, resultPath } = useProjects()
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
+  const projectList = data[resultPath].data || []
+  const eventDataWithDateId = projectList.map(event => {
+    const dateDue = new Date(event.dateDue)
+    const dateId = `${dateDue.getFullYear()}-${dateDue.getMonth()}-${dateDue.getDate()}`
+    return {
+      ...event,
+      dateId
+    }
+  })
+  const events = groupBy(eventDataWithDateId, 'dateId')
   const MyComponent = {
     year:
   <CalendarYear

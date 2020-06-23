@@ -39,14 +39,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DateIcon = ({ event, status }) => {
-  const dateDay = format(event.dateDue, 'd')
-  const dateMonth = format(event.dateDue, 'MMM')
-  const dateDayName = format(event.dateDue, 'EEEE')
+  const dateDay = format(new Date(event.dateDue), 'd')
+  const dateMonth = format(new Date(event.dateDue), 'MMM')
+  const dateDayName = format(new Date(event.dateDue), 'EEEE')
   const statusColor = getStatusColor(event.status)
-  const isLate = isAfter(new Date(), event.dateDue)
+  const isLate = isAfter(new Date(), new Date(event.dateDue))
   const classes = useStyles({ color: statusColor, isLate })
   const formattedAmount = amountShortFormat(event.amount)
-  const formattedId = pad(event.id, 5)
+  const formattedId = pad(event.requestId, 5)
   return (
     <div style={{ position: 'relative', padding: 22, textTransform: 'uppercase', paddingBottom: !status ? 0 : 22 }}>
       <Typography variant='body2' color='textSecondary' style={{ position: 'absolute', left: 6, top: 0, fontWeight: 'bold' }}>#</Typography>

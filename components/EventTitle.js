@@ -9,17 +9,18 @@ import { formatDistanceToNow } from 'date-fns'
 
 const EventTitle = ({ event }) => {
   const statusColor = getStatusColor(event.status)
-  const dateToNow = formatDistanceToNow(event.dateEntered, { addSuffix: true })
+  const dateToNow = formatDistanceToNow(new Date(event.dateEntered), { addSuffix: true })
+  const editedDateToNow = formatDistanceToNow(new Date(event.dateEdited), { addSuffix: true })
   return (
     <Grid container wrap='nowrap'>
       <Grid item>
         <DateIcon event={event} status={false} />
         <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
-          <Typography variant='caption' align='center' color='textSecondary' style={{ textTransform: 'uppercase', margin: 8, textAlign: 'center' }}>{event.salesman.name}</Typography>
+          <Typography variant='caption' align='center' color='textSecondary' style={{ textTransform: 'uppercase', margin: 8, textAlign: 'center' }}>{event.salesRef.name}</Typography>
         </div>
       </Grid>
       <Grid item xs={12}>
-        <Grid container style={{ marginTop: 12 }}>
+        <Grid container style={{ marginBottom: 12 }}>
           <Typography variant='h5' style={{ fontWeight: 'light', marginRight: 10 }}>{event.title}</Typography>
           <Chip
             label={event.status}
@@ -44,7 +45,8 @@ const EventTitle = ({ event }) => {
           />
         </Grid>
         <Typography variant='body2' color='textSecondary' style={{ fontStyle: 'italic', maxWidth: 600 }}>{event.description}</Typography>
-        <Typography variant='body2' color='textSecondary' style={{ marginBottom: 10, marginTop: 10 }}>Added {dateToNow}</Typography>
+        <Typography variant='body2' color='textSecondary' style={{ marginTop: 10 }}>Added {dateToNow} by {event.createdBy.name}</Typography>
+        <Typography variant='body2' color='textSecondary' style={{ marginBottom: 10 }}>Last edited {editedDateToNow} by {event.editedBy.name}</Typography>
       </Grid>
     </Grid>
   )

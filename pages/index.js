@@ -1,26 +1,26 @@
 import React from 'react'
-import { useLazyQuery } from '@apollo/client'
-import { GET_ACTIVE_PROJECTS } from '../api/queries/getActiveProjects'
 import { getLayout } from '../components/Layout'
+import { useAuth } from '../components/AuthProvider'
+import ManagerDashboard from '../components/ManagerDashboard'
 
 const IndexPage = () => {
-  const [getActiveProjects, { loading, data: allFilesData, error: allFilesError }] = useLazyQuery(GET_ACTIVE_PROJECTS)
-  return (
-    <>
-      <button onClick={() => getActiveProjects()}>Get All Files</button>
-      <br />
-      File Data
-      <pre>
-        {loading ? (
-          <div>loading...</div>
-        ) : allFilesError ? (
-          JSON.stringify(allFilesError, null, 2)
-        ) : (
-          JSON.stringify(allFilesData, null, 2)
-        )}
-      </pre>
-    </>
-  )
+  const { user } = useAuth()
+  switch (user.role) {
+    case 'MANAGER':
+      return (
+        <ManagerDashboard />
+      )
+    case 'INSIDESALES':
+      return (
+        <div>Inside Sales Dasboard coming soon.</div>
+      )
+    case 'OUTSIDESALES':
+      return (
+        <div>Outisde Sales Dasboard coming soon.</div>
+      )
+    default:
+      return null
+  }
 }
 
 IndexPage.getLayout = getLayout

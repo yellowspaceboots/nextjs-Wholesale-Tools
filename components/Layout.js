@@ -7,6 +7,7 @@ import MyAppBar from './MyAppBar'
 import { useAuth } from '../components/AuthProvider'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
+import { ProjectsProvider } from '../components/ProjectProvider'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,15 +51,17 @@ const Layout = ({ children }) => {
   if (!checked) return null
   if (!user) return null
   return (
-    <div className={classes.root}>
-      {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
-      <MyAppBar handleDrawerToggle={handleDrawerToggle} logout={logout} />
-      <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {children}
-      </main>
-    </div>
+    <ProjectsProvider>
+      <div className={classes.root}>
+        {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
+        <MyAppBar handleDrawerToggle={handleDrawerToggle} logout={logout} />
+        <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {children}
+        </main>
+      </div>
+    </ProjectsProvider>
   )
 }
 

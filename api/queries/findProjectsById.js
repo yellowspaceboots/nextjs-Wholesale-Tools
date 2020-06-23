@@ -1,15 +1,22 @@
 import { gql } from '@apollo/client'
 
-export const GET_ACTIVE_PROJECTS = gql`
-  query GetActiveProjects {
-    getActiveProjects(active: true) {
-      data{
+export const FIND_PROJECTS_BY_ID = gql`
+  query FindProjectsById($id: ID!) {
+    findProjectsByID(id: $id) {
             _id
             title
             requestId
             amount
             dateDue
             dateEntered
+            dateEdited
+            description
+            createdBy {
+              name
+            }
+            editedBy {
+              name
+            }
             status
             size
             salesRef {
@@ -18,7 +25,9 @@ export const GET_ACTIVE_PROJECTS = gql`
             }
             customerList {
                 data {
+                  _id
                 status
+                amount
                 customerRef{
                     name
                     account
@@ -29,7 +38,19 @@ export const GET_ACTIVE_PROJECTS = gql`
                 }
                 }
             }
+            comments {
+      data {
+        _id
+        dateCreated
+        message
+        edited
+        replyTo
+        user {
+          _id
+          name
+        }
       }
+    }
     }
   }
 `

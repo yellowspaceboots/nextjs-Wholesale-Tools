@@ -1,5 +1,5 @@
 import React from 'react'
-import { format } from 'date-fns'
+import { format, compareAsc } from 'date-fns'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles'
@@ -30,11 +30,11 @@ const CalendarMonthEvents = ({ events }) => {
   const sliceNumber = events.length > 4 ? 3 : 4
   return (
     <>
-      {events.slice(0, sliceNumber).map(event => (
+      {events.slice().sort((a, b) => compareAsc(new Date(a.dateDue), new Date(b.dateDue))).slice(0, sliceNumber).map(event => (
         <Button
-          key={event.id}
+          key={event._id}
           href='/event/[id]'
-          as={`/event/${event.id}`}
+          as={`/event/${event._id}`}
           component={InternalLink}
           onClick={(e) => e.stopPropagation()}
           variant='contained'
@@ -44,7 +44,7 @@ const CalendarMonthEvents = ({ events }) => {
             label: classes.label
           }}
         >
-          {`${format(event.dateDue, 'ha').toLowerCase()} ${event.title}`}
+          {`${format(new Date(event.dateDue), 'ha').toLowerCase()} ${event.title}`}
         </Button>
       ))}
       {sliceNumber === 3 &&

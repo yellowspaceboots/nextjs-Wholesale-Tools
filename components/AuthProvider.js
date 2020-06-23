@@ -1,23 +1,23 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { GET_USER } from '../api/queries/getUser'
+import { GET_ME } from '../api/queries/getMe'
 
 const AuthContext = createContext()
 
 const AuthProvider = ({ children }) => {
   const { pathname, push } = useRouter()
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState()
   const [checked, setChecked] = useState(false)
   const userMemo = useMemo(() => ({ user, setUser }), [user, setUser])
-  const { loading, error, data } = useQuery(GET_USER, {
+  const { loading, error, data, refetch: refetchUser } = useQuery(GET_ME, {
     onCompleted: data => {
       console.log('running user query')
       setChecked(true)
-      setUser(data.currentUser)
+      setUser(data.getMe)
     },
     onError: error => {
-      setUser(false)
+      setUser()
       setChecked(true)
       console.log(error)
     }
@@ -27,11 +27,12 @@ const AuthProvider = ({ children }) => {
       push('/login')
     }
     if (pathname === '/login' && userMemo.user) {
+      refetchUser()
       push('/')
     }
   })
   return (
-    <AuthContext.Provider value={{ user, checked, setUser }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, checked, setUser, refetchUser }}>{children}</AuthContext.Provider>
   )
 }
 

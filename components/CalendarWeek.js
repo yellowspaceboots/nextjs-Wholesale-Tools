@@ -3,6 +3,7 @@ import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
+import CalendarMonthEvents from './CalendarMonthEvents'
 
 const CalendarWeek = ({
   currentDate,
