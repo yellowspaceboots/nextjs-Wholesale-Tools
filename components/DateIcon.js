@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography'
 import { format, isAfter } from 'date-fns'
 import { makeStyles } from '@material-ui/core/styles'
 import Badge from '@material-ui/core/Badge'
-import { getStatusColor, amountShortFormat, pad } from '../api/utils'
+import { getStatusColor, amountShortFormat, pad } from '../testApi/utils'
 
 const useStyles = makeStyles(theme => ({
   customBadge: {

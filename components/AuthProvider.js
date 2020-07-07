@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { GET_ME } from '../api/queries/getMe'
+import { GET_ME } from '../testApi/queries/getMe'
 
 const AuthContext = createContext()
 

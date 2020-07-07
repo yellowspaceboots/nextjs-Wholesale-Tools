@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 import AddProjectForm from './AddProjectForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { CREATE_PROJECT } from '../api/mutations/createProject'
+import { CREATE_PROJECT } from '../testApi/mutations/createProject'
 import { useMutation } from '@apollo/client'
 
 const AddProjectDialog = ({ dialogOpen, setDialogOpen, query, variables }) => {

@@ -17,7 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from 'react-hook-form-devtools'
 import Button from '@material-ui/core/Button'
-import salesmen from '../api/salesmen.json'
+import salesmen from '../testApi/salesmen.json'
 import { useAuth } from './AuthProvider'
 
 const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {

@@ -18,8 +18,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from 'react-hook-form-devtools'
 import Button from '@material-ui/core/Button'
-import customers from '../api/houstonCustomers.json'
-import salesmen from '../api/salesmen.json'
+import customers from '../testApi/houstonCustomers.json'
+import salesmen from '../testApi/salesmen.json'
 
 const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })

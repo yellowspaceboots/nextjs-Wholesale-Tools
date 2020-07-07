@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 import EditProjectForm from './EditProjectForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { UPDATE_PROJECT } from '../api/mutations/updateProject'
+import { UPDATE_PROJECT } from '../testApi/mutations/updateProject'
 import { useMutation } from '@apollo/client'
 
 const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event }) => {

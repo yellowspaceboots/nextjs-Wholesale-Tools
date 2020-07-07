@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { LocalizationProvider } from '@material-ui/pickers'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../components/theme'
-import { withApollo } from '../api/apollo'
+import { withApollo } from '../testApi/apollo'
 import { AuthProvider } from '../components/AuthProvider'
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 

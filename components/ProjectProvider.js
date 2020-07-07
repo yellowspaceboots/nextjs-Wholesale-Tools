@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react'
 import { useQuery } from '@apollo/client'
 import { useAuth } from '../components/AuthProvider'
-import { GET_ACTIVE_PROJECTS_BY_SALES_NUMBER, GET_ACTIVE_PROJECTS_BY_OUTSIDE_SALESMAN } from '../api/queries/getActiveProjectsBySalesNumber'
-import { GET_ACTIVE_PROJECTS } from '../api/queries/getActiveProjects'
+import { GET_ACTIVE_PROJECTS_BY_SALES_NUMBER, GET_ACTIVE_PROJECTS_BY_OUTSIDE_SALESMAN } from '../testApi/queries/getActiveProjectsBySalesNumber'
+import { GET_ACTIVE_PROJECTS } from '../testApi/queries/getActiveProjects'
 
 const ProjectContext = createContext()
 

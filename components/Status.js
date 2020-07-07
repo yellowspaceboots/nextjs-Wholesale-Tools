@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import { getStatusColor } from '../api/utils'
+import { getStatusColor } from '../testApi/utils'
 
 const Status = ({ status, includeWords, style }) => {
   const statusColor = getStatusColor(status)

@@ -31,7 +31,7 @@ import CalendarDay from './CalendarDay'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Button from '@material-ui/core/Button'
-import { groupBy } from '../api/utils'
+import { groupBy } from '../testApi/utils'
 import { useProjects } from './ProjectProvider'
 
 const CommercialCalendar = ({ view, year, month, day }) => {
