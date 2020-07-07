@@ -1,8 +1,0 @@
-{
-  "scope": "fillipvt",
-  "build": {
-    "env": {
-      "FAUNADB_KEY": "@faunadb_key"
-    }
-  }
-}
