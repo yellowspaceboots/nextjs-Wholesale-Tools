@@ -15,7 +15,7 @@ import min from 'date-fns/min'
 import isWithinInterval from 'date-fns/isWithinInterval'
 
 const ProjectListWrapper = () => {
-  const { loading, error, data, refetch, resultPath } = useProjects()
+  const { loading, error, data, resultPath } = useProjects()
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const projectList = data[resultPath].data || []
