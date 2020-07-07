@@ -6,7 +6,7 @@ import { useTheme } from '@material-ui/core/styles'
 import EditProjectForm from './EditProjectForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { CREATE_PROJECT } from '../api/mutations/createProject'
+import { UPDATE_PROJECT } from '../api/mutations/updateProject'
 import { useMutation } from '@apollo/client'
 
 const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event }) => {
@@ -17,10 +17,8 @@ const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event 
     setDialogOpen(false)
     setError()
   }
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT, {
+  const [updateProject, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_PROJECT, {
     onError: (error) => setError(error),
-    refetchQueries: [{ query, variables }],
-    awaitRefetchQueries: true,
     onCompleted: () => {
       handleClose()
     }
@@ -55,7 +53,7 @@ const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event 
             {mutationError && <p>Error :( Please try again</p>}
           </div>}
         <DialogTitle id='responsive-dialog-title'>Edit Project</DialogTitle>
-        <EditProjectForm handleClose={handleClose} createProject={createProject} mutationError={error} event={event} />
+        <EditProjectForm handleClose={handleClose} updateProject={updateProject} mutationError={error} event={event} />
       </Dialog>
     </>
   )

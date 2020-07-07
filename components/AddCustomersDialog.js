@@ -45,7 +45,10 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
     defaultValues: intialState
   })
   const [addCustomersToProject, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_CUSTOMERS_TO_PROJECT, {
-    onError: (error) => setError(error),
+    onError: (error) => {
+      console.log(error)
+      setError(error)
+    },
     onCompleted: () => {
       handleClose()
     }

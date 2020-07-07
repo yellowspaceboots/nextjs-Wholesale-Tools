@@ -31,7 +31,7 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
     }
   })
   return (
-    <Grid container justify='space-between' style={{ marginTop: -10 }}>
+    <Grid container justify='space-between' style={{ marginTop: -10, maxWidth: 1200 }}>
       {monthData.map((month) => (
         <div
           key={month.name}

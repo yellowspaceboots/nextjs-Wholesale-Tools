@@ -29,7 +29,8 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Button from '@material-ui/core/Button'
 import { FIND_PROJECTS_BY_ID } from '../api/queries/findProjectsById'
 
-const CustomerCard = ({ customer, fullAmount, id }) => {
+const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
+  console.log(customerCount)
   const theme = useTheme()
   const [edit, setEdit] = useState(false)
   const [open, setOpen] = useState(false)
@@ -192,16 +193,18 @@ const CustomerCard = ({ customer, fullAmount, id }) => {
                     </IconButton>
                   </Tooltip>
                 </div>
-                <div>
-                  <Tooltip title='Remove Customer' placement='right'>
-                    <IconButton
-                      aria-label='remove'
-                      onClick={handleClickOpen}
-                    >
-                      <DeleteForeverIcon />
-                    </IconButton>
-                  </Tooltip>
-                </div>
+                {customerCount > 1 && (
+                  <div>
+                    <Tooltip title='Remove Customer' placement='right'>
+                      <IconButton
+                        aria-label='remove'
+                        onClick={handleClickOpen}
+                      >
+                        <DeleteForeverIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                )}
               </>
             )}
           </div>

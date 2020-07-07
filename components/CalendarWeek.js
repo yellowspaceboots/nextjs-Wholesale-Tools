@@ -1,18 +1,21 @@
 import React from 'react'
-import { format, startOfWeek, endOfWeek, eachDayOfInterval } from 'date-fns'
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, eachHourOfInterval, startOfDay, endOfDay, isSameWeek, isSameHour, isSameDay } from 'date-fns'
 import Typography from '@material-ui/core/Typography'
 import GridList from '@material-ui/core/GridList'
 import GridListTile from '@material-ui/core/GridListTile'
-import CalendarMonthEvents from './CalendarMonthEvents'
+import CalendarDayEvents from './CalendarDayEvents'
 
 const CalendarWeek = ({
   currentDate,
-  viewDate
+  viewDate,
+  projectList
 }) => {
+  const dayHours = eachHourOfInterval({
+    start: startOfDay(viewDate),
+    end: endOfDay(viewDate)
+  })
+  const weekProjectList = projectList.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
   const weekdayData = eachDayOfInterval({ start: startOfWeek(viewDate), end: endOfWeek(viewDate) })
-  const timesAM = [...Array(12).keys()].map(time => time === 0 ? '12 am' : `${time} am`)
-  const timesPM = [...Array(12).keys()].map(time => time === 0 ? '12 pm' : `${time} pm`)
-  const times = [...timesAM, ...timesPM]
   return (
     <>
       <GridList cellHeight='auto' cols={15} style={{ borderRight: '1px solid lightgrey' }}>
@@ -43,32 +46,49 @@ const CalendarWeek = ({
           </GridListTile>
         ))}
       </GridList>
-      {times.map((time) => (
-        <GridList key={time} cellHeight={50} cols={15} style={{ borderRight: '1px solid lightgrey' }}>
-          <GridListTile
-            cols={1}
-            style={{ display: 'flex', border: '1px solid lightgrey', borderRight: 'none', borderBottom: 'none', justifyContent: 'center' }}
-          >
-            <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{time}</Typography>
-          </GridListTile>
-          {weekdayData.map((day, i) => (
+      <div style={{ borderBottom: '1px solid lightgrey' }}>
+        {dayHours.map((time) => (
+          <GridList key={time} cellHeight='auto' cols={15} style={{ borderRight: '1px solid lightgrey' }}>
             <GridListTile
-              key={day}
-              cols={2}
-              style={{
-                display: 'flex',
-                border: '1px solid lightgrey',
-                borderRight: 'none',
-                borderBottom: 'none',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
+              cols={1}
+              style={{ display: 'flex', border: '1px solid lightgrey', borderRight: 'none', borderBottom: 'none', justifyContent: 'center' }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }} />
+              <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{format(time, 'h a')}</Typography>
             </GridListTile>
-          ))}
-        </GridList>
-      ))}
+            {weekdayData.map((day, i) => (
+              <GridListTile
+                key={day}
+                cols={2}
+                style={{
+                  display: 'flex',
+                  border: '1px solid lightgrey',
+                  borderRight: 'none',
+                  borderBottom: 'none',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <CalendarDayEvents
+                  fullWidth
+                  events={weekProjectList.filter(event =>
+                    isSameHour(new Date(event.dateDue),
+                      new Date(
+                        day.getFullYear(),
+                        day.getMonth(),
+                        day.getDate(),
+                        time.getHours(),
+                        time.getMinutes(),
+                        time.getSeconds(),
+                        time.getMilliseconds()
+                      )
+                    )
+                  )}
+                />
+              </GridListTile>
+            ))}
+          </GridList>
+        ))}
+      </div>
     </>
   )
 }

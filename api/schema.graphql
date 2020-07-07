@@ -91,6 +91,19 @@ input CreateProjectInput {
   salesman: String!
   customerList: [CustomerProjectStateInput]!
 }
+
+input UpdateProjectInput @embedded {
+  projectId: String!
+  title: String!
+  description: String
+  status: String!
+  dateDue: String!
+  dateEdited: String!
+  amount: Long!
+  size: String!
+  salesman: String!
+}
+
 input AddCustomerToProjectInput @embedded {
   projectId: String!
   customerList: [CustomerProjectStateInput]!
@@ -135,5 +148,6 @@ type Mutation {
   createUser(input: CreateUserInput): User! @resolver(name: "create_user")
   loginUser(input: LoginUserInput): LoginResult! @resolver(name: "login_user")
   createProject(input: CreateProjectInput): Projects @resolver(name: "create_project")
-  addCustomersToProject(input: AddCustomerToProjectInput!): Projects! @resolver(name: "add_customers_to_project", paginated: true)
+  updateProject(input: UpdateProjectInput!): Projects @resolver(name: "update_project")
+  addCustomersToProject(input: AddCustomerToProjectInput!): Projects! @resolver(name: "add_customers_to_project")
 }

@@ -128,11 +128,13 @@ const CommercialCalendar = ({ view, year, month, day }) => {
   <CalendarWeek
     currentDate={currentDate}
     viewDate={viewDate}
+    projectList={projectList}
   />,
     day:
   <CalendarDay
     currentDate={currentDate}
     viewDate={viewDate}
+    projectList={projectList}
   />,
     agenda: <div />
   }

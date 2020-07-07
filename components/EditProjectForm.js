@@ -4,7 +4,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import FormControl from '@material-ui/core/FormControl'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
-import matchSorter from 'match-sorter'
 import { MobileDateTimePicker, MobileDatePicker } from '@material-ui/pickers'
 import { Controller, useForm } from 'react-hook-form'
 import OutlinedInput from '@material-ui/core/OutlinedInput'
@@ -18,13 +17,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from 'react-hook-form-devtools'
 import Button from '@material-ui/core/Button'
-import customers from '../api/houstonCustomers.json'
 import salesmen from '../api/salesmen.json'
 import { useAuth } from './AuthProvider'
 
-const EdiProjectForm = ({ handleClose, createProject, mutationError, event }) => {
+const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {
   const { user } = useAuth()
-  const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
   const intialState = {
     projectName: event.title,
     amount: event.amount / 10000,
@@ -32,12 +29,6 @@ const EdiProjectForm = ({ handleClose, createProject, mutationError, event }) =>
     status: event.status,
     salesman: event.salesRef,
     description: event.description,
-    customers: event.customerList.data.map(customer => {
-      return {
-        account: customer.customerRef.account,
-        name: customer.customerRef.name
-      }
-    }),
     dateEntered: new Date(event.dateEntered),
     dateDue: new Date(event.dateDue)
   }
@@ -48,22 +39,17 @@ const EdiProjectForm = ({ handleClose, createProject, mutationError, event }) =>
   })
   const onSubmit = (data, e) => {
     const payload = {
+      projectId: event._id,
       title: data.projectName.trim(),
       description: data.description.trim(),
       status: data.status,
-      dateEntered: data.dateEntered.toISOString(),
+      dateEdited: new Date().toISOString(),
       dateDue: data.dateDue.toISOString(),
       amount: data.amount * 10000,
       salesman: data.salesman.number,
-      customerList: data.customers.map(customer => {
-        return {
-          account: customer.account,
-          name: customer.name
-        }
-      }),
       size: data.size
     }
-    createProject({ variables: { input: payload } })
+    updateProject({ variables: { input: payload } })
   }
   const insideSalesmen = salesmen.filter(salesman => salesman.type === 'Inside')
   return (
@@ -84,48 +70,7 @@ const EdiProjectForm = ({ handleClose, createProject, mutationError, event }) =>
               inputRef={register({ required: true })}
             />
           </Grid>
-          <Grid item xs={12}>
-            <Controller
-              as={
-                <Autocomplete
-                  id='customers'
-                  disabled
-                  multiple
-                  options={customers}
-                  filterOptions={filterOptions}
-                  fullWidth
-                  getOptionSelected={(option, value) => option.account === value.account}
-                  getOptionLabel={(option) => option.name}
-                  ListboxComponent={ListboxComponent}
-                  renderInput={(params) => <TextField {...params} error={!!errors.customers} helperText={!!errors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-                  renderOption={(option, { inputValue }) => {
-                    const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
-                    const matches = match(fullOption.trim(), inputValue)
-                    const parts = parse(fullOption.trim(), matches)
-                    return (
-                      <div>
-                        {parts.map((part, index) => (
-                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    )
-                  }}
-                />
-              }
-              onChange={([, data]) => data}
-              name='customers'
-              rules={{
-                validate: value => {
-                  return value.length > 0
-                }
-              }}
-              control={control}
-              defaultValue={intialState.customers}
-            />
-          </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <Controller
               as={
                 <Autocomplete
@@ -168,25 +113,6 @@ const EdiProjectForm = ({ handleClose, createProject, mutationError, event }) =>
               }}
               control={control}
               defaultValue={intialState.salesman}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Controller
-              as={
-                <MobileDatePicker
-                  label='Date Entered'
-                  disabled
-                  renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
-                />
-              }
-              name='dateEntered'
-              rules={{
-                validate: value => {
-                  return !!value
-                }
-              }}
-              control={control}
-              defaultValue={intialState.dateEntered}
             />
           </Grid>
           <Grid item xs={6}>

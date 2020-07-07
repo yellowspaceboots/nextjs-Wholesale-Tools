@@ -92,7 +92,7 @@ const CalendarEvent = ({ id }) => {
           <Grid container spacing={2} direction='row' alignItems='stretch'>
             {event.customerList.data.map(customer =>
               <Grid item key={customer.customerRef.account}>
-                <CustomerCard customer={customer} fullAmount={event.amount} id={id} />
+                <CustomerCard customer={customer} fullAmount={event.amount} id={id} customerCount={event.customerList.data.length} />
               </Grid>
             )}
           </Grid>
