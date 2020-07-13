@@ -1,6 +1,6 @@
 {
-  "name": "with-faunadb-abac-auth",
-  "version": "2.0.0",
+  "name": "wholesale-tools",
+  "version": "0.0.1alpha",
   "scripts": {
     "dev": "next",
     "build": "next build",
