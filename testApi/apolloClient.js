@@ -1,13 +1,11 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
-import { setContext } from '@apollo/link-context'
-import fetch from 'isomorphic-unfetch'
+import { setContext } from '@apollo/client/link/context'
 import cookie from 'cookie'
 
 export default function createApolloClient (initialState, ctx) {
   const httpLink = new HttpLink({
     uri: 'https://graphql.fauna.com/graphql', // Server URL (must be absolute)
-    credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-    fetch
+    credentials: 'same-origin' // Additional fetch() options like `credentials` or `headers`
   })
 
   const authLink = setContext((_, { headers }) => {

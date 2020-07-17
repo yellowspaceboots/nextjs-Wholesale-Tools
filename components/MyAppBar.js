@@ -19,7 +19,6 @@ import AnnouncementIcon from '@material-ui/icons/Announcement'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import Badge from '@material-ui/core/Badge'
 import InternalLink from './InternalLink'
-import moment from 'moment'
 import WLogo from './WLogo'
 import SearchIcon from '@material-ui/icons/Search'
 import InputBase from '@material-ui/core/InputBase'
@@ -29,6 +28,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 import WidgetsIcon from '@material-ui/icons/Widgets'
 import AddProjectDialog from './AddProjectDialog'
 import { useProjects } from './ProjectProvider'
+import { formatDistanceToNow } from 'date-fns'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -119,6 +119,7 @@ const DialogWithRefetch = ({ dialogOpen, setDialogOpen }) => {
 }
 
 const MyAppBar = ({ handleDrawerToggle, logout }) => {
+  const dateToNow = formatDistanceToNow(new Date(), { addSuffix: true })
   const [dialogOpen, setDialogOpen] = useState(false)
   const handleClickOpen = () => {
     setDialogOpen(true)
@@ -157,7 +158,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         <ListItemText
           disableTypography
           primary={<Typography variant='body2'>Project Bidding Soon</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{dateToNow}</Typography>}
         />
       </MenuItem>
       <MenuItem onClick={notificationClose}>
@@ -169,7 +170,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         <ListItemText
           disableTypography
           primary={<Typography variant='body2'>New Project Added</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{dateToNow}</Typography>}
         />
       </MenuItem>
       <MenuItem onClick={notificationClose}>
@@ -181,7 +182,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         <ListItemText
           disableTypography
           primary={<Typography variant='body2'>New Message for Project</Typography>}
-          secondary={<Typography color='textSecondary' variant='body2'>{moment(new Date()).fromNow()}</Typography>}
+          secondary={<Typography color='textSecondary' variant='body2'>{dateToNow}</Typography>}
         />
       </MenuItem>
       <Divider />
