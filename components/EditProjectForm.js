@@ -207,6 +207,9 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                   <MenuItem value='Off Track'>
                     Off Track
                   </MenuItem>
+                  <MenuItem value='Pending'>
+                    Pending
+                  </MenuItem>
                   <MenuItem value='Closed'>
                     Closed
                   </MenuItem>
