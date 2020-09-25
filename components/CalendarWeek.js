@@ -1,8 +1,8 @@
 import React from 'react'
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, eachHourOfInterval, startOfDay, endOfDay, isSameWeek, isSameHour, isSameDay } from 'date-fns'
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, eachHourOfInterval, startOfDay, endOfDay, isSameWeek, isSameHour, getHours } from 'date-fns'
 import Typography from '@material-ui/core/Typography'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
+import ImageList from '@material-ui/core/ImageList'
+import ImageListItem from '@material-ui/core/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 
 const CalendarWeek = ({
@@ -16,80 +16,106 @@ const CalendarWeek = ({
   })
   const weekProjectList = projectList.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
   const weekdayData = eachDayOfInterval({ start: startOfWeek(viewDate), end: endOfWeek(viewDate) })
+  const isEven = (x) => !(x & 1)
+  const filteredDayHours = dayHours.map((time) => {
+    const dayEvents = weekdayData.map((day, i) => {
+      const events = weekProjectList.filter(event =>
+        isSameHour(new Date(event.dateDue),
+          new Date(
+            day.getFullYear(),
+            day.getMonth(),
+            day.getDate(),
+            time.getHours(),
+            time.getMinutes(),
+            time.getSeconds(),
+            time.getMilliseconds()
+          )
+        )
+      )
+      const eventCount = events.length
+      return (
+        {
+          day,
+          events,
+          eventCount
+        }
+      )
+    })
+    const hourEventCount = dayEvents.reduce((acc, curr) => acc + curr.eventCount, 0)
+    return {
+      time,
+      formattedTime: format(time, 'h a'),
+      hourEventCount,
+      dayEvents,
+      striped: isEven(getHours(time))
+    }
+  })
+  const lowerBounds = filteredDayHours.findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
+  const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
   return (
-    <>
-      <GridList cellHeight='auto' cols={15} style={{ borderRight: '1px solid lightgrey' }}>
-        <GridListTile
-          cols={1}
-          style={{ display: 'flex', border: '1px solid lightgrey', borderRight: 'none', borderBottom: 'none', justifyContent: 'center' }}
+    <ImageList rowHeight='auto' cols={23} gap={2}>
+      <ImageListItem
+        cols={1}
+        style={{ display: 'flex', border: '1px solid lightgrey', justifyContent: 'center', alignItems: 'flex-end' }}
+      >
+        <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase', padding: 4 }}>Time</Typography>
+      </ImageListItem>
+      {weekdayData.map((day, i) => (
+        <ImageListItem
+          key={day}
+          cols={i === 0 || i === 6 ? 1 : 4}
+          style={{
+            display: 'flex',
+            border: '1px solid lightgrey',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
         >
-          <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>Time</Typography>
-        </GridListTile>
-        {weekdayData.map((day, i) => (
-          <GridListTile
-            key={day}
-            cols={2}
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{format(day, 'EEE')}</Typography>
+            <Typography variant='h6' color='textSecondary'>{format(day, 'd')}</Typography>
+          </div>
+        </ImageListItem>
+      ))}
+      {filteredDayHours.slice(lowerBounds, filteredDayHours.length - upperBounds).map(time => (
+        <React.Fragment key={time.time}>
+          <ImageListItem
+            cols={1}
             style={{
               display: 'flex',
-              flex: 2,
               border: '1px solid lightgrey',
-              borderRight: 'none',
-              borderBottom: 'none',
               justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'flex-end',
+              backgroundColor: time.striped ? 'whitesmoke' : 'transparent'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-              <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{format(day, 'EEE')}</Typography>
-              <Typography variant='h6' color='textSecondary'>{format(day, 'd')}</Typography>
-            </div>
-          </GridListTile>
-        ))}
-      </GridList>
-      <div style={{ borderBottom: '1px solid lightgrey' }}>
-        {dayHours.map((time) => (
-          <GridList key={time} cellHeight='auto' cols={15} style={{ borderRight: '1px solid lightgrey' }}>
-            <GridListTile
-              cols={1}
-              style={{ display: 'flex', border: '1px solid lightgrey', borderRight: 'none', borderBottom: 'none', justifyContent: 'center' }}
-            >
-              <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{format(time, 'h a')}</Typography>
-            </GridListTile>
-            {weekdayData.map((day, i) => (
-              <GridListTile
-                key={day}
-                cols={2}
+            <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase', padding: 4 }}>{time.formattedTime}</Typography>
+          </ImageListItem>
+          {time.dayEvents.map((day, i) => {
+            return (
+              <ImageListItem
+                key={day.day}
+                cols={i === 0 || i === 6 ? 1 : 4}
                 style={{
                   display: 'flex',
                   border: '1px solid lightgrey',
-                  borderRight: 'none',
-                  borderBottom: 'none',
-                  justifyContent: 'center',
-                  alignItems: 'center'
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  padding: 4,
+                  overflow: 'hidden',
+                  backgroundColor: time.striped ? 'whitesmoke' : 'transparent'
                 }}
               >
                 <CalendarDayEvents
                   fullWidth
-                  events={weekProjectList.filter(event =>
-                    isSameHour(new Date(event.dateDue),
-                      new Date(
-                        day.getFullYear(),
-                        day.getMonth(),
-                        day.getDate(),
-                        time.getHours(),
-                        time.getMinutes(),
-                        time.getSeconds(),
-                        time.getMilliseconds()
-                      )
-                    )
-                  )}
+                  events={day.events}
                 />
-              </GridListTile>
-            ))}
-          </GridList>
-        ))}
-      </div>
-    </>
+              </ImageListItem>
+            )
+          })}
+        </React.Fragment>
+      ))}
+    </ImageList>
   )
 }
 

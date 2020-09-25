@@ -100,43 +100,43 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Controller
-                  as={
-                    <Autocomplete
-                      id='customers'
-                      multiple
-                      options={customers}
-                      filterOptions={filterOptions}
-                      fullWidth
-                      getOptionSelected={(option, value) => option.account === value.account}
-                      getOptionDisabled={option => currentCustomerList.includes(option.account)}
-                      getOptionLabel={(option) => option.name}
-                      ListboxComponent={ListboxComponent}
-                      renderInput={(params) => <TextField {...params} error={!!addCustomerErrors.customers} helperText={!!addCustomerErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-                      renderOption={(option, { inputValue }) => {
-                        const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
-                        const matches = match(fullOption.trim(), inputValue)
-                        const parts = parse(fullOption.trim(), matches)
-                        return (
-                          <div>
-                            {parts.map((part, index) => (
-                              <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                                {part.text}
-                              </span>
-                            ))}
-                          </div>
-                        )
-                      }}
-                    />
-                  }
-                  onChange={([, data]) => data}
                   name='customers'
-                  rules={{
-                    validate: value => {
-                      return value.length > 0
-                    }
-                  }}
                   control={addCustomerControl}
                   defaultValue={intialState.customers}
+                  rules={{
+                    validate: value => value.length > 0
+                  }}
+                  render={({ onChange, onBlur, value }) => {
+                    return (
+                      <Autocomplete
+                        id='customers'
+                        multiple
+                        onChange={(e, val) => onChange(val)}
+                        options={customers}
+                        filterOptions={filterOptions}
+                        fullWidth
+                        getOptionSelected={(option, value) => option.account === value.account}
+                        getOptionDisabled={option => currentCustomerList.includes(option.account)}
+                        getOptionLabel={(option) => option.name}
+                        ListboxComponent={ListboxComponent}
+                        renderInput={(params) => <TextField {...params} error={!!addCustomerErrors.customers} helperText={!!addCustomerErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
+                        renderOption={(option, { inputValue }) => {
+                          const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
+                          const matches = match(fullOption.trim(), inputValue)
+                          const parts = parse(fullOption.trim(), matches)
+                          return (
+                            <div>
+                              {parts.map((part, index) => (
+                                <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                                  {part.text}
+                                </span>
+                              ))}
+                            </div>
+                          )
+                        }}
+                      />
+                    )
+                  }}
                 />
               </Grid>
             </Grid>

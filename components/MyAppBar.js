@@ -339,7 +339,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
           aria-label='Notifications'
           onClick={notificationClick}
         >
-          <Badge color='secondary' overlap='circle' variant='dot'>
+          <Badge color='secondary' overlap='circular' variant='dot'>
             <NotificationsNoneIcon />
           </Badge>
         </IconButton>

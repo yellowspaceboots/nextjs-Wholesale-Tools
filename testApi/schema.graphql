@@ -142,6 +142,7 @@ type Query {
   getCustomerProjectStateByActiveProjects: [CustomerProjectState!]! @resolver(name: "get_cps_by_active_projects", paginated: true)
   getActiveProjects(active: Boolean! = true): [Projects!]!
   getSalesmenByType(type: String!): [Salesmen!]!
+  getAllOpenProjects: [Projects!]! @resolver(name: "get_all_open_jobs", paginated: true)
 }
 
 type Mutation {

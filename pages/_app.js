@@ -8,6 +8,8 @@ import { withApollo } from '../testApi/apollo'
 import { AuthProvider } from '../components/AuthProvider'
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 
+// if (typeof process.versions === 'undefined') process.versions = {}
+
 const MyApp = (props) => {
   const { Component, pageProps } = props
   const getLayout = Component.getLayout || (page => page)

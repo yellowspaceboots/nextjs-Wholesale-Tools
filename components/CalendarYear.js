@@ -10,8 +10,8 @@ import {
 } from 'date-fns'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
-import GridList from '@material-ui/core/GridList'
-import GridListTile from '@material-ui/core/GridListTile'
+import ImageList from '@material-ui/core/ImageList'
+import ImageListItem from '@material-ui/core/ImageListItem'
 import Grid from '@material-ui/core/Grid'
 import InternalLink from './InternalLink'
 
@@ -31,7 +31,7 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
     }
   })
   return (
-    <Grid container justify='space-between' style={{ marginTop: -10, maxWidth: 1200 }}>
+    <Grid container justifyContent='space-between' style={{ marginTop: -10, maxWidth: 1200 }}>
       {monthData.map((month) => (
         <div
           key={month.name}
@@ -50,18 +50,18 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
             >
               {month.name}
             </Typography>
-            <GridList cellHeight={26} cols={7}>
+            <ImageList rowHeight={26} cols={7} gap={0}>
               {shortWeekdays.map((day, i) => (
-                <GridListTile
+                <ImageListItem
                   key={i}
                   cols={1}
                   style={{ display: 'flex', justifyContent: 'center' }}
                 >
                   <Typography variant='overline' color='textSecondary'>{day}</Typography>
-                </GridListTile>
+                </ImageListItem>
               ))}
               {month.days.map((day, i) => (
-                <GridListTile
+                <ImageListItem
                   key={i}
                   cols={1}
                   style={{ display: 'flex', justifyContent: 'center' }}
@@ -87,9 +87,9 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
                       {format(day, 'd')}
                     </Typography>
                   </IconButton>
-                </GridListTile>
+                </ImageListItem>
               ))}
-            </GridList>
+            </ImageList>
           </div>
         </div>
       ))}

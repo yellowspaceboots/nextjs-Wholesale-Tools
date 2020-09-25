@@ -38,12 +38,13 @@ export const useHover = () => {
 export const getStatusColor = (status) => {
   const statusColors = {
     'On Track': 'green',
-    'At Risk': '#ffbb41',
+    'At Risk': '#ff8741',
     'Off Track': '#d32f2f',
     Open: '#1e3f76',
     Pending: '#ffbb41',
     Won: 'green',
-    Lost: '#d32f2f'
+    Lost: '#d32f2f',
+    Closed: 'lightgrey'
   }
   const statusColor = statusColors[status] || 'lightgrey'
   return statusColor

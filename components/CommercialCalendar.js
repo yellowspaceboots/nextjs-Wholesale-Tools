@@ -141,7 +141,7 @@ const CommercialCalendar = ({ view, year, month, day }) => {
   const title = view !== 'week' ? format(viewDate, titleFormats[view]) : `${format(startOfWeek(viewDate), titleFormats[view])} - ${format(endOfWeek(viewDate), titleFormats.week2)}`
   return (
     <Grid container direction='column'>
-      <Grid container item alignItems='center' xs={12} style={{ marginBottom: 12 }}>
+      <Grid container item alignItems='center' xs={12}>
         <Button variant='outlined' href='/calendar/[...params]' as={todayUrl} component={InternalLink} style={{ marginRight: 10 }}>Today</Button>
         <IconButton href='/calendar/[...params]' as={previousUrl} component={InternalLink} color='inherit' size='small' aria-label='Previous'>
           <ChevronLeftIcon />
@@ -168,7 +168,7 @@ const CommercialCalendar = ({ view, year, month, day }) => {
           </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
-      <div style={{ maxHeight: '80vh', overflowX: 'scroll', padding: 2 }}>
+      <div style={{ height: '80vh', overflowX: 'hidden' }}>
         <AnimatePresence exitBeforeEnter key={[view, viewDate]}>
           <motion.div
             initial='initial'

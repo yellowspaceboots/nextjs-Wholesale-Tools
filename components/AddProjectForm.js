@@ -16,7 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import ListboxComponent from './VirtualizedList'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
-import { DevTool } from 'react-hook-form-devtools'
+import { DevTool } from '@hookform/devtools'
 import Button from '@material-ui/core/Button'
 import customers from '../testApi/houstonCustomers.json'
 import salesmen from '../testApi/salesmen.json'
@@ -85,204 +85,212 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
           </Grid>
           <Grid item xs={12}>
             <Controller
-              as={
-                <Autocomplete
-                  id='customers'
-                  multiple
-                  options={customers}
-                  filterOptions={filterOptions}
-                  fullWidth
-                  getOptionSelected={(option, value) => option.account === value.account}
-                  getOptionLabel={(option) => option.name}
-                  ListboxComponent={ListboxComponent}
-                  renderInput={(params) => <TextField {...params} error={!!addErrors.customers} helperText={!!addErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-                  renderOption={(option, { inputValue }) => {
-                    const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
-                    const matches = match(fullOption.trim(), inputValue)
-                    const parts = parse(fullOption.trim(), matches)
-                    return (
-                      <div>
-                        {parts.map((part, index) => (
-                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    )
-                  }}
-                />
-              }
-              onChange={([, data]) => data}
               name='customers'
-              rules={{
-                validate: value => {
-                  return value.length > 0
-                }
-              }}
               control={addControl}
               defaultValue={intialState.customers}
+              rules={{ validate: value => value.length > 0 }}
+              render={({ onChange, onBlur, value }) => {
+                return (
+                  <Autocomplete
+                    id='customers'
+                    multiple
+                    onChange={(e, val) => onChange(val)}
+                    options={customers}
+                    filterOptions={filterOptions}
+                    fullWidth
+                    getOptionSelected={(option, value) => option.account === value.account}
+                    getOptionLabel={(option) => option.name}
+                    ListboxComponent={ListboxComponent}
+                    renderInput={(params) =>
+                      <TextField
+                        {...params}
+                        error={!!addErrors.customers}
+                        helperText={!!addErrors.customers && 'Customers Cannot Be Blank'}
+                        label='Customers'
+                        variant='outlined'
+                      />}
+                    renderOption={(option, { inputValue }) => {
+                      const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
+                      const matches = match(fullOption.trim(), inputValue)
+                      const parts = parse(fullOption.trim(), matches)
+                      return (
+                        <div>
+                          {parts.map((part, index) => (
+                            <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                              {part.text}
+                            </span>
+                          ))}
+                        </div>
+                      )
+                    }}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={12}>
             <Controller
-              as={
-                <Autocomplete
-                  id='salesman'
-                  options={insideSalesmen}
-                  getOptionLabel={(option) => option.name}
-                  getOptionSelected={(option, value) => option.number === value.number}
-                  renderInput={(params) =>
-                    <TextField
-                      {...params}
-                      error={!!addErrors.salesman}
-                      helperText={!!addErrors.salesman && 'Salesman Cannot Be Blank'}
-                      label='Inside Salesman'
-                      variant='outlined'
-                    />}
-                  ListboxComponent={ListboxComponent}
-                  renderOption={(option, { inputValue }) => {
-                    const fullOption = `${option.number}-${option.name}`
-                    const matches = match(fullOption.trim(), inputValue)
-                    const parts = parse(fullOption.trim(), matches)
-                    return (
-                      <div>
-                        {parts.map((part, index) => (
-                          <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
-                            {part.text}
-                          </span>
-                        ))}
-                      </div>
-                    )
-                  }}
-                />
-              }
-              onChange={([, data]) => data}
               name='salesman'
-              rules={{
-                validate: value => {
-                  return !!value
-                }
-              }}
               control={addControl}
               defaultValue={intialState.salesman}
+              rules={{ validate: value => !!value }}
+              render={({ onChange, onBlur, value }) => {
+                return (
+                  <Autocomplete
+                    id='salesman'
+                    options={insideSalesmen}
+                    onChange={(e, val) => onChange(val)}
+                    getOptionLabel={(option) => option.name}
+                    getOptionSelected={(option, value) => option.number === value.number}
+                    renderInput={(params) =>
+                      <TextField
+                        {...params}
+                        error={!!addErrors.salesman}
+                        helperText={!!addErrors.salesman && 'Salesman Cannot Be Blank'}
+                        label='Inside Salesman'
+                        variant='outlined'
+                      />}
+                    ListboxComponent={ListboxComponent}
+                    renderOption={(option, { inputValue }) => {
+                      const fullOption = `${option.number}-${option.name}`
+                      const matches = match(fullOption.trim(), inputValue)
+                      const parts = parse(fullOption.trim(), matches)
+                      return (
+                        <div>
+                          {parts.map((part, index) => (
+                            <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                              {part.text}
+                            </span>
+                          ))}
+                        </div>
+                      )
+                    }}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <Controller
-              as={
-                <MobileDatePicker
-                  label='Date Entered'
-                  disabled
-                  renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
-                />
-              }
               name='dateEntered'
-              rules={{
-                validate: value => {
-                  return !!value
-                }
-              }}
+              rules={{ validate: value => !!value }}
               control={addControl}
               defaultValue={intialState.dateEntered}
+              render={({ onChange, onBlur, value }) => {
+                return (
+                  <MobileDatePicker
+                    label='Date Entered'
+                    disabled
+                    renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <Controller
-              as={
-                <MobileDateTimePicker
-                  label='Date Due'
-                  renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
-                />
-              }
               name='dateDue'
-              rules={{
-                validate: value => {
-                  return !!value
-                }
-              }}
+              rules={{ validate: value => !!value }}
               control={addControl}
               defaultValue={intialState.dateDue}
+              render={props => {
+                return (
+                  <MobileDateTimePicker
+                    {...props}
+                    label='Date Due'
+                    renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <FormControl error={!!addErrors.amount} variant='outlined' fullWidth>
               <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
               <Controller
-                as={
-                  <OutlinedInput
-                    autoComplete='off'
-                    id='outlined-adornment-amount'
-                    startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                    aria-describedby='outlined-adornment-amount'
-                    inputProps={{
-                      'aria-label': 'amount'
-                    }}
-                    labelWidth={70}
-                    type='number'
-                  />
-                }
                 name='amount'
                 control={addControl}
                 defaultValue={intialState.amount}
+                render={props => {
+                  return (
+                    <OutlinedInput
+                      {...props}
+                      autoComplete='off'
+                      id='outlined-adornment-amount'
+                      startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                      aria-describedby='outlined-adornment-amount'
+                      inputProps={{
+                        'aria-label': 'amount'
+                      }}
+                      labelWidth={70}
+                      type='number'
+                    />
+                  )
+                }}
               />
-
               {!!addErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
             </FormControl>
           </Grid>
           <Grid item xs={3}>
             <Controller
-              as={
-                <TextField
-                  id='outlined-select-size'
-                  select
-                  fullWidth
-                  label='Size'
-                  variant='outlined'
-                  error={!!addErrors.size}
-                  helperText={!!addErrors.size && 'Size Cannot Be Blank'}
-                >
-                  <MenuItem value='Small'>
-                  Small
-                  </MenuItem>
-                  <MenuItem value='Medium'>
-                  Medium
-                  </MenuItem>
-                  <MenuItem value='Large'>
-                  Large
-                  </MenuItem>
-                </TextField>
-              }
               name='size'
               control={addControl}
               defaultValue={intialState.size}
+              render={props => {
+                return (
+                  <TextField
+                    {...props}
+                    id='outlined-select-size'
+                    select
+                    fullWidth
+                    label='Size'
+                    variant='outlined'
+                    error={!!addErrors.size}
+                    helperText={!!addErrors.size && 'Size Cannot Be Blank'}
+                  >
+                    <MenuItem value='Small'>
+                  Small
+                    </MenuItem>
+                    <MenuItem value='Medium'>
+                  Medium
+                    </MenuItem>
+                    <MenuItem value='Large'>
+                  Large
+                    </MenuItem>
+                  </TextField>
+                )
+              }}
             />
           </Grid>
           <Grid item xs={3}>
             <Controller
-              as={
-                <TextField
-                  id='outlined-select-size'
-                  select
-                  fullWidth
-                  label='Status'
-                  variant='outlined'
-                  error={!!addErrors.status}
-                  helperText={!!addErrors.status && 'Status Cannot Be Blank'}
-                >
-                  <MenuItem value='On Track'>
-                    On Track
-                  </MenuItem>
-                  <MenuItem value='At Risk'>
-                    At Risk
-                  </MenuItem>
-                  <MenuItem value='Off Track'>
-                    Off Track
-                  </MenuItem>
-                </TextField>
-              }
               name='status'
               control={addControl}
               defaultValue={intialState.status}
+              render={props => {
+                return (
+                  <TextField
+                    id='outlined-select-size'
+                    {...props}
+                    select
+                    fullWidth
+                    label='Status'
+                    variant='outlined'
+                    error={!!addErrors.status}
+                    helperText={!!addErrors.status && 'Status Cannot Be Blank'}
+                  >
+                    <MenuItem value='On Track'>
+                    On Track
+                    </MenuItem>
+                    <MenuItem value='At Risk'>
+                    At Risk
+                    </MenuItem>
+                    <MenuItem value='Off Track'>
+                    Off Track
+                    </MenuItem>
+                  </TextField>
+                )
+              }}
             />
           </Grid>
           <Grid item xs={12}>

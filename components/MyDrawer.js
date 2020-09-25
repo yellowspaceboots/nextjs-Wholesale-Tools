@@ -20,6 +20,7 @@ import Hidden from '@material-ui/core/Hidden'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Tooltip from '@material-ui/core/Tooltip'
+import { useAuth } from './AuthProvider'
 
 const drawerWidth = 180
 
@@ -49,9 +50,9 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(7) + 1
+      width: `calc(${theme.spacing(7)} + 1px)`
     }
   },
   drawerPaper: {
@@ -81,10 +82,8 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
 const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const theme = useTheme()
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const styleProps = {
-    navColor: 'lightgrey',
-    navPadding: 44
-  }
+  const { user } = useAuth()
+  const styleProps = { navColor: 'lightgrey', navPadding: 44 }
   const today = new Date()
   const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
   const classes = useStyles(styleProps)
@@ -153,6 +152,14 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>
         </DrawerTooltip>
+        {user.role === 'MANAGER' && (
+          <DrawerTooltip title='Settings' drawerOpen={mobileOpen || drawerOpen}>
+            <ListItem button href='/settings/commercial-projects' as='/settings/commercial-projects' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+              <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<SettingsIcon className={classes.drawerIcon} />}</ListItemIcon>
+              <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Settings</Typography>} />
+            </ListItem>
+          </DrawerTooltip>
+        )}
         {/* drawerNavConfig.map(nestedNavigation => {
           const Icon = nestedNavigation.icon
           const title = nestedNavigation.sectionTitle

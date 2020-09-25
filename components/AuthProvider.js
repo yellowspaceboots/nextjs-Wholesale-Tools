@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
       push('/')
     }
   })
+  if (loading) return null
   return (
     <AuthContext.Provider value={{ user, checked, setUser, refetchUser }}>{children}</AuthContext.Provider>
   )

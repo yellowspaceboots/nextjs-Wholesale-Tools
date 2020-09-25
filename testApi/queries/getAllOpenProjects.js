@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const GET_ACTIVE_PROJECTS = gql`
-  query GetActiveProjects {
-    getActiveProjects(_size: 500, active: true) {
+export const GET_ALL_OPEN_PROJECTS = gql`
+  query GetAllOpenProjects {
+    getAllOpenProjects(_size: 500) {
       data{
             _id
             title

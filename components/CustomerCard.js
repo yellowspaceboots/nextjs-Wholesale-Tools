@@ -30,11 +30,10 @@ import Button from '@material-ui/core/Button'
 import { FIND_PROJECTS_BY_ID } from '../testApi/queries/findProjectsById'
 
 const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
-  console.log(customerCount)
   const theme = useTheme()
   const [edit, setEdit] = useState(false)
   const [open, setOpen] = useState(false)
-  const statusColor = getStatusColor(customer.status)
+  const [statusColor, setStatusColor] = useState(getStatusColor(customer.status))
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -67,6 +66,7 @@ const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
       amount: data.amount * 10000
     }
     updateCustomerProjectState({ variables: { id: customer._id, data: payload } })
+    setStatusColor(getStatusColor(data.status))
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -106,55 +106,60 @@ const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
               {customer.customerRef.name}
             </Typography>
             <Controller
-              as={
-                <TextField
-                  select
-                  disabled={!edit}
-                  size='small'
-                  label='Status'
-                  variant='outlined'
-                  value={customer.status}
-                  style={{ marginBottom: 12 }}
-                >
-                  <MenuItem value='Open'>
-                    Open
-                  </MenuItem>
-                  <MenuItem value='Pending'>
-                    Pending
-                  </MenuItem>
-                  <MenuItem value='Won'>
-                    Won
-                  </MenuItem>
-                  <MenuItem value='Lost'>
-                    Lost
-                  </MenuItem>
-                </TextField>
-              }
               name='status'
               control={control}
               defaultValue={intialState.status}
+              render={props => {
+                return (
+                  <TextField
+                    select
+                    {...props}
+                    disabled={!edit}
+                    size='small'
+                    label='Status'
+                    variant='outlined'
+                    style={{ marginBottom: 12 }}
+                  >
+                    <MenuItem value='Open'>
+                    Open
+                    </MenuItem>
+                    <MenuItem value='Pending'>
+                    Pending
+                    </MenuItem>
+                    <MenuItem value='Won'>
+                    Won
+                    </MenuItem>
+                    <MenuItem value='Lost'>
+                    Lost
+                    </MenuItem>
+                  </TextField>
+                )
+              }}
             />
             <div>
               <FormControl error={!!errors.amount} variant='outlined' size='small' fullWidth style={{ marginBottom: 10 }}>
                 <InputLabel htmlFor={`outlined-adornment-amount${customer._id}`}>Amount</InputLabel>
                 <Controller
-                  as={
-                    <OutlinedInput
-                      autoComplete='off'
-                      disabled={!edit}
-                      id={`outlined-adornment-amount${customer._id}`}
-                      startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                      aria-describedby={`outlined-adornment-amount${customer._id}`}
-                      inputProps={{
-                        'aria-label': 'amount'
-                      }}
-                      labelWidth={70}
-                      type='number'
-                    />
-                  }
                   name='amount'
                   control={control}
                   defaultValue={intialState.amount}
+                  render={props => {
+                    return (
+                      <OutlinedInput
+                        {...props}
+                        autoComplete='off'
+                        disabled={!edit}
+                        id={`outlined-adornment-amount${customer._id}`}
+                        startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                        aria-describedby={`outlined-adornment-amount${customer._id}`}
+                        inputProps={{
+                          'aria-label': 'amount'
+                        }}
+                        labelWidth={70}
+                        type='number'
+                      />
+                    )
+                  }}
                 />
               </FormControl>
             </div>
