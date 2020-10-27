@@ -22,6 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { compareDesc } from 'date-fns'
 import { groupBy } from '../testApi/utils'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
+import CustomerStatusBoard from './CustomerStatusBoard'
 
 const CalendarEvent = ({ id }) => {
   // const temp = ['375fc2cb384d29ae', 'a996530b6030574d', '068b9689b1e66cc4', 'ae68aa3703b55a7a', '435f42aa8c93d58f']
@@ -80,9 +81,18 @@ const CalendarEvent = ({ id }) => {
             </Tooltip>
           </Grid>
           <Divider style={{ marginBottom: 12, marginTop: 4 }} />
-          <EventTitle event={event} />
-          <Divider />
-          <Button
+          <Grid container>
+            <Grid item style={{ flex: 1, marginRight: 10 }}>
+              <EventTitle event={event} />
+            </Grid>
+            <Grid item style={{ flex: 2 }}>
+              <CustomerStatusBoard customerList={event.customerList.data} />
+            </Grid>
+
+          </Grid>
+          <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+          {/*
+                    <Button
             onClick={handleAddCustomersClickOpen}
             startIcon={<GroupAddIcon />}
             style={{ marginTop: 12, marginBottom: 12 }}
@@ -97,6 +107,7 @@ const CalendarEvent = ({ id }) => {
             )}
           </Grid>
           <Divider style={{ marginTop: 20, marginBottom: 20 }} />
+          */}
           <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{data.findProjectsByID.comments.data.length} Comments</Typography>
           <Grid item style={{ marginBottom: 20, marginLeft: -8 }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>

@@ -302,7 +302,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
           <Typography variant='h5' style={{ fontWeight: 700 }}>Wholesale Electric</Typography>
           <Typography variant='caption' style={{ marginTop: -8, textTransform: 'uppercase' }}>Supply Company of Houston</Typography>
         </div>
-        <Hidden xsDown implementation='css'>
+        <Hidden smDown implementation='css'>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

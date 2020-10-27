@@ -95,18 +95,18 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                         variant='outlined'
                       />}
                     ListboxComponent={ListboxComponent}
-                    renderOption={(option, { inputValue }) => {
+                    renderOption={(props, option, { inputValue }) => {
                       const fullOption = `${option.number}-${option.name}`
                       const matches = match(fullOption.trim(), inputValue)
                       const parts = parse(fullOption.trim(), matches)
                       return (
-                        <div>
+                        <li {...props}>
                           {parts.map((part, index) => (
                             <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                               {part.text}
                             </span>
                           ))}
-                        </div>
+                        </li>
                       )
                     }}
                   />

@@ -109,18 +109,18 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                         label='Customers'
                         variant='outlined'
                       />}
-                    renderOption={(option, { inputValue }) => {
+                    renderOption={(props, option, { inputValue }) => {
                       const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
                       const matches = match(fullOption.trim(), inputValue)
                       const parts = parse(fullOption.trim(), matches)
                       return (
-                        <div>
+                        <li {...props}>
                           {parts.map((part, index) => (
                             <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                               {part.text}
                             </span>
                           ))}
-                        </div>
+                        </li>
                       )
                     }}
                   />
@@ -151,18 +151,18 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                         variant='outlined'
                       />}
                     ListboxComponent={ListboxComponent}
-                    renderOption={(option, { inputValue }) => {
+                    renderOption={(props, option, { inputValue }) => {
                       const fullOption = `${option.number}-${option.name}`
                       const matches = match(fullOption.trim(), inputValue)
                       const parts = parse(fullOption.trim(), matches)
                       return (
-                        <div>
+                        <li {...props}>
                           {parts.map((part, index) => (
                             <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                               {part.text}
                             </span>
                           ))}
-                        </div>
+                        </li>
                       )
                     }}
                   />

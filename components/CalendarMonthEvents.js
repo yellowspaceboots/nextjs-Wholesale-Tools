@@ -7,42 +7,6 @@ import InternalLink from './InternalLink'
 import Status from './Status'
 import CalendarEventButton from './CalendarEventButton'
 
-/*
-
-const useStyles = makeStyles({
-  root: {
-    textTransform: 'none',
-    fontSize: 12,
-    height: 18,
-    padding: 0,
-    textAlign: 'left',
-    fontWeight: 'lighter',
-    backgroundColor: 'white',
-    width: '95%',
-    marginTop: 4
-  },
-  label: {
-    justifyContent: 'flex-start',
-    whiteSpace: 'nowrap',
-    color: 'black'
-  }
-})
-        <Button
-          key={event._id}
-          href='/event/[id]'
-          as={`/event/${event._id}`}
-          component={InternalLink}
-          onClick={(e) => e.stopPropagation()}
-          variant='contained'
-          startIcon={<Status status={event.status} style={{ marginLeft: 10 }} />}
-          classes={{
-            root: classes.root,
-            label: classes.label
-          }}
-        >
-          {`${format(new Date(event.dateDue), 'ha').toLowerCase()} ${event.title}`}
-        </Button>
-*/
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,16 +27,18 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const CalendarMonthEvents = ({ events, day }) => {
+const CalendarMonthEvents = ({ events, day, dateCount }) => {
   if (!events) return null
   const classes = useStyles()
-  const sliceNumber = events.length > 4 ? 3 : 4
+  const max = dateCount <= 35 ? 4 : 3
+  const needsSlicing = events.length > max
+  const sliceNumber = needsSlicing ? max - 1 : max
   return (
     <>
       {events.slice().sort((a, b) => compareAsc(new Date(a.dateDue), new Date(b.dateDue))).slice(0, sliceNumber).map(event => (
         <CalendarEventButton key={event._id} event={event} time title fullWidth />
       ))}
-      {sliceNumber === 3 &&
+      {needsSlicing &&
         <Button
           fullWidth
           component={InternalLink}
@@ -86,7 +52,7 @@ const CalendarMonthEvents = ({ events, day }) => {
             label: classes.label
           }}
         >
-          {`${events.length - 3} more`}
+          {`${events.length - sliceNumber} more`}
         </Button>}
     </>
   )

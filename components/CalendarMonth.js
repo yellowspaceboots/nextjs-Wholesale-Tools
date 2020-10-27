@@ -1,5 +1,5 @@
 import React from 'react'
-import { isSameMonth, isSameDay, format } from 'date-fns'
+import { isSameMonth, isSameDay, format, startOfDay, endOfDay } from 'date-fns'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import ImageList from '@material-ui/core/ImageList'
@@ -18,6 +18,9 @@ const CalendarMonth = ({
 }) => {
   const dateFormat = 'd'
   const handleClickOpen = (day) => setSelectedDate(day)
+  const firstDate = startOfDay(calendarDates[0]).toISOString()
+  const lastDate = endOfDay(calendarDates[calendarDates.length - 1]).toISOString()
+  console.log({ firstDate, lastDate })
   return (
     <ImageList rowHeight='auto' cols={7} gap={2}>
       <>
@@ -59,7 +62,7 @@ const CalendarMonth = ({
               </Typography>
             </IconButton>
             <div style={{ maxWidth: 275 }}>
-              <CalendarMonthEvents events={events[`${day.getFullYear()}-${day.getMonth()}-${day.getDate()}`]} day={day} />
+              <CalendarMonthEvents events={events[`${day.getFullYear()}-${day.getMonth()}-${day.getDate()}`]} day={day} dateCount={calendarDates.length} />
             </div>
           </ImageListItem>
         ))}

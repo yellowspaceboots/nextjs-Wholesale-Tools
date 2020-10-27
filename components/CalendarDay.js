@@ -1,6 +1,5 @@
 import React from 'react'
 import { format, isSameHour, isSameDay, eachHourOfInterval, startOfDay, endOfDay, getHours } from 'date-fns'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'

@@ -16,6 +16,8 @@ import cookie from 'js-cookie'
 import { LOGIN_USER } from '../testApi/mutations/loginUser'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
+import { initializeApollo } from '../testApi/testApollo'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -136,6 +138,13 @@ const Login = () => {
       </Grid>
     </>
   )
+}
+
+export async function getStaticProps (context) {
+  const apolloClient = initializeApollo(context)
+  return {
+    props: {} // will be passed to the page component as props
+  }
 }
 
 export default Login

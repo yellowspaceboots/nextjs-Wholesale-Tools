@@ -8,6 +8,8 @@ import { useAuth } from '../components/AuthProvider'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
 import { ProjectsProvider } from '../components/ProjectProvider'
+import Fab from '@material-ui/core/Fab'
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,6 +50,9 @@ const Layout = ({ children }) => {
     cookie.remove('token')
     setUser(false)
   }
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
   if (!checked) return null
   if (!user) return null
   return (
@@ -59,6 +64,19 @@ const Layout = ({ children }) => {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {children}
+          <Fab
+            style={{
+              position: 'fixed',
+              bottom: 20,
+              right: 20
+            }}
+            color='secondary'
+            size='small'
+            aria-label='scroll back to top'
+            onClick={scrollTop}
+          >
+            <KeyboardArrowUpIcon />
+          </Fab>
         </main>
       </div>
     </ProjectsProvider>

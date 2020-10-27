@@ -12,7 +12,7 @@ const EventTitle = ({ event }) => {
   const dateToNow = formatDistanceToNow(new Date(event.dateEntered), { addSuffix: true })
   const editedDateToNow = formatDistanceToNow(new Date(event.dateEdited), { addSuffix: true })
   return (
-    <Grid container wrap='nowrap'>
+    <Grid container>
       <Grid item>
         <DateIcon event={event} status={false} />
         <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>

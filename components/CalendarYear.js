@@ -50,12 +50,12 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
             >
               {month.name}
             </Typography>
-            <ImageList rowHeight={26} cols={7} gap={0}>
+            <ImageList rowHeight={26} cols={7} gap={4}>
               {shortWeekdays.map((day, i) => (
                 <ImageListItem
                   key={i}
                   cols={1}
-                  style={{ display: 'flex', justifyContent: 'center' }}
+                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                 >
                   <Typography variant='overline' color='textSecondary'>{day}</Typography>
                 </ImageListItem>
@@ -66,27 +66,29 @@ const CalendarYear = ({ months, year, shortWeekdays, currentDate }) => {
                   cols={1}
                   style={{ display: 'flex', justifyContent: 'center' }}
                 >
-                  <IconButton
-                    color='inherit'
-                    size='small'
-                    href='/calendar/[...params]'
-                    as={`/calendar/day/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}`}
-                    component={InternalLink}
-                    onClick={(e) => e.stopPropagation()}
-                    style={{ backgroundColor: (day.getMonth() === month.number && isSameDay(day, currentDate)) && '#1e3f76' }}
-                  >
-                    <Typography
-                      variant='overline'
-                      style={{
-                        height: 24,
-                        minWidth: 20,
-                        marginTop: -4,
-                        color: (day.getMonth() === month.number && isSameDay(day, currentDate)) && 'white'
-                      }}
+                  <div>
+                    <IconButton
+                      color='inherit'
+                      size='small'
+                      href='/calendar/[...params]'
+                      as={`/calendar/day/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}`}
+                      component={InternalLink}
+                      onClick={(e) => e.stopPropagation()}
+                      style={{ backgroundColor: (day.getMonth() === month.number && isSameDay(day, currentDate)) && '#1e3f76' }}
                     >
-                      {format(day, 'd')}
-                    </Typography>
-                  </IconButton>
+                      <Typography
+                        variant='overline'
+                        style={{
+                          height: 24,
+                          minWidth: 20,
+                          marginTop: -4,
+                          color: (day.getMonth() === month.number && isSameDay(day, currentDate)) && 'white'
+                        }}
+                      >
+                        {format(day, 'd')}
+                      </Typography>
+                    </IconButton>
+                  </div>
                 </ImageListItem>
               ))}
             </ImageList>

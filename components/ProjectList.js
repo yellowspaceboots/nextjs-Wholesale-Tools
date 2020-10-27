@@ -15,13 +15,40 @@ import min from 'date-fns/min'
 import isWithinInterval from 'date-fns/isWithinInterval'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
+import OpenProjects from './OpenProjects'
+import PendingProjects from './PendingProjects'
+import ClosedProjects from './ClosedProjects'
+import Box from '@material-ui/core/Box'
 
-const ProjectListWrapper = (props) => {
+const ProjectListWrapper = ({ projectList, ...props }) => {
+  /*
   const { loading, error, data, resultPath } = useProjects()
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const projectList = data[resultPath].data || []
+  */
   return <ProjectList unsorteredProjectList={projectList} {...props} />
+}
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      style={{ display: 'flex', flex: '0 0 100%' }}
+      {...other}
+    >
+      {value === index && (
+        <>
+          {children}
+        </>
+      )}
+    </div>
+  )
 }
 
 const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
@@ -29,6 +56,8 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
   const handleChange = (event, newValue) => {
     setTabValue(newValue)
   }
+  const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
+  /*
   const projectList = unsorteredProjectList.slice().sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
   const dateRange = projectList.map(project => new Date(project.dateDue))
   const [selectedDate, handleDateChange] = useState([min(dateRange), max(dateRange)])
@@ -65,6 +94,7 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
     (salesmanValue ? state.customerList.data.map(customer => customer.customerRef.salesRef.number).includes(salesmanValue.salesNumber) : true) &&
     (insideSalesmanValue ? state.salesRef.number === insideSalesmanValue.insideSalesNumber : true) &&
     (projectValue ? state.title === projectValue.name : true))
+    */
   return (
     <AnimatePresence>
       <motion.div
@@ -74,7 +104,7 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
         variants={pageVariants}
       >
         <Grid container spacing={4}>
-          {filterOpen && (
+          {/* filterOpen && (
             <Grid xs={12} item container spacing={2} direction='row'>
               <Grid item>
                 <MobileDateRangePicker
@@ -157,7 +187,7 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
                 />
               </Grid>
             </Grid>
-          )}
+          ) */}
 
           <Grid item xs={12}>
             <Divider />
@@ -167,13 +197,23 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
               indicatorColor='primary'
               textColor='primary'
               centered
+              style={{ paddingBottom: 10 }}
             >
               <Tab label='Open' />
               <Tab label='Pending' />
               <Tab label='Closed' />
             </Tabs>
           </Grid>
-          {projectList.length > 0 ? (
+          <TabPanel value={tabValue} index={0}>
+            <OpenProjects />
+          </TabPanel>
+          <TabPanel value={tabValue} index={1}>
+            <PendingProjects />
+          </TabPanel>
+          <TabPanel value={tabValue} index={2}>
+            <ClosedProjects />
+          </TabPanel>
+          {/* projectList.length > 0 ? (
             <>
               <Grid container spacing={4}>
                 {filteredList.map(event =>
@@ -185,7 +225,7 @@ const ProjectList = ({ unsorteredProjectList, filterOpen }) => {
             <>
               <Typography>No Quotations</Typography>
             </>
-          )}
+          ) */}
         </Grid>
       </motion.div>
     </AnimatePresence>

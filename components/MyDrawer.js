@@ -201,7 +201,7 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
           {drawer}
         </Drawer>
       </Hidden>
-      <Hidden xsDown implementation='css'>
+      <Hidden smDown implementation='css'>
         <Drawer
           className={clsx(classes.drawer, {
             [classes.drawerOpen]: drawerOpen,
