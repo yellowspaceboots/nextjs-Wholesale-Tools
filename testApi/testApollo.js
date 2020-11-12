@@ -12,6 +12,7 @@ function createLink (ctx) {
   })
   const authLink = setContext((_, { headers }) => {
     const token = getNextCookies(ctx).token
+    console.log(token)
     return {
       headers: {
         ...headers,

@@ -3,7 +3,7 @@ import Link from './Link'
 
 const CommercialProjectsSettings = ({ events }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column'}}>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Link href='/commercial-projects/edit-salesman-list' variant='body2'>
         Edit Assignable Salesman List
       </Link>

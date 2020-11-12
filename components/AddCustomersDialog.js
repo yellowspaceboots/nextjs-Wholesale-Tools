@@ -5,12 +5,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { ADD_CUSTOMERS_TO_PROJECT } from '../testApi/mutations/addCustomersToProject'
-import { useMutation } from '@apollo/client'
 import customers from '../testApi/houstonCustomers.json'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import Autocomplete from '@material-ui/core/Autocomplete'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -20,7 +18,15 @@ import match from 'autosuggest-highlight/match'
 import { Controller, useForm } from 'react-hook-form'
 import matchSorter from 'match-sorter'
 
-const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event }) => {
+const AddCustomersDialog = ({
+  dialogOpen,
+  setDialogOpen,
+  id,
+  customerList,
+  addCustomersToProject,
+  mutationLoading,
+  mutationError
+}) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
@@ -29,7 +35,7 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
     setDialogOpen(false)
     setError()
   }
-  const currentCustomerList = event.customerList.data.map(customer => customer.customerRef.account)
+  const currentCustomerList = customerList.map(customer => customer.customerRef.account)
   const intialState = {
     customers: []
   }
@@ -44,18 +50,9 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
     reValidateMode: 'onChange',
     defaultValues: intialState
   })
-  const [addCustomersToProject, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_CUSTOMERS_TO_PROJECT, {
-    onError: (error) => {
-      console.log(error)
-      setError(error)
-    },
-    onCompleted: () => {
-      handleClose()
-    }
-  })
   const onSubmit = (data, e) => {
     const payload = {
-      projectId: event._id,
+      projectId: id,
       customerList: data.customers.map(customer => {
         return {
           account: customer.account,
@@ -103,9 +100,7 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
                   name='customers'
                   control={addCustomerControl}
                   defaultValue={intialState.customers}
-                  rules={{
-                    validate: value => value.length > 0
-                  }}
+                  rules={{ validate: value => value.length > 0 }}
                   render={({ onChange, onBlur, value }) => {
                     return (
                       <Autocomplete
@@ -120,18 +115,18 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
                         getOptionLabel={(option) => option.name}
                         ListboxComponent={ListboxComponent}
                         renderInput={(params) => <TextField {...params} error={!!addCustomerErrors.customers} helperText={!!addCustomerErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
-                        renderOption={(option, { inputValue }) => {
+                        renderOption={(props, option, { inputValue }) => {
                           const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
                           const matches = match(fullOption.trim(), inputValue)
                           const parts = parse(fullOption.trim(), matches)
                           return (
-                            <div>
+                            <li {...props}>
                               {parts.map((part, index) => (
                                 <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                                   {part.text}
                                 </span>
                               ))}
-                            </div>
+                            </li>
                           )
                         }}
                       />
@@ -145,7 +140,7 @@ const AddCustomersDialog = ({ dialogOpen, setDialogOpen, query, variables, event
             <Button disabled={!addCustomerFormState.isValid} type='submit' color='primary'>
             Save
             </Button>
-            <Button onClick={handleClose} color='primary' autoFocus>
+            <Button onClick={handleClose} type='reset' color='primary'>
             Cancel
             </Button>
           </DialogActions>

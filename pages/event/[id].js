@@ -3,10 +3,10 @@ import CalendarEvent from '../../components/CalendarEvent'
 import { useRouter } from 'next/router'
 
 const Event = () => {
-    const router = useRouter()
-    const { id } = router.query
+  const router = useRouter()
+  const { id } = router.query
   return (
-      <CalendarEvent id={id} />
+    <CalendarEvent id={id} />
   )
 }
 

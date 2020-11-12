@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
@@ -16,8 +16,7 @@ import cookie from 'js-cookie'
 import { LOGIN_USER } from '../testApi/mutations/loginUser'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
-import { initializeApollo } from '../testApi/testApollo'
-
+import { Controller, useForm } from 'react-hook-form'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -51,17 +50,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Login = () => {
-  const { user } = useAuth()
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
   const classes = useStyles()
+  const { user } = useAuth()
   const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN_USER, {
-    variables: {
-      input: {
-        email,
-        password
-      }
-    },
     onCompleted: data => {
       cookie.set('token', data.loginUser.token, {
         sameSite: 'lax',
@@ -71,6 +62,29 @@ const Login = () => {
       Router.reload(window.location.pathname)
     }
   })
+  const intialState = {
+    email: '',
+    password: ''
+  }
+  const {
+    register: loginRegister,
+    errors: loginErrors,
+    handleSubmit: loginHandleSubmit
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: intialState
+  })
+  const onSubmit = (formData, e) => {
+    loginUser({
+      variables: {
+        input: {
+          email: formData.email.trim(),
+          password: formData.password.trim()
+        }
+      }
+    })
+  }
   if (user) return null
   return (
     <>
@@ -85,32 +99,31 @@ const Login = () => {
             <Typography component='h1' variant='h5'>
             Sign in
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} onSubmit={loginHandleSubmit(onSubmit)}>
               <TextField
+                autoComplete='email'
                 variant='outlined'
-                margin='normal'
-                required
-                fullWidth
+                name='email'
                 id='email'
                 label='Email Address'
-                name='email'
-                autoComplete='email'
+                fullWidth
                 autoFocus
-                onChange={(e) => setEmail(e.target.value)}
+                error={!!loginErrors.email || mutationError}
+                helperText={loginErrors.email ? 'Email Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                inputRef={loginRegister({ required: true })}
               />
               <TextField
-                error={Boolean(mutationError)}
-                helperText={Boolean(mutationError) && mutationError.message}
+                autoComplete='current-password'
                 variant='outlined'
-                margin='normal'
-                required
-                fullWidth
                 name='password'
                 label='Password'
                 type='password'
                 id='password'
-                autoComplete='current-password'
-                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+                autoFocus
+                error={!!loginErrors.password || mutationError}
+                helperText={loginErrors.password ? 'Password Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                inputRef={loginRegister({ required: true })}
               />
               <FormControlLabel
                 control={<Checkbox value='remember' color='primary' />}
@@ -121,7 +134,7 @@ const Login = () => {
                 variant='contained'
                 color='primary'
                 className={classes.submit}
-                onClick={async () => loginUser()}
+                type='submit'
               >
               Sign In
               </Button>
@@ -139,12 +152,15 @@ const Login = () => {
     </>
   )
 }
-
-export async function getStaticProps (context) {
-  const apolloClient = initializeApollo(context)
+/*
+export async function getServerSideProps (ctx) {
+  const apolloClient = initializeApollo(null, ctx)
+  await apolloClient.query({ query: GET_ME })
   return {
-    props: {} // will be passed to the page component as props
+    props: {
+      initialApolloState: apolloClient.cache.extract(),
+    },
   }
 }
-
+*/
 export default Login

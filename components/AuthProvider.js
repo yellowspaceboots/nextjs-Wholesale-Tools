@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   const { loading, error, data, refetch: refetchUser } = useQuery(GET_ME, {
     onCompleted: data => {
       console.log('running user query')
+      console.log(data)
       setChecked(true)
       setUser(data.getMe)
     },

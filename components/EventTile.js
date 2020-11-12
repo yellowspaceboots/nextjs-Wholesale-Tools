@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import AvatarGroup from '@material-ui/lab/AvatarGroup'
+import AvatarGroup from '@material-ui/core/AvatarGroup'
 import Avatar from '@material-ui/core/Avatar'
 import { getStatusColor } from '../testApi/utils'
 import Button from '@material-ui/core/Button'

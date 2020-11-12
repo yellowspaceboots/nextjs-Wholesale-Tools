@@ -31,12 +31,8 @@ const CalendarEvent = ({ id }) => {
     setComment(event.target.value)
   }
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [addCustomersDialogOpen, setAddCustomersDialogOpen] = useState(false)
   const handleClickOpen = () => {
     setDialogOpen(true)
-  }
-  const handleAddCustomersClickOpen = () => {
-    setAddCustomersDialogOpen(true)
   }
   const { user } = useAuth()
   const [createComments, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_COMMENT, {
@@ -62,7 +58,11 @@ const CalendarEvent = ({ id }) => {
   const groupedComments = groupBy(sortedComments, 'replyTo')
   const fullComments = groupedComments.null || []
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
-  const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(event.amount / 10000)
+  const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
+  const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
+  const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
+  // const formattedAmount = amountShortFormat(avgAmount)
+  const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(avgAmount / 10000)
   return (
     <AnimatePresence>
       <>
@@ -73,7 +73,7 @@ const CalendarEvent = ({ id }) => {
           variants={pageVariants}
         >
           <Grid container alignItems='center'>
-            <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Current Project Value: {fullAmount}</Typography>
+            <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Average Project Value: {fullAmount}</Typography>
             <Tooltip title='Edit Project' placement='right'>
               <IconButton aria-label='edit' onClick={() => handleClickOpen()}>
                 <EditIcon fontSize='small' />
@@ -86,28 +86,11 @@ const CalendarEvent = ({ id }) => {
               <EventTitle event={event} />
             </Grid>
             <Grid item style={{ flex: 2 }}>
-              <CustomerStatusBoard customerList={event.customerList.data} />
+              <CustomerStatusBoard id={id} customerList={event.customerList.data} />
             </Grid>
 
           </Grid>
           <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-          {/*
-                    <Button
-            onClick={handleAddCustomersClickOpen}
-            startIcon={<GroupAddIcon />}
-            style={{ marginTop: 12, marginBottom: 12 }}
-          >
-        Add Customers
-          </Button>
-          <Grid container spacing={2} direction='row' alignItems='stretch'>
-            {event.customerList.data.map(customer =>
-              <Grid item key={customer.customerRef.account}>
-                <CustomerCard customer={customer} fullAmount={event.amount} id={id} customerCount={event.customerList.data.length} />
-              </Grid>
-            )}
-          </Grid>
-          <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-          */}
           <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{data.findProjectsByID.comments.data.length} Comments</Typography>
           <Grid item style={{ marginBottom: 20, marginLeft: -8 }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -144,13 +127,6 @@ const CalendarEvent = ({ id }) => {
           </Grid>
         </motion.div>
         <EditProjectDialog event={event} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
-        <AddCustomersDialog
-          event={event}
-          dialogOpen={addCustomersDialogOpen}
-          setDialogOpen={setAddCustomersDialogOpen}
-          query={FIND_PROJECTS_BY_ID}
-          variables={id}
-        />
       </>
     </AnimatePresence>
   )

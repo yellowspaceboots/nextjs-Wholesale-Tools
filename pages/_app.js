@@ -8,10 +8,10 @@ import { AuthProvider } from '../components/AuthProvider'
 import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../testApi/testApollo'
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/core';
+import createCache from '@emotion/cache'
+import { CacheProvider } from '@emotion/core'
 
-export const cache = createCache();
+export const cache = createCache()
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
@@ -26,20 +26,20 @@ const MyApp = (props) => {
   }, [])
   return (
     <CacheProvider value={cache}>
-    <ApolloProvider client={client}>
-      <Head>
-        <title>Wholesale Electric Tools</title>
-        <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <AuthProvider>
-          <LocalizationProvider dateAdapter={DateFnsUtils}>
-            {getLayout(<Component {...pageProps} />)}
-          </LocalizationProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </ApolloProvider>
+      <ApolloProvider client={client}>
+        <Head>
+          <title>Wholesale Electric Tools</title>
+          <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width' />
+        </Head>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AuthProvider>
+            <LocalizationProvider dateAdapter={DateFnsUtils}>
+              {getLayout(<Component {...pageProps} />)}
+            </LocalizationProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </ApolloProvider>
     </CacheProvider>
   )
 }

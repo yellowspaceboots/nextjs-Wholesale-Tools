@@ -6,7 +6,10 @@ const CommercialEditSalesmanToggle = ({ currentState }) => {
   return (
     <Switch
       checked={toggle}
-      onChange={() => setToggle(!toggle)}
+      onChange={() => {
+        setToggle(!toggle)
+        console.log('triggered')
+      }}
       color='primary'
       name='checkedB'
       inputProps={{ 'aria-label': 'primary checkbox' }}

@@ -7,7 +7,6 @@ import InternalLink from './InternalLink'
 import Status from './Status'
 import CalendarEventButton from './CalendarEventButton'
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     fontSize: 12,

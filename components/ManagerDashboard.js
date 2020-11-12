@@ -13,7 +13,7 @@ import isWithinInterval from 'date-fns/isWithinInterval'
 import endOfDay from 'date-fns/endOfDay'
 import startOfDay from 'date-fns/startOfDay'
 import { useTheme } from '@material-ui/core/styles'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import Autocomplete from '@material-ui/core/Autocomplete'
 
 const ManagerDashboard = () => {
   const theme = useTheme()

@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import IconButton from '@material-ui/core/IconButton'
 import FilterListIcon from '@material-ui/icons/FilterList'
 
-const Projects = () => {
+const Quotations = () => {
   const [filterOpen, toggleFilterOpen] = useState(false)
   const handleToggleFilterOpen = () => toggleFilterOpen(!filterOpen)
   return (
@@ -29,6 +29,6 @@ const Projects = () => {
   )
 }
 
-Projects.getLayout = getLayout
+Quotations.getLayout = getLayout
 
-export default Projects
+export default Quotations

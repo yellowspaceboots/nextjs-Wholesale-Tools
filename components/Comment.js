@@ -72,7 +72,7 @@ const Comment = ({ comment, groupedComments, id }) => {
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Typography variant='body2' noWrap gutterBottom style={{ fontWeight: 'bold', marginLeft: 12 }}>{comment.user.name}</Typography>
             <Typography variant='body2' noWrap color='textSecondary' style={{ marginLeft: 6 }}>{timePosted}</Typography>
-            {comment.edited && <Typography variant='caption' color='textSecondary' style={{ marginLeft: 4, marginTop: 2 }}>{`(edited)`}</Typography>}
+            {comment.edited && <Typography variant='caption' color='textSecondary' style={{ marginLeft: 4, marginTop: 2 }}>(edited)</Typography>}
           </div>
           {edit ? (
             <TextField

@@ -1,6 +1,6 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+import Autocomplete from '@material-ui/core/Autocomplete'
 import FormControl from '@material-ui/core/FormControl'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
@@ -246,7 +246,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
         <Button disabled={!formState.isValid} type='submit' color='primary'>
             Save
         </Button>
-        <Button onClick={handleClose} color='primary' autoFocus>
+        <Button onClick={handleClose} type='reset' color='primary' autoFocus>
             Cancel
         </Button>
       </DialogActions>

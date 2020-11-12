@@ -1,51 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { getLayout } from '../../components/Layout'
 import salesmen from '../../testApi/salesmen.json'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
 import CommercialEditSalesmanToggle from '../../components/CommercialEditSalesmanToggle'
+import { DataGrid } from '@material-ui/data-grid'
+import TextField from '@material-ui/core/TextField'
 
 const EditSalesmanList = () => {
+  const rows = salesmen.map(salesman => {
+    return {
+      ...salesman,
+      id: salesman.number,
+      search: `${salesman.number} ${salesman.name}`
+    }
+  })
+  const zeroPad = (num, places) => String(num).padStart(places, '0')
+  const columns = [
+    { field: 'number', headerName: 'ID', width: 80 },
+    { field: 'name', headerName: 'Name', width: 400 },
+    { field: 'type', headerName: 'Type', width: 130 },
+    {
+      field: 'store',
+      headerName: 'Store',
+      width: 130,
+      valueFormatter: (params) => zeroPad(params.value, 4)
+    },
+    {
+      field: 'used',
+      headerName: 'Used',
+      renderCell: () => <CommercialEditSalesmanToggle currentState={false} />
+    }
+  ]
   return (
-    <div>
+    <>
       <p>Salesman List</p>
-      <TableContainer component={Paper} style={{ height: '80vh' }}>
-        <Table size='small' aria-label='a dense table'>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align='right'>Number</TableCell>
-              <TableCell align='right'>Type</TableCell>
-              <TableCell align='right'>Store</TableCell>
-              <TableCell align='right'>Assignable</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {salesmen.map((row) => {
-              const currentState = false
-              return (
-                <TableRow key={row.number}>
-                  <TableCell component='th' scope='row'>
-                    {row.name}
-                  </TableCell>
-                  <TableCell align='right'>{row.number}</TableCell>
-                  <TableCell align='right'>{row.type}</TableCell>
-                  <TableCell align='right'>{row.store}</TableCell>
-                  <TableCell align='right'>
-                    <CommercialEditSalesmanToggle currentState={currentState} />
-                  </TableCell>
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+      <div style={{ height: 700, width: '100%' }}>
+        <DataGrid rows={rows} columns={columns} pageSize={100} disableSelectionOnClick />
+      </div>
+    </>
   )
 }
 

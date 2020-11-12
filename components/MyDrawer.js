@@ -140,10 +140,10 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
           </ListItem>
         </DrawerTooltip>
-        <DrawerTooltip title='Projects' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button href='/projects' as='/projects' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+        <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
+          <ListItem button href='/quotations' as='/quotations' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<WidgetsIcon className={classes.drawerIcon} />}</ListItemIcon>
-            <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Projects</Typography>} />
+            <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
