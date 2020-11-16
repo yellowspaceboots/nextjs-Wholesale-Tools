@@ -7,10 +7,8 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Comment from './Comment'
 import EventTitle from './EventTitle'
-import CustomerCard from './CustomerCard'
 import { motion, AnimatePresence } from 'framer-motion'
 import EditProjectDialog from './EditProjectDialog'
-import AddCustomersDialog from './AddCustomersDialog'
 import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -21,11 +19,9 @@ import { useAuth } from './AuthProvider'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { compareDesc } from 'date-fns'
 import { groupBy } from '../testApi/utils'
-import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import CustomerStatusBoard from './CustomerStatusBoard'
 
 const CalendarEvent = ({ id }) => {
-  // const temp = ['375fc2cb384d29ae', 'a996530b6030574d', '068b9689b1e66cc4', 'ae68aa3703b55a7a', '435f42aa8c93d58f']
   const [comment, setComment] = useState()
   const handleChange = (event) => {
     setComment(event.target.value)
@@ -61,7 +57,6 @@ const CalendarEvent = ({ id }) => {
   const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
   const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
   const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
-  // const formattedAmount = amountShortFormat(avgAmount)
   const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(avgAmount / 10000)
   return (
     <AnimatePresence>
@@ -82,13 +77,13 @@ const CalendarEvent = ({ id }) => {
           </Grid>
           <Divider style={{ marginBottom: 12, marginTop: 4 }} />
           <Grid container>
-            <Grid item style={{ flex: 1, marginRight: 10 }}>
+            <Grid item xs={2} style={{ flex: 1, marginRight: 10, minWidth: 250 }}>
               <EventTitle event={event} />
             </Grid>
-            <Grid item style={{ flex: 2 }}>
+            <Grid item style={{ border: '2px black solid', flexGrow: 1 }}>
+              {/* <div style={{ border: '1px red solid', height: 456, width: '100%', overflow: 'hidden' }} /> */}
               <CustomerStatusBoard id={id} customerList={event.customerList.data} />
             </Grid>
-
           </Grid>
           <Divider style={{ marginTop: 20, marginBottom: 20 }} />
           <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{data.findProjectsByID.comments.data.length} Comments</Typography>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import LoadingButton from '@material-ui/lab/LoadingButton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import useTimer from '../utils/useTimer'
 
-const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText }) => {
+const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) => {
   const [deleteDown, setDeleteDown] = useState(false)
   const { timer, handleStart, handleReset } = useTimer(0)
   useEffect(() => {
@@ -27,7 +26,7 @@ const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText }) => {
       onMouseDown={() => handleDelete('down')}
       onMouseLeave={() => handleDelete('up')}
       onMouseUp={() => handleDelete('up')}
-      startIcon={deleteDown ? <CircularProgress size={20} variant='determinate' value={timer} style={{ color: 'red' }} /> : <DeleteForeverIcon />}
+      startIcon={deleteDown ? <CircularProgress size={20} variant='determinate' value={timer} style={{ color: 'red' }} /> : icon}
       pendingPosition='start'
       pending={pending}
     >

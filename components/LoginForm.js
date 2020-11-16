@@ -36,40 +36,42 @@ const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
   }, [])
   return (
     <>
-      {!isLoggedIn ? (
-        <>
-          <label htmlFor='username'>Username:</label>
-          <input
-            type='username'
-            id='username'
-            name='username'
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <label htmlFor='pwd'>Password:</label>
-          <input
-            type='password'
-            id='pwd'
-            name='pwd'
-            value={pwd}
-            onChange={e => setPwd(e.target.value)}
-          />
-          <Button id='test1' onClick={() => loginUser()}>Login</Button>
-        </>
-      ) : (
-        <Button
-          id='test2'
-          onClick={e => {
-            e.preventDefault()
-            client.resetStore()
-            cookie.remove('token')
-            setLoginData(null)
-            setIsLoggedIn(false)
-          }}
-        >
-          Logout
-        </Button>
-      )}
+      {!isLoggedIn
+        ? (
+          <>
+            <label htmlFor='username'>Username:</label>
+            <input
+              type='username'
+              id='username'
+              name='username'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+            />
+            <label htmlFor='pwd'>Password:</label>
+            <input
+              type='password'
+              id='pwd'
+              name='pwd'
+              value={pwd}
+              onChange={e => setPwd(e.target.value)}
+            />
+            <Button id='test1' onClick={() => loginUser()}>Login</Button>
+          </>
+          )
+        : (
+          <Button
+            id='test2'
+            onClick={e => {
+              e.preventDefault()
+              client.resetStore()
+              cookie.remove('token')
+              setLoginData(null)
+              setIsLoggedIn(false)
+            }}
+          >
+            Logout
+          </Button>
+          )}
     </>
   )
 }

@@ -40,26 +40,24 @@ const OpenProjects = () => {
   // const projectList = unsorteredProjectList.slice().sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
   return (
     <Grid container>
-      {projectList.length > 0 ? (
-        <>
-          <Grid container spacing={4} style={{ width: '98%', paddingLeft: 20 }}>
-            {projectList.map((event, i) =>
-              <React.Fragment key={event._id}>
-                <EventTile event={event} />
-                {data.getAllOpenProjects.after && i === projectList.length - 10 && (
-                  <Waypoint
-                    onEnter={wayPointHandler}
-                  />
-                )}
-              </React.Fragment>
-            )}
-          </Grid>
-        </>
-      ) : (
-        <>
-          <Typography>No Quotations</Typography>
-        </>
-      )}
+      {projectList.length > 0
+        ? (
+          <>
+            <Grid container spacing={4} style={{ width: '98%', paddingLeft: 20 }}>
+              {projectList.map((event, i) =>
+                <React.Fragment key={event._id}>
+                  <EventTile event={event} />
+                  {data.getAllOpenProjects.after && i === projectList.length - 10 && (
+                    <Waypoint
+                      onEnter={wayPointHandler}
+                    />
+                  )}
+                </React.Fragment>
+              )}
+            </Grid>
+          </>
+          )
+        : <Typography>No Quotations</Typography>}
       {networkStatus === 3 && (
         <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
           <CircularProgress color='secondary' size={80} />

@@ -73,38 +73,40 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
   const classes = useStyles({ selectedButton })
   return (
     <>
-      {selectedButton.themeButton ? (
-        <Button
-          {...props}
-          href='/event/[id]'
-          as={`/event/${event._id}`}
-          component={InternalLink}
-          onClick={(e) => e.stopPropagation()}
-          variant='contained'
-          classes={{
-            root: classes.root,
-            label: classes.label
-          }}
-        >
-          {buttonText}
-        </Button>
-      ) : (
-        <Button
-          {...props}
-          href='/event/[id]'
-          as={`/event/${event._id}`}
-          component={InternalLink}
-          color={selectedButton.color}
-          onClick={(e) => e.stopPropagation()}
-          variant='contained'
-          classes={{
-            root: classes.unThemedRoot,
-            label: classes.label
-          }}
-        >
-          {buttonText}
-        </Button>
-      )}
+      {selectedButton.themeButton
+        ? (
+          <Button
+            {...props}
+            href='/quotations/[id]'
+            as={`/quotations/${event._id}`}
+            component={InternalLink}
+            onClick={(e) => e.stopPropagation()}
+            variant='contained'
+            classes={{
+              root: classes.root,
+              label: classes.label
+            }}
+          >
+            {buttonText}
+          </Button>
+          )
+        : (
+          <Button
+            {...props}
+            href='/quotations/[id]'
+            as={`/quotations/${event._id}`}
+            component={InternalLink}
+            color={selectedButton.color}
+            onClick={(e) => e.stopPropagation()}
+            variant='contained'
+            classes={{
+              root: classes.unThemedRoot,
+              label: classes.label
+            }}
+          >
+            {buttonText}
+          </Button>
+          )}
     </>
   )
 }

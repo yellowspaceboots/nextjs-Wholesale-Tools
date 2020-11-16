@@ -19,6 +19,7 @@ type Salesmen {
   name: String
   type: String
   store: String
+  usedByCommercial: Boolean
 }
 
 type Projects {

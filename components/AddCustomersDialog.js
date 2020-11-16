@@ -138,10 +138,10 @@ const AddCustomersDialog = ({
           </DialogContent>
           <DialogActions>
             <Button disabled={!addCustomerFormState.isValid} type='submit' color='primary'>
-            Save
+              Save
             </Button>
             <Button onClick={handleClose} type='reset' color='primary'>
-            Cancel
+              Cancel
             </Button>
           </DialogActions>
         </form>

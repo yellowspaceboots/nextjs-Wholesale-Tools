@@ -249,13 +249,13 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                     helperText={!!addErrors.size && 'Size Cannot Be Blank'}
                   >
                     <MenuItem value='Small'>
-                  Small
+                      Small
                     </MenuItem>
                     <MenuItem value='Medium'>
-                  Medium
+                      Medium
                     </MenuItem>
                     <MenuItem value='Large'>
-                  Large
+                      Large
                     </MenuItem>
                   </TextField>
                 )
@@ -280,13 +280,13 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                     helperText={!!addErrors.status && 'Status Cannot Be Blank'}
                   >
                     <MenuItem value='On Track'>
-                    On Track
+                      On Track
                     </MenuItem>
                     <MenuItem value='At Risk'>
-                    At Risk
+                      At Risk
                     </MenuItem>
                     <MenuItem value='Off Track'>
-                    Off Track
+                      Off Track
                     </MenuItem>
                   </TextField>
                 )
@@ -311,10 +311,10 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
       </DialogContent>
       <DialogActions>
         <Button disabled={!addFormState.isValid} type='submit' color='primary'>
-            Save
+          Save
         </Button>
         <Button onClick={handleClose} type='reset' color='primary' autoFocus>
-            Cancel
+          Cancel
         </Button>
       </DialogActions>
     </form>

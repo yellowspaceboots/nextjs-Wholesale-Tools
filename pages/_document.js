@@ -2,7 +2,7 @@ import React from 'react'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheets } from '@material-ui/core/styles'
 import theme from '../components/theme'
-import createEmotionServer from 'create-emotion-server'
+import createEmotionServer from '@emotion/server/create-instance'
 import { cache } from './_app.js'
 
 const { extractCritical } = createEmotionServer(cache)

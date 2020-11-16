@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button'
 import Comment from './Comment'
 
 const ProjectComments = ({ id, myComments, myReplies, fullComments }) => {
-  // const temp = ['375fc2cb384d29ae', 'a996530b6030574d', '068b9689b1e66cc4', 'ae68aa3703b55a7a', '435f42aa8c93d58f']
   const [comment, setComment] = useState()
   const handleChange = (event) => {
     setComment(event.target.value)

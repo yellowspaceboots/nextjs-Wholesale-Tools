@@ -18,8 +18,8 @@ export default function AddToCalendar ({ open, setOpen, setSelectedDate }) {
       <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
       <DialogContent>
         <DialogContentText>
-            To subscribe to this website, please enter your email address here. We will send updates
-            occasionally.
+          To subscribe to this website, please enter your email address here. We will send updates
+          occasionally.
         </DialogContentText>
         <TextField
           autoFocus
@@ -32,10 +32,10 @@ export default function AddToCalendar ({ open, setOpen, setSelectedDate }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color='primary'>
-            Cancel
+          Cancel
         </Button>
         <Button onClick={handleClose} color='primary'>
-            Subscribe
+          Subscribe
         </Button>
       </DialogActions>
     </Dialog>

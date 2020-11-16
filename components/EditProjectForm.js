@@ -176,13 +176,13 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                     helperText={!!errors.size && 'Size Cannot Be Blank'}
                   >
                     <MenuItem value='Small'>
-                  Small
+                      Small
                     </MenuItem>
                     <MenuItem value='Medium'>
-                  Medium
+                      Medium
                     </MenuItem>
                     <MenuItem value='Large'>
-                  Large
+                      Large
                     </MenuItem>
                   </TextField>
                 )
@@ -207,19 +207,19 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                     helperText={!!errors.status && 'Status Cannot Be Blank'}
                   >
                     <MenuItem value='On Track'>
-                    On Track
+                      On Track
                     </MenuItem>
                     <MenuItem value='At Risk'>
-                    At Risk
+                      At Risk
                     </MenuItem>
                     <MenuItem value='Off Track'>
-                    Off Track
+                      Off Track
                     </MenuItem>
                     <MenuItem value='Pending'>
-                    Pending
+                      Pending
                     </MenuItem>
                     <MenuItem value='Closed'>
-                    Closed
+                      Closed
                     </MenuItem>
                   </TextField>
                 )
@@ -244,10 +244,10 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
       </DialogContent>
       <DialogActions>
         <Button disabled={!formState.isValid} type='submit' color='primary'>
-            Save
+          Save
         </Button>
         <Button onClick={handleClose} type='reset' color='primary' autoFocus>
-            Cancel
+          Cancel
         </Button>
       </DialogActions>
     </form>

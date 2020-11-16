@@ -136,26 +136,26 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
       <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
         <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen || drawerOpen}>
           <ListItem button href='/' as='/' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
-            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<HomeIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}><HomeIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
           <ListItem button href='/quotations' as='/quotations' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
-            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<WidgetsIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}><WidgetsIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
           <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
-            <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<EventIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}><EventIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>
         </DrawerTooltip>
         {user.role === 'MANAGER' && (
           <DrawerTooltip title='Settings' drawerOpen={mobileOpen || drawerOpen}>
-            <ListItem button href='/settings/commercial-projects' as='/settings/commercial-projects' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
-              <ListItemIcon style={{ minWidth: styleProps.navPadding }}>{<SettingsIcon className={classes.drawerIcon} />}</ListItemIcon>
+            <ListItem button href='/settings' as='/settings' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+              <ListItemIcon style={{ minWidth: styleProps.navPadding }}><SettingsIcon className={classes.drawerIcon} /></ListItemIcon>
               <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Settings</Typography>} />
             </ListItem>
           </DrawerTooltip>

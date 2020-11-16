@@ -1,4 +1,4 @@
-import { getLayout } from '../../components/Layout'
+import { getLayout } from '../../../components/Layout'
 
 const Users = () => {
   return (

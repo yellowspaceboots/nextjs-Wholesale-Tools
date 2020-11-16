@@ -20,19 +20,21 @@ const PendingProjects = () => {
   const projectList = unsorteredProjectList.slice().sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
   return (
     <>
-      {projectList.length > 0 ? (
-        <>
-          <Grid container spacing={4} style={{ width: '98%', paddingLeft: 20 }}>
-            {projectList.map(event =>
-              <EventTile key={event._id} event={event} />
-            )}
-          </Grid>
-        </>
-      ) : (
-        <>
-          <Typography>No Quotations</Typography>
-        </>
-      )}
+      {projectList.length > 0
+        ? (
+          <>
+            <Grid container spacing={4} style={{ width: '98%', paddingLeft: 20 }}>
+              {projectList.map(event =>
+                <EventTile key={event._id} event={event} />
+              )}
+            </Grid>
+          </>
+          )
+        : (
+          <>
+            <Typography>No Quotations</Typography>
+          </>
+          )}
     </>
   )
 }

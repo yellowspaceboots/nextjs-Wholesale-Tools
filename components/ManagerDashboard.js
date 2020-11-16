@@ -41,10 +41,12 @@ const ManagerDashboard = () => {
   })
   const salesmen = salesmanAndCustomerList.reduce((x, y) => x.findIndex(e => e.salesNumber === y.salesNumber) < 0 ? [...x, y] : x, [])
   const customers = salesmanAndCustomerList.reduce((x, y) => x.findIndex(e => e.account === y.account) < 0 ? [...x, y] : x, [])
-  const groupedProjectStates = groupBy(data.activeCustomerState.data.filter(state => selectedDate[0] ? isWithinInterval(
-    new Date(state.projectRef.dateEntered),
-    { start: selectedDate[0], end: selectedDate[1] }
-  ) : true).map(state => {
+  const groupedProjectStates = groupBy(data.activeCustomerState.data.filter(state => selectedDate[0]
+    ? isWithinInterval(
+        new Date(state.projectRef.dateEntered),
+        { start: selectedDate[0], end: selectedDate[1] }
+      )
+    : true).map(state => {
     return {
       _id: state._id,
       status: state.status,

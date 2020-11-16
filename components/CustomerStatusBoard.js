@@ -15,7 +15,6 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import CancelIcon from '@material-ui/icons/Cancel'
 import Grid from '@material-ui/core/Grid'
-import CardActions from '@material-ui/core/CardActions'
 import Radio from '@material-ui/core/Radio'
 import { motion } from 'framer-motion'
 import { FIND_PROJECTS_BY_ID } from '../testApi/queries/findProjectsById'
@@ -28,10 +27,25 @@ import AddCustomersDialog from './AddCustomersDialog'
 import Tooltip from '@material-ui/core/Tooltip'
 import CardHeader from '@material-ui/core/CardHeader'
 import CloseIcon from '@material-ui/icons/Close'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import TimeReleaseButton from './TimeReleaseButton'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import OutlinedInput from '@material-ui/core/OutlinedInput'
+import { Controller, useForm } from 'react-hook-form'
 
 const CustomerStatusBoard = ({ id, customerList }) => {
+  const intialState = { amount: '' }
+  const {
+    errors: amountChangeErrors,
+    control: amountChangeControl,
+    handleSubmit: amountHandleSubmit
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: intialState
+  })
   const statuses = ['Open', 'Pending', 'Won', 'Lost'].map(name => {
     const color = getStatusColor(name)
     return {
@@ -42,9 +56,9 @@ const CustomerStatusBoard = ({ id, customerList }) => {
   })
   const [anchorEl, setAnchorEl] = useState(null)
   const [anchorElMove, setAnchorElMove] = useState(null)
+  const [anchorElAmount, setAnchorElAmount] = useState(null)
   const [activeCustomer, setActiveCustomer] = useState(null)
   const [addCustomersDialogOpen, setAddCustomersDialogOpen] = useState(false)
-  const [deleteDown, setDeleteDown] = useState(false)
   const [error, setError] = useState()
   const handleClose = () => {
     setAddCustomersDialogOpen(false)
@@ -52,6 +66,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
   }
   const open = Boolean(anchorEl)
   const openMove = Boolean(anchorElMove)
+  const openAmount = Boolean(anchorElAmount)
   const handlePopperClick = (customer) => (event) => {
     setAnchorElMove(null)
     setAnchorEl(event.currentTarget === anchorEl ? null : event.currentTarget)
@@ -65,10 +80,18 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     setAnchorElMove(null)
     updateCustomerProjectStatus({ variables: { id: activeCustomer._id, data: { status: newStatus } } })
   }
-  const [deleteCustomerProjectState, { loading: deleteMutationLoading, error: deleteMutationError }] = useMutation(DELETE_CUSTOMER_PROJECT_STATE, {
+  const onSubmit = (data, e) => {
+    setAnchorElAmount(null)
+    updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000 } } })
+  }
+  const [deleteCustomerProjectState, { loading: deleteMutationLoading }] = useMutation(DELETE_CUSTOMER_PROJECT_STATE, {
     refetchQueries: [{ query: FIND_PROJECTS_BY_ID, variables: { id } }],
     variables: {
       id: activeCustomer ? activeCustomer._id : null
+    },
+    onError: (error) => {
+      console.log(error)
+      setError(error)
     },
     onCompleted: () => handlePopperClose()
   })
@@ -79,59 +102,73 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     },
     onCompleted: () => handleClose()
   })
-  const [updateCustomerProjectStatus, { loading: updateStatusMutationLoading, error: updateStatusMutationError }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATE, {
+  const [updateCustomerProjectStatus, { loading: updateStatusMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATE, {
+    onError: (error) => {
+      console.log(error)
+      setError(error)
+    },
+    onCompleted: () => handlePopperClose()
+  })
+  const [updateCustomerProjectAmount, { loading: updateAmountMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATE, {
+    onError: (error) => {
+      console.log(error)
+      setError(error)
+    },
     onCompleted: () => handlePopperClose()
   })
   return (
-    <div style={{ display: 'flex', justifyContent: 'stretch', width: '100%', overflow: 'auto' }}>
-      {statuses.map(status => {
-        return (
-          <Card key={status.name} style={{ width: 300, backgroundColor: status.color, marginRight: 20 }}>
-            <CardContent style={{ padding: 8 }}>
-              <div style={{ display: 'flex', alignItems: 'center', height: 40 }}>
-                <Typography
-                  style={{ color: 'white', flexGrow: 1 }}
-                  gutterBottom
-                >
-                  {status.name}
-                </Typography>
-                {status.name === 'Open' && (
-                  <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
-                    <GroupAddIcon style={{ color: 'white' }} />
-                  </IconButton>
-                )}
-              </div>
-              <div style={{ height: 400, overflow: 'auto' }}>
-                {status.customerList.map(customer => {
-                  const formattedAmount = amountShortFormat(customer.amount)
-                  return (
-                    <Card key={customer.customerRef.account} style={{ marginBottom: 8 }} variant='outlined'>
-                      <CardActionArea onClick={handlePopperClick(customer)}>
-                        <CardContent style={{ padding: 8 }}>
-                          <div style={{ display: 'flex', marginBottom: 4 }}>
-                            <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, marginRight: 4, backgroundColor: 'lightgrey' }}>
-                              <Typography variant='caption' style={{ fontWeight: 'bold' }}>{customer.customerRef.account}</Typography>
-                            </Paper>
-                            <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, marginRight: 4, backgroundColor: 'lightgrey', flexGrow: 1 }}>
-                              <Typography variant='caption' style={{ fontWeight: 'bold' }}>{customer.customerRef.salesRef.name}</Typography>
-                            </Paper>
-                            <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, backgroundColor: 'green' }}>
-                              <Typography variant='caption' style={{ fontWeight: 'bold', color: 'white' }}>{formattedAmount}</Typography>
-                            </Paper>
-                          </div>
-                          <Typography color='textSecondary' style={{ marginLeft: 4 }}>
-                            {customer.customerRef.name}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  )
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        )
-      })}
+    <>
+      <Typography>{error}</Typography>
+      <div style={{ display: 'flex', width: '100%' }}>
+        {statuses.map(status => {
+          return (
+            <Card key={status.name} style={{ width: 300, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
+              <CardContent style={{ padding: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', height: 40 }}>
+                  <Typography
+                    style={{ color: 'white', flexGrow: 1 }}
+                    gutterBottom
+                  >
+                    {status.name}
+                  </Typography>
+                  {status.name === 'Open' && (
+                    <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
+                      <GroupAddIcon style={{ color: 'white' }} />
+                    </IconButton>
+                  )}
+                </div>
+                <div style={{ height: 400, overflow: 'auto' }}>
+                  {status.customerList.map(customer => {
+                    const formattedAmount = amountShortFormat(customer.amount)
+                    return (
+                      <Card key={customer.customerRef.account} style={{ marginBottom: 8 }} variant='outlined'>
+                        <CardActionArea onClick={handlePopperClick(customer)}>
+                          <CardContent style={{ padding: 8 }}>
+                            <div style={{ display: 'flex', marginBottom: 4 }}>
+                              <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, marginRight: 4, backgroundColor: 'lightgrey' }}>
+                                <Typography variant='caption' style={{ fontWeight: 'bold' }}>{customer.customerRef.account}</Typography>
+                              </Paper>
+                              <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, marginRight: 4, backgroundColor: 'lightgrey', flexGrow: 1 }}>
+                                <Typography variant='caption' style={{ fontWeight: 'bold' }}>{customer.customerRef.salesRef.name}</Typography>
+                              </Paper>
+                              <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, backgroundColor: 'green' }}>
+                                <Typography variant='caption' style={{ fontWeight: 'bold', color: 'white' }}>{formattedAmount}</Typography>
+                              </Paper>
+                            </div>
+                            <Typography color='textSecondary' style={{ marginLeft: 4 }}>
+                              {customer.customerRef.name}
+                            </Typography>
+                          </CardContent>
+                        </CardActionArea>
+                      </Card>
+                    )
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
       <Popper open={open} anchorEl={anchorEl} placement='right-start' transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
@@ -142,10 +179,10 @@ const CustomerStatusBoard = ({ id, customerList }) => {
             >
               {[
                 {
-                  onClick: () => console.log('edit'),
+                  onClick: (event) => setAnchorElAmount(event.currentTarget === anchorElAmount ? null : event.currentTarget),
                   icon: <EditIcon />,
                   text: 'Edit',
-                  pending: false
+                  pending: updateAmountMutationLoading
                 },
                 {
                   onClick: (event) => setAnchorElMove(event.currentTarget === anchorElMove ? null : event.currentTarget),
@@ -165,7 +202,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     <LoadingButton
                       variant='contained'
                       size='small'
-                      onClick={component.onClick}
+                      onClick={(event) => component.onClick(event)}
                       startIcon={component.icon}
                       pendingPosition='start'
                       pending={component.pending}
@@ -181,6 +218,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     timeReleaseFunction={deleteCustomerProjectState}
                     pending={deleteMutationLoading}
                     buttonText='Delete'
+                    icon={<DeleteForeverIcon />}
                   />
                 </motion.div>
               </Grid>
@@ -200,7 +238,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     <IconButton style={{ marginLeft: 10, marginTop: 0, marginRight: 4 }} aria-label='edit' size='small' onClick={() => setAnchorElMove(null)}>
                       <CloseIcon fontSize='inherit' />
                     </IconButton>
-                  }
+                    }
                   title={
                     <Typography
                       color='textSecondary'
@@ -208,7 +246,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     >
                       Move to New Status
                     </Typography>
-                  }
+                    }
                 />
                 <div>
                   {statuses.map(status => (
@@ -229,6 +267,63 @@ const CustomerStatusBoard = ({ id, customerList }) => {
           </Fade>
         )}
       </Popper>
+      <Popper open={openAmount} anchorEl={anchorElAmount} placement='bottom' transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps}>
+            <form onSubmit={amountHandleSubmit(onSubmit)}>
+              <Card>
+                <CardContent style={{ padding: 10 }}>
+                  <CardHeader
+                    disableTypography
+                    style={{ padding: 0 }}
+                    action={
+                      <IconButton style={{ marginLeft: 10, marginTop: 0, marginRight: 4 }} aria-label='edit' size='small' onClick={() => setAnchorElAmount(null)}>
+                        <CloseIcon fontSize='inherit' />
+                      </IconButton>
+                    }
+                    title={
+                      <Typography
+                        color='textSecondary'
+                        gutterBottom
+                      >
+                        Update Quote Amount
+                      </Typography>
+                    }
+                  />
+                  <FormControl error={!!amountChangeErrors.amount} variant='outlined' fullWidth>
+                    <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
+                    <Controller
+                      name='amount'
+                      control={amountChangeControl}
+                      defaultValue={intialState.amount}
+                      rules={{ required: true }}
+                      render={props => {
+                        return (
+                          <OutlinedInput
+                            {...props}
+                            autoComplete='off'
+                            id='outlined-adornment-amount'
+                            startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                            aria-describedby='outlined-adornment-amount'
+                            inputProps={{
+                              'aria-label': 'amount'
+                            }}
+                            labelWidth={70}
+                            type='number'
+                          />
+                        )
+                      }}
+                    />
+                    {!!amountChangeErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
+                  </FormControl>
+                  <Button variant='contained' type='submit' size='small' style={{ marginTop: 10 }} disableElevation>Save</Button>
+                </CardContent>
+              </Card>
+            </form>
+
+          </Fade>
+        )}
+      </Popper>
       <AddCustomersDialog
         id={id}
         customerList={customerList}
@@ -238,7 +333,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
         mutationLoading={addMutationLoading}
         mutationError={addMutationError}
       />
-    </div>
+    </>
   )
 }
 

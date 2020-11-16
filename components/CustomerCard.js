@@ -95,7 +95,7 @@ const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
             <div style={{ display: 'flex', width: '100%' }}>
               <div style={{ width: '100%', flexGrow: 1 }}>
                 <Typography color='textSecondary' style={{ fontSize: 14 }}>
-                Account: {customer.customerRef.account}
+                  Account: {customer.customerRef.account}
                 </Typography>
                 <Typography color='textSecondary' style={{ fontSize: 14 }}>
                   {customer.customerRef.salesRef.name}
@@ -121,16 +121,16 @@ const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
                     style={{ marginBottom: 12 }}
                   >
                     <MenuItem value='Open'>
-                    Open
+                      Open
                     </MenuItem>
                     <MenuItem value='Pending'>
-                    Pending
+                      Pending
                     </MenuItem>
                     <MenuItem value='Won'>
-                    Won
+                      Won
                     </MenuItem>
                     <MenuItem value='Lost'>
-                    Lost
+                      Lost
                     </MenuItem>
                   </TextField>
                 )
@@ -165,53 +165,55 @@ const CustomerCard = ({ customer, fullAmount, id, customerCount }) => {
             </div>
           </div>
           <div style={{ marginLeft: 6, marginRight: -8 }}>
-            {!edit ? (
-              <div>
-                <Tooltip title='Edit Customer' placement='right'>
-                  <IconButton aria-label='Edit' onClick={() => setEdit(!edit)}>
-                    <EditIcon />
-                  </IconButton>
-                </Tooltip>
-              </div>
-            ) : (
-              <>
+            {!edit
+              ? (
                 <div>
-                  <Tooltip title='Cancel' placement='right'>
-                    <IconButton
-                      aria-label='Delete'
-                      onClick={() => {
-                        reset(intialState)
-                        setEdit(!edit)
-                      }}
-                    >
-                      <RemoveCircleIcon />
+                  <Tooltip title='Edit Customer' placement='right'>
+                    <IconButton aria-label='Edit' onClick={() => setEdit(!edit)}>
+                      <EditIcon />
                     </IconButton>
                   </Tooltip>
                 </div>
-                <div>
-                  <Tooltip title='Save Changes' placement='right'>
-                    <IconButton
-                      type='submit'
-                      aria-label='Save'
-                    >
-                      <SaveIcon />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-                {customerCount > 1 && (
+                )
+              : (
+                <>
                   <div>
-                    <Tooltip title='Remove Customer' placement='right'>
+                    <Tooltip title='Cancel' placement='right'>
                       <IconButton
-                        aria-label='remove'
-                        onClick={handleClickOpen}
+                        aria-label='Delete'
+                        onClick={() => {
+                          reset(intialState)
+                          setEdit(!edit)
+                        }}
                       >
-                        <DeleteForeverIcon />
+                        <RemoveCircleIcon />
                       </IconButton>
                     </Tooltip>
                   </div>
+                  <div>
+                    <Tooltip title='Save Changes' placement='right'>
+                      <IconButton
+                        type='submit'
+                        aria-label='Save'
+                      >
+                        <SaveIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                  {customerCount > 1 && (
+                    <div>
+                      <Tooltip title='Remove Customer' placement='right'>
+                        <IconButton
+                          aria-label='remove'
+                          onClick={handleClickOpen}
+                        >
+                          <DeleteForeverIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </div>
+                  )}
+                </>
                 )}
-              </>
-            )}
           </div>
         </CardContent>
       </Card>

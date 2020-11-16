@@ -1,6 +1,6 @@
 import React from 'react'
-import { getLayout } from '../../components/Layout'
-import customers from '../../testApi/houstonCustomers.json'
+import { getLayout } from '../../../components/Layout'
+import customers from '../../../testApi/houstonCustomers.json'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
@@ -8,12 +8,15 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import CommercialEditCustomerToggle from '../../components/CommercialEditCustomerToggle'
+import CommercialEditCustomerToggle from '../../../components/CommercialEditCustomerToggle'
+import VirtualizedTable from '../../../components/VirtualizedTable'
 
 const EditCustomerList = () => {
   return (
     <div>
       <p>Salesman List</p>
+      <VirtualizedTable />
+      {/*
       <TableContainer component={Paper}>
         <Table size='small' aria-label='a dense table'>
           <TableHead>
@@ -45,6 +48,8 @@ const EditCustomerList = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      */}
+
     </div>
   )
 }

@@ -74,61 +74,65 @@ const Comment = ({ comment, groupedComments, id }) => {
             <Typography variant='body2' noWrap color='textSecondary' style={{ marginLeft: 6 }}>{timePosted}</Typography>
             {comment.edited && <Typography variant='caption' color='textSecondary' style={{ marginLeft: 4, marginTop: 2 }}>(edited)</Typography>}
           </div>
-          {edit ? (
-            <TextField
-              id='edit-comment'
-              label='Edit Comment'
-              variant='outlined'
-              autoComplete='off'
-              style={{ marginTop: 8 }}
-              fullWidth
-              value={editText}
-              onChange={handleEditChange}
-            />
-          ) : <Typography variant='body2' style={{ marginLeft: 12 }}>{comment.message}</Typography>}
-
-          {reply ? (
-            <div style={{ width: '100%', padding: 10, paddingLeft: 0, marginLeft: -30 }}>
+          {edit
+            ? (
               <TextField
-                id='standard-basic'
-                style={{ marginLeft: 30 }}
-                label='Add A Reply...'
+                id='edit-comment'
+                label='Edit Comment'
                 variant='outlined'
                 autoComplete='off'
+                style={{ marginTop: 8 }}
                 fullWidth
-                value={commentText}
-                onChange={handleChange}
+                value={editText}
+                onChange={handleEditChange}
               />
-              <div style={{ marginTop: 10, marginLeft: 30, marginBottom: 6 }}>
-                <Button disabled={!commentText} onClick={() => createComments()} variant='contained' size='small' color='primary'>{mutationLoading ? <CircularProgress style={{ height: 24, width: 24, color: 'white' }} /> : 'Submit'}</Button>
-                <Button
-                  size='small'
-                  onClick={() => {
-                    setReply(false)
-                    setCommentText('')
-                  }}
-                >Cancel
-                </Button>
-                {mutationError && <Typography error>{mutationError.message}</Typography>}
-              </div>
-            </div>
-          ) : (
-            <div style={{ margin: 10, marginLeft: 0 }}>
-              {!edit && <Button onClick={() => setReply(!reply)} size='small'>Reply</Button>}
-              {user._id === comment.user._id && (
-                <>
-                  {edit && <Button disabled={editText === comment.message} onClick={() => updateComments()} variant='contained' size='small' color='primary'>{updateMutationLoading ? <CircularProgress style={{ height: 24, width: 24, color: 'white' }} /> : 'Submit'}</Button>}
+              )
+            : <Typography variant='body2' style={{ marginLeft: 12 }}>{comment.message}</Typography>}
+
+          {reply
+            ? (
+              <div style={{ width: '100%', padding: 10, paddingLeft: 0, marginLeft: -30 }}>
+                <TextField
+                  id='standard-basic'
+                  style={{ marginLeft: 30 }}
+                  label='Add A Reply...'
+                  variant='outlined'
+                  autoComplete='off'
+                  fullWidth
+                  value={commentText}
+                  onChange={handleChange}
+                />
+                <div style={{ marginTop: 10, marginLeft: 30, marginBottom: 6 }}>
+                  <Button disabled={!commentText} onClick={() => createComments()} variant='contained' size='small' color='primary'>{mutationLoading ? <CircularProgress style={{ height: 24, width: 24, color: 'white' }} /> : 'Submit'}</Button>
                   <Button
                     size='small'
-                    onClick={() =>
-                      setEdit(!edit)}
-                  >{edit ? 'Cancel' : 'Edit'}
+                    onClick={() => {
+                      setReply(false)
+                      setCommentText('')
+                    }}
+                  >Cancel
                   </Button>
-                </>
+                  {mutationError && <Typography error>{mutationError.message}</Typography>}
+                </div>
+              </div>
+              )
+            : (
+              <div style={{ margin: 10, marginLeft: 0 }}>
+                {!edit && <Button onClick={() => setReply(!reply)} size='small'>Reply</Button>}
+                {user._id === comment.user._id && (
+                  <>
+                    {edit && <Button disabled={editText === comment.message} onClick={() => updateComments()} variant='contained' size='small' color='primary'>{updateMutationLoading ? <CircularProgress style={{ height: 24, width: 24, color: 'white' }} /> : 'Submit'}</Button>}
+                    <Button
+                      size='small'
+                      onClick={() =>
+                        setEdit(!edit)}
+                    >{edit ? 'Cancel' : 'Edit'}
+                    </Button>
+                  </>
+                )}
+                {updateMutationError && <Typography error>{updateMutationError.message}</Typography>}
+              </div>
               )}
-              {updateMutationError && <Typography error>{updateMutationError.message}</Typography>}
-            </div>
-          )}
         </div>
       </div>
       {nestedComments}

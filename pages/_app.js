@@ -9,9 +9,9 @@ import DateFnsUtils from '@material-ui/pickers/adapter/date-fns'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../testApi/testApollo'
 import createCache from '@emotion/cache'
-import { CacheProvider } from '@emotion/core'
+import { CacheProvider } from '@emotion/react'
 
-export const cache = createCache()
+export const cache = createCache({ key: 'css' })
 
 const MyApp = (props) => {
   const { Component, pageProps } = props

@@ -16,8 +16,8 @@ const EventTile = ({ event }) => (
       <Grid item>
         <motion.div whileHover={{ y: -10 }}>
           <Button
-            href='/event/[id]'
-            as={`/event/${event._id}`}
+            href='/quotations/[id]'
+            as={`/quotations/${event._id}`}
             component={InternalLink}
             onClick={(e) => e.stopPropagation()}
             style={{ borderRadius: '20px', display: 'flex', alignItems: 'flex-start' }}

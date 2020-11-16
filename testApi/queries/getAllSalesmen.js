@@ -7,6 +7,9 @@ export const GET_ALL_SALESMEN = gql`
         _id
         number
         name
+        store
+        type
+        usedByCommercial
       }
     }
   }
