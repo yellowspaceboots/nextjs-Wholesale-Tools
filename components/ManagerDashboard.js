@@ -16,6 +16,7 @@ import { useTheme } from '@material-ui/core/styles'
 import Autocomplete from '@material-ui/core/Autocomplete'
 
 const ManagerDashboard = () => {
+  /*
   const theme = useTheme()
   const [selectedDate, handleDateChange] = useState([null, null])
   const [letterValue, setValue] = useState(['A', 'B', 'C', 'D', 'F'])
@@ -102,7 +103,11 @@ const ManagerDashboard = () => {
   }).filter(state => (letterValue.includes(state.letterGrade.letter) || letterValue.length === 0) && (customerValue === null || state.account === customerValue.account) && (salesmanValue === null || state.salesNumber === salesmanValue.salesNumber))
   const filteredCustomerList = final.map(state => state.account)
   const filtereSalesmanList = final.map(state => state.salesName)
+  */
   return (
+    <>
+      <div>I am a Manager</div>
+      {/*
     <Grid container spacing={2}>
       <Grid xs={12} item container style={{ marginTop: 12 }} spacing={2} direction='row'>
         <Grid item>
@@ -186,6 +191,8 @@ const ManagerDashboard = () => {
         )
       })}
     </Grid>
+    */}
+    </>
   )
 }
 

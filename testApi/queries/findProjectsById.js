@@ -20,6 +20,7 @@ export const FIND_PROJECTS_BY_ID = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
@@ -28,12 +29,14 @@ export const FIND_PROJECTS_BY_ID = gql`
                   _id
                 status
                 amount
-                customerRef{
+                customerRef {
+                    _id
                     name
                     account
                     salesRef {
-                    name
-                    number
+                      _id
+                      name
+                      number
                     }
                 }
                 }

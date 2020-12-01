@@ -20,6 +20,7 @@ export const ADD_CUSTOMERS_TO_PROJECT = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
@@ -29,9 +30,11 @@ export const ADD_CUSTOMERS_TO_PROJECT = gql`
                 status
                 amount
                 customerRef{
+                    _id
                     name
                     account
                     salesRef {
+                    _id
                     name
                     number
                     }

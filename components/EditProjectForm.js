@@ -17,8 +17,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from '@hookform/devtools'
 import Button from '@material-ui/core/Button'
-import salesmen from '../testApi/salesmen.json'
 import { useAuth } from './AuthProvider'
+import { useDrowDown } from './DropDownProvider'
 
 const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {
   const { user } = useAuth()
@@ -51,7 +51,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
     }
     updateProject({ variables: { input: payload } })
   }
-  const insideSalesmen = salesmen.filter(salesman => salesman.type === 'Inside')
+  const { salesmen } = useDrowDown()
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DevTool control={control} />
@@ -83,15 +83,15 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                     {...props}
                     onChange={(e, val) => onChange(val)}
                     disabled={user.role === 'INSIDESALES'}
-                    options={insideSalesmen}
+                    options={salesmen}
                     getOptionLabel={(option) => option.name}
                     getOptionSelected={(option, value) => option.number === value.number}
                     renderInput={(params) =>
                       <TextField
                         {...params}
                         error={!!errors.salesman}
-                        helperText={!!errors.salesman && 'Salesman Cannot Be Blank'}
-                        label='Inside Salesman'
+                        helperText={!!errors.salesman && 'Assigned To Cannot Be Blank'}
+                        label='Assigned To'
                         variant='outlined'
                       />}
                     ListboxComponent={ListboxComponent}

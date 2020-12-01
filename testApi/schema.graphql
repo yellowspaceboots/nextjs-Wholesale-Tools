@@ -74,6 +74,7 @@ type Customers {
   keyAccountId: String
   name: String
   salesRef: Salesmen
+  usedByCommercial: Boolean
 }
 
 type LoginResult @embedded {
@@ -138,6 +139,8 @@ type Query {
   getAllCustomers: [Customers!]!
   getAllProjects: [Projects!]!
   activeCustomerState(active: Boolean! = true): [CustomerProjectState!]!
+  salesmenUsedByCommercialProjects(usedByCommercial: Boolean! = true): [Salesmen!]!
+  customersUsedByCommercialProjects(usedByCommercial: Boolean! = true): [Customers!]!
   getActiveProjectsBySalesNumber(active: Boolean! = true, salesman: String!): [Projects!]!
   getActiveProjectsByOutsideSalesman(salesman: String!): [Projects!]! @resolver(name: "get_outside_salesman_projects", paginated: true)
   getCustomerProjectStateByActiveProjects: [CustomerProjectState!]! @resolver(name: "get_cps_by_active_projects", paginated: true)

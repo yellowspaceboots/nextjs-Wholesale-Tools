@@ -15,6 +15,7 @@ export const GET_ALL_OPEN_PROJECTS = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
@@ -22,10 +23,12 @@ export const GET_ALL_OPEN_PROJECTS = gql`
                 data {
                 status
                 amount
-                customerRef{
+                customerRef {
+                    _id
                     name
                     account
                     salesRef {
+                    _id
                     name
                     number
                     }

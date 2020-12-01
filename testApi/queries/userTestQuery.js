@@ -4,6 +4,7 @@ export const USER_TEST = gql`
   query UserTest {
     getUser {
         salesRef {
+            _id
             number
         }
     }

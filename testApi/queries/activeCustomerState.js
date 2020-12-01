@@ -15,6 +15,7 @@ export const ACTIVE_CUSTOMER_STATE = gql`
                 name
                 account
                 salesRef {
+                  _id
                   number
                   name
                 }

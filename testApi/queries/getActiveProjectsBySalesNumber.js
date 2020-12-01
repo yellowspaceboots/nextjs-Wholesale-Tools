@@ -13,24 +13,27 @@ export const GET_ACTIVE_PROJECTS_BY_SALES_NUMBER = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
             customerList {
                 data {
-                status
-                amount
-                customerRef{
-                    name
-                    account
-                    salesRef {
-                    name
-                    number
-                    }
-                }
+                  status
+                  amount
+                  customerRef {
+                      _id
+                      name
+                      account
+                      salesRef {
+                        _id
+                        name
+                        number
+                      }
+                  }
                 }
             }
-            }
+          }
     }
   }
 `
@@ -47,6 +50,7 @@ export const GET_ACTIVE_PROJECTS_BY_OUTSIDE_SALESMAN = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
@@ -54,11 +58,13 @@ export const GET_ACTIVE_PROJECTS_BY_OUTSIDE_SALESMAN = gql`
                 data {
                 status
                 customerRef{
+                    _id
                     name
                     account
                     salesRef {
-                    name
-                    number
+                      _id
+                      name
+                      number
                     }
                 }
                 }

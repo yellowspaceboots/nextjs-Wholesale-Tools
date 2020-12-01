@@ -5,7 +5,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import customers from '../testApi/houstonCustomers.json'
+// import customers from '../testApi/houstonCustomers.json'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import Autocomplete from '@material-ui/core/Autocomplete'
@@ -17,6 +17,7 @@ import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import { Controller, useForm } from 'react-hook-form'
 import matchSorter from 'match-sorter'
+import { useDrowDown } from './DropDownProvider'
 
 const AddCustomersDialog = ({
   dialogOpen,
@@ -62,6 +63,7 @@ const AddCustomersDialog = ({
     }
     addCustomersToProject({ variables: { input: payload } })
   }
+  const { customers } = useDrowDown()
   return (
     <>
       <Dialog
@@ -116,7 +118,7 @@ const AddCustomersDialog = ({
                         ListboxComponent={ListboxComponent}
                         renderInput={(params) => <TextField {...params} error={!!addCustomerErrors.customers} helperText={!!addCustomerErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
                         renderOption={(props, option, { inputValue }) => {
-                          const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
+                          const fullOption = `${option.account} - ${option.name} - ${option.salesRef.number}`
                           const matches = match(fullOption.trim(), inputValue)
                           const parts = parse(fullOption.trim(), matches)
                           return (

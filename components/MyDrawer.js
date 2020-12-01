@@ -20,7 +20,7 @@ import Hidden from '@material-ui/core/Hidden'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Tooltip from '@material-ui/core/Tooltip'
-import { useAuth } from './AuthProvider'
+import Permission from './Permission'
 
 const drawerWidth = 180
 
@@ -82,7 +82,6 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
 const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
   const theme = useTheme()
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const { user } = useAuth()
   const styleProps = { navColor: 'lightgrey', navPadding: 44 }
   const today = new Date()
   const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
@@ -152,14 +151,15 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>
         </DrawerTooltip>
-        {user.role === 'MANAGER' && (
+        <Permission availableTo={['MANAGER']}>
           <DrawerTooltip title='Settings' drawerOpen={mobileOpen || drawerOpen}>
             <ListItem button href='/settings' as='/settings' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
               <ListItemIcon style={{ minWidth: styleProps.navPadding }}><SettingsIcon className={classes.drawerIcon} /></ListItemIcon>
               <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Settings</Typography>} />
             </ListItem>
           </DrawerTooltip>
-        )}
+        </Permission>
+
         {/* drawerNavConfig.map(nestedNavigation => {
           const Icon = nestedNavigation.icon
           const title = nestedNavigation.sectionTitle

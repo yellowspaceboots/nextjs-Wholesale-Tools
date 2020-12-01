@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { getLayout } from '../../../components/Layout'
 import CommercialEditSalesmanToggle from '../../../components/CommercialEditSalesmanToggle'
-import { DataGrid } from '@material-ui/data-grid'
 import TextField from '@material-ui/core/TextField'
 import { GET_ALL_SALESMEN } from '../../../testApi/queries/getAllSalesmen'
-import { useQuery } from '@apollo/client'
+import { useQuery, useMutation } from '@apollo/client'
+import { UPDATE_SALESMAN } from '../../../testApi/mutations/updateSalesman'
+import DataTable from '../../../components/TableTest'
 
 const EditSalesmanList = () => {
-  const [page, setPage] = useState(1)
+  const [updateError, setUpdateError] = useState(1)
+  const [search, setSearch] = useState('')
+  const handleChange = (event) => {
+    setSearch(event.target.value)
+  }
+  const [updateSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_SALESMAN, {
+    onError: (error) => {
+      setUpdateError(error)
+    }
+  })
   const { loading, error, data } = useQuery(GET_ALL_SALESMEN)
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
@@ -18,7 +28,7 @@ const EditSalesmanList = () => {
       search: `${salesman.number} ${salesman.name}`,
       used: salesman.usedByCommercial
     }
-  })
+  }).filter(salesman => search === '' || salesman.search.toLowerCase().includes(search.toLowerCase()))
   const zeroPad = (num, places) => String(num).padStart(places, '0')
   const columns = [
     { field: 'number', headerName: 'ID', width: 80 },
@@ -32,26 +42,28 @@ const EditSalesmanList = () => {
     },
     {
       field: 'used',
-      headerName: 'Used',
-      renderCell: (params) => <CommercialEditSalesmanToggle currentState={params.value} />
+      headerName: 'Assignable',
+      renderCell: (params) => <CommercialEditSalesmanToggle id={params.getValue('_id')} currentState={Boolean(params.value)} updateSalesman={updateSalesman} />
     }
   ]
   return (
     <>
       <p>Salesman List</p>
-      <div style={{ height: 700, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={100}
-          disableSelectionOnClick
-          page={page}
-          rowHeight={30}
-          onPageChange={(params) => {
-            setPage(params.page)
-          }}
-        />
-      </div>
+      <TextField
+        autoComplete='off'
+        variant='outlined'
+        name='filter'
+        id='filter'
+        label='Filter'
+        fullWidth
+        value={search}
+        onChange={handleChange}
+        margin='dense'
+      />
+      <DataTable
+        rows={rows}
+        columns={columns}
+      />
     </>
   )
 }

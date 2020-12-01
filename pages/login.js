@@ -97,7 +97,7 @@ const Login = () => {
               <LockOutlinedIcon style={{ fontSize: 50, fontWeight: 100 }} />
             </Avatar>
             <Typography component='h1' variant='h5'>
-            Sign in
+              Sign in
             </Typography>
             <form className={classes.form} onSubmit={loginHandleSubmit(onSubmit)}>
               <TextField
@@ -136,12 +136,12 @@ const Login = () => {
                 className={classes.submit}
                 type='submit'
               >
-              Sign In
+                Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
                   <Link href='#' variant='body2'>
-                  Forgot password?
+                    Forgot password?
                   </Link>
                 </Grid>
               </Grid>

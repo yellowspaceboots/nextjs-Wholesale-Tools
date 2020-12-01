@@ -29,6 +29,8 @@ import WidgetsIcon from '@material-ui/icons/Widgets'
 import AddProjectDialog from './AddProjectDialog'
 import { useProjects } from './ProjectProvider'
 import { formatDistanceToNow } from 'date-fns'
+import PersonIcon from '@material-ui/icons/Person'
+import Permission from './Permission'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -278,6 +280,34 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
           primary={<Typography variant='body2'>Add Project</Typography>}
         />
       </MenuItem>
+      <MenuItem
+        onClick={(e) => {
+          e.preventDefault()
+          addClose()
+        }}
+      >
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>Add Salesman</Typography>}
+        />
+      </MenuItem>
+      <MenuItem
+        onClick={(e) => {
+          e.preventDefault()
+          addClose()
+        }}
+      >
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText
+          disableTypography
+          primary={<Typography variant='body2'>Add Customer</Typography>}
+        />
+      </MenuItem>
     </Menu>
   )
   const renderAddDialog = (
@@ -326,14 +356,16 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
             <SearchIcon />
           </IconButton>
         </Hidden>
-        <IconButton
-          color='inherit'
-          aria-label='Add'
-          onClick={addClick}
-        >
-          <AddCircleIcon />
-        </IconButton>
-        {renderAddMenu}
+        <Permission availableTo={['MANAGER']}>
+          <IconButton
+            color='inherit'
+            aria-label='Add'
+            onClick={addClick}
+          >
+            <AddCircleIcon />
+          </IconButton>
+          {renderAddMenu}
+        </Permission>
         <IconButton
           color='inherit'
           aria-label='Notifications'

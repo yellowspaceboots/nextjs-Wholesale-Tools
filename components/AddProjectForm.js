@@ -18,8 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
 import { DevTool } from '@hookform/devtools'
 import Button from '@material-ui/core/Button'
-import customers from '../testApi/houstonCustomers.json'
-import salesmen from '../testApi/salesmen.json'
+import { useDrowDown } from './DropDownProvider'
 
 const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
@@ -64,7 +63,8 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
     }
     createProject({ variables: { input: payload } })
   }
-  const insideSalesmen = salesmen.filter(salesman => salesman.type === 'Inside')
+  // const insideSalesmen = salesmen.filter(salesman => salesman.type === 'Inside')
+  const { salesmen, customers } = useDrowDown()
   return (
     <form onSubmit={addHandleSubmit(onSubmit)}>
       <DevTool control={addControl} />
@@ -110,7 +110,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                         variant='outlined'
                       />}
                     renderOption={(props, option, { inputValue }) => {
-                      const fullOption = `${option.salesmanNumber}-${option.account}-${option.name}`
+                      const fullOption = `${option.account} - ${option.name} - ${option.salesRef.number}`
                       const matches = match(fullOption.trim(), inputValue)
                       const parts = parse(fullOption.trim(), matches)
                       return (
@@ -138,7 +138,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                 return (
                   <Autocomplete
                     id='salesman'
-                    options={insideSalesmen}
+                    options={salesmen}
                     onChange={(e, val) => onChange(val)}
                     getOptionLabel={(option) => option.name}
                     getOptionSelected={(option, value) => option.number === value.number}
@@ -146,8 +146,8 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                       <TextField
                         {...params}
                         error={!!addErrors.salesman}
-                        helperText={!!addErrors.salesman && 'Salesman Cannot Be Blank'}
-                        label='Inside Salesman'
+                        helperText={!!addErrors.salesman && 'Assigned To Cannot Be Blank'}
+                        label='Assigned To'
                         variant='outlined'
                       />}
                     ListboxComponent={ListboxComponent}

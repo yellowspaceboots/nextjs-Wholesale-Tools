@@ -15,6 +15,7 @@ export const UPDATE_PROJECT = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }

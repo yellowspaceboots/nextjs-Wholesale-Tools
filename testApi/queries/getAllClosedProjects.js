@@ -13,6 +13,7 @@ export const GET_ALL_CLOSED_PROJECTS = gql`
             status
             size
             salesRef {
+                _id
                 name
                 number
             }
@@ -21,11 +22,13 @@ export const GET_ALL_CLOSED_PROJECTS = gql`
                 status
                 amount
                 customerRef{
+                    _id
                     name
                     account
                     salesRef {
-                    name
-                    number
+                      _id
+                      name
+                      number
                     }
                 }
                 }

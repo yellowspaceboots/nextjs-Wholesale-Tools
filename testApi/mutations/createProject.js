@@ -5,6 +5,7 @@ export const CREATE_PROJECT = gql`
     createProject(input: $input) {
         title
         salesRef {
+            _id
             name
         }
     }

@@ -9,7 +9,7 @@ import { CardActionArea } from '@material-ui/core'
 const CustomerStatusCard = ({ customer, handlePopperClick }) => {
   const formattedAmount = amountShortFormat(customer.amount)
   return (
-    <Card style={{ marginBottom: 8 }} variant='outlined'>
+    <Card style={{ marginBottom: 8 }}>
       <CardActionArea onClick={handlePopperClick(customer)}>
         <CardContent style={{ padding: 8 }}>
           <div style={{ display: 'flex', marginBottom: 4 }}>
