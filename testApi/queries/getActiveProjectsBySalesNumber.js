@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const GET_ACTIVE_PROJECTS_BY_SALES_NUMBER = gql`
   query GetActiveProjectsBySalesNumber($salesman: String!, $active: Boolean!) {
-    getActiveProjectsBySalesNumber(_size: 1000, active: $active, salesman: $salesman) {
+    getActiveProjectsBySalesNumber(_size: 2000, active: $active, salesman: $salesman) {
         data {
             _id
             title
