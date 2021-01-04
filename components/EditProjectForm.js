@@ -1,17 +1,11 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/core/Autocomplete'
-import FormControl from '@material-ui/core/FormControl'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
-import { MobileDateTimePicker } from '@material-ui/pickers'
 import { Controller, useForm } from 'react-hook-form'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import InputLabel from '@material-ui/core/InputLabel'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import FormHelperText from '@material-ui/core/FormHelperText'
 import ListboxComponent from './VirtualizedList'
 import MenuItem from '@material-ui/core/MenuItem'
 import Grid from '@material-ui/core/Grid'
@@ -19,6 +13,8 @@ import { DevTool } from '@hookform/devtools'
 import Button from '@material-ui/core/Button'
 import { useAuth } from './AuthProvider'
 import { useDrowDown } from './DropDownProvider'
+import DateTimePicker from '@material-ui/lab/DateTimePicker'
+import isValid from 'date-fns/isValid'
 
 const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {
   const { user } = useAuth()
@@ -45,7 +41,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
       status: data.status,
       dateEdited: new Date().toISOString(),
       dateDue: data.dateDue.toISOString(),
-      amount: data.amount * 10000,
+      amount: 0,
       salesman: data.salesman.number,
       size: data.size
     }
@@ -117,48 +113,28 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
           <Grid item xs={6}>
             <Controller
               name='dateDue'
-              rules={{ validate: value => !!value }}
+              rules={{ validate: value => isValid(value) }}
               control={control}
               defaultValue={intialState.dateDue}
               render={props => {
                 return (
-                  <MobileDateTimePicker
+                  <DateTimePicker
                     {...props}
                     label='Date Due'
-                    renderInput={props => <TextField {...props} fullWidth variant='outlined' />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        fullWidth
+                        variant='outlined'
+                        helperText={!!errors.dateDue && 'Not a valid Date'}
+                      />
+                    )}
                   />
                 )
               }}
             />
           </Grid>
           <Grid item xs={6}>
-            <FormControl error={!!errors.amount} variant='outlined' fullWidth>
-              <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
-              <Controller
-                name='amount'
-                control={control}
-                defaultValue={intialState.amount}
-                render={props => {
-                  return (
-                    <OutlinedInput
-                      {...props}
-                      autoComplete='off'
-                      id='outlined-adornment-amount'
-                      startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                      aria-describedby='outlined-adornment-amount'
-                      inputProps={{
-                        'aria-label': 'amount'
-                      }}
-                      labelWidth={70}
-                      type='number'
-                    />
-                  )
-                }}
-              />
-              {!!errors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
-            </FormControl>
-          </Grid>
-          <Grid item xs={3}>
             <Controller
               name='size'
               control={control}
@@ -189,7 +165,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
               }}
             />
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6}>
             <Controller
               name='status'
               control={control}

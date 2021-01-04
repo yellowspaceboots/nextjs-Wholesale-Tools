@@ -16,7 +16,7 @@ import cookie from 'js-cookie'
 import { LOGIN_USER } from '../testApi/mutations/loginUser'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -108,6 +108,7 @@ const Login = () => {
                 label='Email Address'
                 fullWidth
                 autoFocus
+                margin='normal'
                 error={!!loginErrors.email || mutationError}
                 helperText={loginErrors.email ? 'Email Cannot Be Blank' : mutationError ? mutationError.message : ''}
                 inputRef={loginRegister({ required: true })}
@@ -121,6 +122,7 @@ const Login = () => {
                 id='password'
                 fullWidth
                 autoFocus
+                margin='normal'
                 error={!!loginErrors.password || mutationError}
                 helperText={loginErrors.password ? 'Password Cannot Be Blank' : mutationError ? mutationError.message : ''}
                 inputRef={loginRegister({ required: true })}

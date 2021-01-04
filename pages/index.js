@@ -12,11 +12,11 @@ const IndexPage = () => {
       )
     case 'INSIDESALES':
       return (
-        <div>Inside Sales Dasboard coming soon.</div>
+        <div>Inside Sales Dashboard coming soon.</div>
       )
     case 'OUTSIDESALES':
       return (
-        <div>Outisde Sales Dasboard coming soon.</div>
+        <div>Outisde Sales Dashboard coming soon.</div>
       )
     default:
       return null

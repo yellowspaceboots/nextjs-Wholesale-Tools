@@ -1,10 +1,9 @@
 import React from 'react'
-import { format, compareAsc } from 'date-fns'
+import { compareAsc } from 'date-fns'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles'
 import InternalLink from './InternalLink'
-import Status from './Status'
 import CalendarEventButton from './CalendarEventButton'
 
 const useStyles = makeStyles(theme => ({

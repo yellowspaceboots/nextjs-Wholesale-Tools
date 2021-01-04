@@ -4,17 +4,25 @@ import Typography from '@material-ui/core/Typography'
 import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
+import { useQuery } from '@apollo/client'
+import { GET_QUOTATIONS_BY_DATE_RANGE } from '../testApi/queries/getQuotationsByDateRange'
+import { useAuth } from './AuthProvider'
 
 const CalendarWeek = ({
   currentDate,
-  viewDate,
-  projectList
+  viewDate
 }) => {
+  const { user } = useAuth()
+  const start = startOfWeek(viewDate)
+  const end = endOfWeek(viewDate)
+  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE, { variables: { input: { start, end } } })
+  if (loading) return 'Loading...'
+  if (error) return `Error! ${error.message}`
   const dayHours = eachHourOfInterval({
     start: startOfDay(viewDate),
     end: endOfDay(viewDate)
   })
-  const weekProjectList = projectList.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
+  const weekProjectList = data.getQuotationsByDateRange.data.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
   const weekdayData = eachDayOfInterval({ start: startOfWeek(viewDate), end: endOfWeek(viewDate) })
   const isEven = (x) => !(x & 1)
   const filteredDayHours = dayHours.map((time) => {
@@ -53,27 +61,29 @@ const CalendarWeek = ({
   const lowerBounds = filteredDayHours.findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
   const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
   return (
-    <ImageList rowHeight='auto' cols={23} gap={2}>
+    <ImageList rowHeight='auto' cols={8} gap={2} style={{ maxWidth: '100%' }}>
       <ImageListItem
         cols={1}
         style={{ display: 'flex', border: '1px solid lightgrey', justifyContent: 'center', alignItems: 'flex-end' }}
       >
-        <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase', padding: 4 }}>Time</Typography>
+        <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase', padding: 4, paddingRight: 6 }}>Time</Typography>
       </ImageListItem>
       {weekdayData.map((day, i) => (
         <ImageListItem
           key={day}
-          cols={i === 0 || i === 6 ? 1 : 4}
+          cols={1}
           style={{
             display: 'flex',
             border: '1px solid lightgrey',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            maxWidth: (i === 0 || i === 6) ? 'none' : 275,
+            minWidth: (i === 0 || i === 6) ? 'none' : 275
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{format(day, 'EEE')}</Typography>
-            <Typography variant='h6' color='textSecondary'>{format(day, 'd')}</Typography>
+            <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase', marginTop: 4 }}>{format(day, 'EEE')}</Typography>
+            <Typography variant='h6' color='textSecondary' style={{ marginTop: -6 }}>{format(day, 'd')}</Typography>
           </div>
         </ImageListItem>
       ))}
@@ -95,13 +105,14 @@ const CalendarWeek = ({
             return (
               <ImageListItem
                 key={day.day}
-                cols={i === 0 || i === 6 ? 1 : 4}
+                cols={1}
                 style={{
                   display: 'flex',
                   border: '1px solid lightgrey',
                   justifyContent: 'flex-start',
                   alignItems: 'flex-start',
                   padding: 4,
+                  paddingRight: 6,
                   overflow: 'hidden',
                   backgroundColor: time.striped ? 'whitesmoke' : 'transparent'
                 }}
@@ -109,6 +120,8 @@ const CalendarWeek = ({
                 <CalendarDayEvents
                   fullWidth
                   events={day.events}
+                  wrap
+                  showSalesName={user.role !== 'INSIDESALES'}
                 />
               </ImageListItem>
             )

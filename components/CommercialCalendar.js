@@ -25,14 +25,13 @@ import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup'
 import CalendarMonth from './CalendarMonth'
 import InternalLink from './InternalLink'
 import locale from 'date-fns/locale/en-US'
-import CalendarYear from './CalendarYear'
 import CalendarWeek from './CalendarWeek'
 import CalendarDay from './CalendarDay'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/router'
 import Button from '@material-ui/core/Button'
-import { groupBy } from '../testApi/utils'
-import { useProjects } from './ProjectProvider'
+import DesktopDatePicker from '@material-ui/lab/DatePicker'
+import Box from '@material-ui/core/Box'
 
 const CommercialCalendar = ({ view, year, month, day }) => {
   const router = useRouter()
@@ -46,8 +45,6 @@ const CommercialCalendar = ({ view, year, month, day }) => {
   }
   // localize format options: narrow, short, abbreviated, wide
   const weekdays = [...Array(7).keys()].map(i => locale.localize.day(i, { width: 'abbreviated' }))
-  const shortWeekdays = [...Array(7).keys()].map(i => locale.localize.day(i, { width: 'narrow' }))
-  const months = [...Array(12).keys()].map(i => locale.localize.month(i, { width: 'wide' }))
   const currentDate = new Date()
   const [selectedDate, setSelectedDate] = useState()
   const viewDate = new Date(year, month - 1, day, 0, 0, 0, 0)
@@ -93,27 +90,7 @@ const CommercialCalendar = ({ view, year, month, day }) => {
       opacity: 0
     }
   }
-  const { loading, error, data, refetch, resultPath } = useProjects()
-  if (loading) return 'Loading...'
-  if (error) return `Error! ${error.message}`
-  const projectList = data[resultPath].data || []
-  const eventDataWithDateId = projectList.map(event => {
-    const dateDue = new Date(event.dateDue)
-    const dateId = `${dateDue.getFullYear()}-${dateDue.getMonth()}-${dateDue.getDate()}`
-    return {
-      ...event,
-      dateId
-    }
-  })
-  const events = groupBy(eventDataWithDateId, 'dateId')
   const MyComponent = {
-    year:
-  <CalendarYear
-    months={months}
-    year={year}
-    shortWeekdays={shortWeekdays}
-    currentDate={currentDate}
-  />,
     month:
   <CalendarMonth
     selectedDate={selectedDate}
@@ -122,21 +99,17 @@ const CommercialCalendar = ({ view, year, month, day }) => {
     calendarDates={calendarDates}
     monthStart={monthStart}
     currentDate={currentDate}
-    events={events}
   />,
     week:
   <CalendarWeek
     currentDate={currentDate}
     viewDate={viewDate}
-    projectList={projectList}
   />,
     day:
   <CalendarDay
     currentDate={currentDate}
     viewDate={viewDate}
-    projectList={projectList}
-  />,
-    agenda: <div />
+  />
   }
   const title = view !== 'week' ? format(viewDate, titleFormats[view]) : `${format(startOfWeek(viewDate), titleFormats[view])} - ${format(endOfWeek(viewDate), titleFormats.week2)}`
   return (
@@ -150,10 +123,21 @@ const CommercialCalendar = ({ view, year, month, day }) => {
           <ChevronRightIcon />
         </IconButton>
         <Typography variant='h5' style={{ marginLeft: 15, flexGrow: 1 }}>{title}</Typography>
+        <div style={{ marginRight: 8 }}>
+          <DesktopDatePicker
+            value={viewDate}
+            onChange={(newValue) => {
+              router.push(`/calendar/${view}/${newValue.getFullYear()}/${newValue.getMonth() + 1}/${newValue.getDate()}`)
+            }}
+            renderInput={({ inputRef, inputProps, InputProps }) => (
+              <Box sx={{ display: 'flex', alignItems: 'center', marginRight: 2 }}>
+                <div ref={inputRef} {...inputProps} />
+                {InputProps?.endAdornment}
+              </Box>
+            )}
+          />
+        </div>
         <ToggleButtonGroup size='small' value={view} exclusive onChange={handleChange}>
-          <ToggleButton key={1} value='year'>
-            Year
-          </ToggleButton>
           <ToggleButton key={2} value='month'>
             Month
           </ToggleButton>
@@ -163,12 +147,9 @@ const CommercialCalendar = ({ view, year, month, day }) => {
           <ToggleButton key={4} value='day'>
             Day
           </ToggleButton>
-          <ToggleButton key={5} value='agenda'>
-            Agenda
-          </ToggleButton>
         </ToggleButtonGroup>
       </Grid>
-      <div style={{ height: '80vh', overflowX: 'hidden' }}>
+      <div style={{ height: '100%', maxWidth: '100%', overflowX: 'scroll' }}>
         <AnimatePresence exitBeforeEnter key={[view, viewDate]}>
           <motion.div
             initial='initial'

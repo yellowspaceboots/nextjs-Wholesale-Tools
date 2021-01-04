@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
@@ -7,18 +7,27 @@ import { useQuery, useMutation } from '@apollo/client'
 import { FIND_CUSTOMERS_BY_ID } from '../testApi/queries/findCustomersById'
 import { useForm } from 'react-hook-form'
 import LoadingButton from '@material-ui/lab/LoadingButton'
+import { CHANGE_CUSTOMER_SALESMAN } from '../testApi/mutations/changeCustomerSalesman'
 
 const Customer = ({ id }) => {
   const {
     register: newSalesRegister,
     errors: newSalesErrors,
     handleSubmit: newSalesHandleSubmit,
-    formState: newSalesFormState
+    formState: newSalesFormState,
+    reset: newSalesReset
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange'
   })
-  const onSubmit = (data, e) => console.log({ variables: { input: data.newSalesNumber } })
+  const [myError, setMyError] = useState()
+  const [changeCustomerSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(CHANGE_CUSTOMER_SALESMAN, {
+    onError: (error) => console.log(error),
+    onCompleted: () => {
+      newSalesReset()
+    }
+  })
+  const onSubmit = (data, e) => changeCustomerSalesman({ variables: { input: { id, salesmanNumber: data.newSalesNumber.toUpperCase() } } })
   const { loading, error, data } = useQuery(FIND_CUSTOMERS_BY_ID, { variables: { id } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
@@ -43,7 +52,14 @@ const Customer = ({ id }) => {
                   label='New Sales Number'
                   autoComplete='off'
                   name='newSalesNumber'
+                  inputProps={{
+                    maxLength: 4,
+                    style: {
+                      textTransform: 'uppercase'
+                    }
+                  }}
                   variant='outlined'
+                  helperText='Must be 4 Characters'
                   error={!!newSalesErrors.salesman}
                   inputRef={newSalesRegister({
                     required: true,
@@ -53,7 +69,7 @@ const Customer = ({ id }) => {
                   })}
                   style={{ marginTop: 30, marginBottom: 12 }}
                 />
-                <LoadingButton disabled={!newSalesFormState.isValid} type='submit' color='primary' pending={false} variant='outlined'>
+                <LoadingButton disabled={!newSalesFormState.isValid} type='submit' color='primary' pending={mutationLoading} variant='outlined'>
                   Save
                 </LoadingButton>
               </Grid>

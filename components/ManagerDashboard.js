@@ -6,7 +6,6 @@ import CustomerReportCard from './CustomerReportCard'
 import Grid from '@material-ui/core/Grid'
 import Divider from '@material-ui/core/Divider'
 import TextField from '@material-ui/core/TextField'
-import { MobileDateRangePicker, DateRangeDelimiter } from '@material-ui/pickers'
 import max from 'date-fns/max'
 import min from 'date-fns/min'
 import isWithinInterval from 'date-fns/isWithinInterval'
@@ -106,7 +105,7 @@ const ManagerDashboard = () => {
   */
   return (
     <>
-      <div>I am a Manager</div>
+      <div>Manager Dashboard Coming Soon</div>
       {/*
     <Grid container spacing={2}>
       <Grid xs={12} item container style={{ marginTop: 12 }} spacing={2} direction='row'>

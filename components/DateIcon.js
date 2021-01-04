@@ -39,11 +39,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const DateIcon = ({ event, status }) => {
-  const dateDay = format(new Date(event.dateDue), 'd')
-  const dateMonth = format(new Date(event.dateDue), 'MMM')
-  const dateDayName = format(new Date(event.dateDue), 'EEEE')
+  const eventDate = event.dateDueDate
+  const dateDay = format(new Date(eventDate), 'd')
+  const dateMonth = format(new Date(eventDate), 'MMM')
+  const dateDayName = format(new Date(eventDate), 'EEEE')
   const statusColor = getStatusColor(event.status)
-  const isLate = isAfter(new Date(), new Date(event.dateDue))
+  const isLate = isAfter(new Date(), new Date(eventDate))
   const isClosed = event.status === 'Closed'
   const iconColor = isClosed ? 'lightgrey' : 'grey'
   const iconBorder = `solid 2px ${iconColor}`

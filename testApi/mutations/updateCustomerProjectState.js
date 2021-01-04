@@ -6,6 +6,7 @@ export const UPDATE_CUSTOMER_PROJECT_STATE = gql`
       _id
       status
       amount
+      note
     }
   }
 `

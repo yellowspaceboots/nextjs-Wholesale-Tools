@@ -9,47 +9,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableRow from '@material-ui/core/TableRow'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
-import { visuallyHidden } from '@material-ui/system'
+import { visuallyHidden } from '@material-ui/utils'
 
-/*
-const columns = [
-  { field: 'name', headerName: 'Name', width: 170 },
-  { field: 'code', headerName: 'ISO\u00a0Code', width: 100 },
-  {
-    field: 'population',
-    headerName: 'Population',
-    width: 170,
-    align: 'right',
-    valueFormatter: (params) => params.value.toLocaleString('en-US')
-  },
-  {
-    field: 'size',
-    headerName: 'Size\u00a0(km\u00b2)',
-    width: 170,
-    align: 'right',
-    valueFormatter: (params) => params.value.toLocaleString('en-US')
-  },
-  {
-    field: 'density',
-    headerName: 'Density',
-    width: 170,
-    align: 'right',
-    valueFormatter: (params) => params.value.toFixed(2)
-  },
-  {
-    field: 'test',
-    headerName: 'Test',
-    width: 170,
-    align: 'right',
-    renderCell: (params) => <Switch checked={params.getValue('density') > 200} />
-  }
-]
-
-function createData (name, code, population, size) {
-  const density = population / size
-  return { name, code, population, size, density }
-}
-*/
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1
@@ -75,25 +36,7 @@ function stableSort (array, comparator) {
   })
   return stabilizedThis.map((el) => el[0])
 }
-/*
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767)
-]
-*/
+
 const useStyles = makeStyles({
   root: {
     width: '100%'

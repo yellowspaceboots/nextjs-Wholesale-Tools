@@ -3,14 +3,14 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
-import AddProjectForm from './AddProjectForm'
+import AddSalesmanForm from './AddSalesmanForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { CREATE_PROJECT } from '../testApi/mutations/createProject'
+import { CREATE_SALESMEN } from '../testApi/mutations/createSalesmen'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/salesmenUsedByCommercialProjects'
 import { useMutation } from '@apollo/client'
-import { GET_ALL_OPEN_PROJECTS } from '../testApi/queries/getAllOpenProjects'
 
-const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
+const AddSalesmanDialog = ({ dialogOpen, setDialogOpen }) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [error, setError] = useState()
@@ -18,9 +18,9 @@ const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
     setDialogOpen(false)
     setError()
   }
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT, {
+  const [createSalesmen, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_SALESMEN, {
     onError: (error) => setError(error),
-    refetchQueries: [{ query: GET_ALL_OPEN_PROJECTS }],
+    refetchQueries: [{ query: SALESMEN_USED_BY_COMMERCIAL_PROJECTS }],
     awaitRefetchQueries: true,
     onCompleted: () => {
       handleClose()
@@ -51,13 +51,13 @@ const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
           }}
         >
           <CircularProgress style={{ color: 'white' }} />
-          <Typography style={{ color: 'white' }}>Creating Quotation...</Typography>
+          <Typography style={{ color: 'white' }}>Adding Salesman...</Typography>
           {mutationError && <p>Error :( Please try again</p>}
         </div>}
-      <DialogTitle id='responsive-dialog-title'>New Quotation</DialogTitle>
-      <AddProjectForm handleClose={handleClose} createProject={createProject} mutationError={error} />
+      <DialogTitle id='responsive-dialog-title'>New Salesman</DialogTitle>
+      <AddSalesmanForm handleClose={handleClose} createSalesmen={createSalesmen} mutationError={error} />
     </Dialog>
   )
 }
 
-export default AddProjectDialog
+export default AddSalesmanDialog

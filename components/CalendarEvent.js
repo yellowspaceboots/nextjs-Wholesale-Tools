@@ -80,8 +80,7 @@ const CalendarEvent = ({ id }) => {
             <Grid item xs={2} style={{ flex: 1, marginRight: 10, minWidth: 250 }}>
               <EventTitle event={event} />
             </Grid>
-            <Grid item style={{ border: '2px black solid', flexGrow: 1 }}>
-              {/* <div style={{ border: '1px red solid', height: 456, width: '100%', overflow: 'hidden' }} /> */}
+            <Grid item style={{ maxWidth: '100%' }}>
               <CustomerStatusBoard id={id} customerList={event.customerList.data} />
             </Grid>
           </Grid>

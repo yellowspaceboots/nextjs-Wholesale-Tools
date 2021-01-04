@@ -26,6 +26,9 @@ const CustomerStatusCard = ({ customer, handlePopperClick }) => {
           <Typography color='textSecondary' style={{ marginLeft: 4 }}>
             {customer.customerRef.name}
           </Typography>
+          <Typography color='textSecondary' variant='caption' style={{ marginLeft: 4 }}>
+            This is a little note about this customer
+          </Typography>
         </CardContent>
       </CardActionArea>
     </Card>

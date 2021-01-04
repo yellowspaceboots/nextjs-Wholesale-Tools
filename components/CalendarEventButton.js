@@ -8,7 +8,7 @@ import { green, red } from '@material-ui/core/colors'
 const useStyles = makeStyles(theme => ({
   root: props => ({
     fontSize: 12,
-    height: 18,
+    height: props.wrap ? 'auto' : 18,
     overflow: 'hidden',
     marginBottom: 4,
     marginRight: 4,
@@ -18,18 +18,18 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: props.selectedButton.hover
     }
   }),
-  unThemedRoot: {
+  unThemedRoot: props => ({
     fontSize: 12,
-    height: 18,
+    height: props.wrap ? 'auto' : 18,
     overflow: 'hidden',
     marginBottom: 4,
     marginRight: 4
-  },
-  label: {
+  }),
+  label: props => ({
     justifyContent: 'flex-start',
-    whiteSpace: 'nowrap',
+    whiteSpace: props.wrap ? 'wrap' : 'nowrap',
     textOverflow: 'ellipsis'
-  }
+  })
 }))
 
 const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) => {
@@ -65,12 +65,12 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
       textColor: 'inherit'
     }
   }
-  const selectedButton = buttonSelector[event.status]
+  const selectedButton = event.status ? buttonSelector[event.status] : buttonSelector.Closed
   const timeText = time ? `${format(new Date(event.dateDue), 'ha').toLowerCase()} ` : ''
   const titleText = title ? `${event.title} ` : ''
   const salesmanText = salesman ? `- ${event.salesRef.name}` : ''
   const buttonText = timeText + titleText + salesmanText
-  const classes = useStyles({ selectedButton })
+  const classes = useStyles({ selectedButton, wrap })
   return (
     <>
       {selectedButton.themeButton

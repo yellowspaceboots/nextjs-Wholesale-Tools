@@ -7,9 +7,9 @@ import EventTile from './EventTile'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Waypoint } from 'react-waypoint'
 
-const OpenProjects = () => {
+const ProjectsByStatus = ({ statusPage }) => {
   const { error, data, fetchMore, networkStatus } = useQuery(GET_ALL_OPEN_PROJECTS, {
-    variables: { cursor: null },
+    variables: { cursor: null, statusPage },
     notifyOnNetworkStatusChange: true
   })
   if (networkStatus === 1) {
@@ -24,7 +24,7 @@ const OpenProjects = () => {
   const wayPointHandler = () => {
     const cursor = data.getAllOpenProjects.after
     fetchMore({
-      variables: { cursor },
+      variables: { cursor, statusPage },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         const newResult = {
           ...fetchMoreResult,
@@ -37,7 +37,6 @@ const OpenProjects = () => {
       }
     })
   }
-  // const projectList = unsorteredProjectList.slice().sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue))
   return (
     <Grid container>
       {projectList.length > 0
@@ -67,4 +66,4 @@ const OpenProjects = () => {
   )
 }
 
-export default OpenProjects
+export default ProjectsByStatus

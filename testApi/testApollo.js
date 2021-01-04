@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import cookie from 'cookie'
+import { concatPagination } from '@apollo/client/utilities'
 
 let apolloClient
 

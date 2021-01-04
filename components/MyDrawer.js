@@ -21,6 +21,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Tooltip from '@material-ui/core/Tooltip'
 import Permission from './Permission'
+import AssessmentIcon from '@material-ui/icons/Assessment'
 
 const drawerWidth = 180
 
@@ -79,9 +80,8 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
   </Tooltip>
 )
 
-const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
+const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen }) => {
   const theme = useTheme()
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const styleProps = { navColor: 'lightgrey', navPadding: 44 }
   const today = new Date()
   const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
@@ -141,7 +141,7 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen }) => {
         </DrawerTooltip>
         <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
           <ListItem button href='/quotations' as='/quotations' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
-            <ListItemIcon style={{ minWidth: styleProps.navPadding }}><WidgetsIcon className={classes.drawerIcon} /></ListItemIcon>
+            <ListItemIcon style={{ minWidth: styleProps.navPadding }}><AssessmentIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>

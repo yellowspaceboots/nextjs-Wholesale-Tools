@@ -7,6 +7,7 @@ export const UPDATE_PROJECT = gql`
             title
             amount
             dateDue
+            dateDueDate
             dateEdited
             description
             editedBy {

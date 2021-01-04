@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client'
 
-export const GET_ALL_CLOSED_PROJECTS = gql`
-  query GetAllClosedProjects {
-    getAllClosedProjects(_size: 500) {
-      data{
+export const GET_QUOTATIONS_BY_DATE_RANGE = gql`
+  query GetQuotationsByDateRange($input: DateRangeInput!) {
+    getQuotationsByDateRange(input: $input) {
+        data {
             _id
             title
             requestId
@@ -21,19 +21,14 @@ export const GET_ALL_CLOSED_PROJECTS = gql`
                 data {
                 status
                 amount
-                customerRef{
+                customerRef {
                     _id
                     name
                     account
-                    salesRef {
-                      _id
-                      name
-                      number
                     }
-                }
                 }
             }
       }
-    }
+  }
   }
 `

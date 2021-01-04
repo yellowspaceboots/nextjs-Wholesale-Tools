@@ -6,7 +6,7 @@ const Event = () => {
   const router = useRouter()
   const { id } = router.query
   return (
-    <CalendarEvent id={id} />
+      <CalendarEvent id={id} />
   )
 }
 

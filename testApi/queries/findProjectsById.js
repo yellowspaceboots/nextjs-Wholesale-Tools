@@ -8,6 +8,7 @@ export const FIND_PROJECTS_BY_ID = gql`
             requestId
             amount
             dateDue
+            dateDueDate
             dateEntered
             dateEdited
             description
@@ -29,6 +30,7 @@ export const FIND_PROJECTS_BY_ID = gql`
                   _id
                 status
                 amount
+                note
                 customerRef {
                     _id
                     name

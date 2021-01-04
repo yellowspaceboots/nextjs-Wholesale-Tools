@@ -1,14 +1,15 @@
 import { gql } from '@apollo/client'
 
-export const GET_ALL_PENDING_PROJECTS = gql`
-  query GetAllPendingProjects {
-    getAllPendingProjects(_size: 500) {
-      data{
+export const PROJECT_SEARCH = gql`
+  query ProjectSearch($input: String!) {
+    projectSearch(input: $input, _size: 5) {
+        data {
             _id
             title
             requestId
             amount
             dateDue
+            dateDueDate
             dateEntered
             status
             size
@@ -21,19 +22,14 @@ export const GET_ALL_PENDING_PROJECTS = gql`
                 data {
                 status
                 amount
-                customerRef{
+                customerRef {
                     _id
                     name
                     account
-                    salesRef {
-                      _id
-                      name
-                      number
                     }
-                }
                 }
             }
       }
-    }
+  }
   }
 `

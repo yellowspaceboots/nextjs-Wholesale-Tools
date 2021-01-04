@@ -7,10 +7,11 @@ import MyAppBar from './MyAppBar'
 import { useAuth } from '../components/AuthProvider'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
-import { ProjectsProvider } from '../components/ProjectProvider'
 import { DropDownProvider } from '../components/DropDownProvider'
 import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
+import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import Zoom from '@material-ui/core/Zoom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,9 +19,18 @@ const useStyles = makeStyles(theme => ({
     height: '100vh'
   },
   toolbar: theme.mixins.toolbar,
-  content: {
+  content: props => ({
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    maxWidth: props.drawerOpen ? 'calc(100% - 179px)' : `calc(100% - ${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: '100%'
+    }
+  }),
+  scroll: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2)
   }
 }))
 
@@ -43,8 +53,9 @@ const Layout = ({ children }) => {
   })
   const { user, checked, setUser } = useAuth()
   const client = useApolloClient()
-  const classes = useStyles()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const classes = useStyles({ drawerOpen })
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
   const logout = () => {
     client.resetStore()
@@ -54,35 +65,31 @@ const Layout = ({ children }) => {
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100
+  })
   if (!checked) return null
   if (!user) return null
   return (
-    <ProjectsProvider>
-      <DropDownProvider>
-        <div className={classes.root}>
-          {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
-          <MyAppBar handleDrawerToggle={handleDrawerToggle} logout={logout} />
-          <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} />
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            {children}
-            <Fab
-              style={{
-                position: 'fixed',
-                bottom: 20,
-                right: 20
-              }}
-              color='secondary'
-              size='small'
-              aria-label='scroll back to top'
-              onClick={scrollTop}
-            >
-              <KeyboardArrowUpIcon />
-            </Fab>
-          </main>
-        </div>
-      </DropDownProvider>
-    </ProjectsProvider>
+    <DropDownProvider>
+      <div className={classes.root}>
+        {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
+        <MyAppBar id='back-to-top-anchor' handleDrawerToggle={handleDrawerToggle} logout={logout} />
+        <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {children}
+          <Zoom in={trigger}>
+            <div role='presentation' className={classes.scroll}>
+              <Fab color='secondary' size='small' aria-label='scroll back to top' onClick={() => scrollTop()}>
+                <KeyboardArrowUpIcon />
+              </Fab>
+            </div>
+          </Zoom>
+        </main>
+      </div>
+    </DropDownProvider>
   )
 }
 

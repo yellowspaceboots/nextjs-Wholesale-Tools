@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Typography from '@material-ui/core/Typography'
+import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Paper from '@material-ui/core/Paper'
@@ -36,16 +37,6 @@ import OutlinedInput from '@material-ui/core/OutlinedInput'
 import { Controller, useForm } from 'react-hook-form'
 
 const CustomerStatusBoard = ({ id, customerList }) => {
-  const intialState = { amount: '' }
-  const {
-    errors: amountChangeErrors,
-    control: amountChangeControl,
-    handleSubmit: amountHandleSubmit
-  } = useForm({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: intialState
-  })
   const statuses = ['Open', 'Pending', 'Won', 'Lost'].map(name => {
     const color = getStatusColor(name)
     return {
@@ -67,22 +58,38 @@ const CustomerStatusBoard = ({ id, customerList }) => {
   const open = Boolean(anchorEl)
   const openMove = Boolean(anchorElMove)
   const openAmount = Boolean(anchorElAmount)
-  const handlePopperClick = (customer) => (event) => {
-    setAnchorElMove(null)
-    setAnchorEl(event.currentTarget === anchorEl ? null : event.currentTarget)
-    setActiveCustomer(customer)
+  const handlePopperClick = (e, customer) => {
+    if (e.currentTarget === anchorEl) {
+      setAnchorEl(null)
+      handlePopperClose()
+    } else {
+      setAnchorElMove(null)
+      setAnchorEl(e.currentTarget)
+      setActiveCustomer(customer)
+    }
   }
   const handlePopperClose = () => {
     setAnchorEl(null)
     setAnchorElMove(null)
+    setAnchorElAmount(null)
   }
   const handleStatusChange = (newStatus) => {
     setAnchorElMove(null)
     updateCustomerProjectStatus({ variables: { id: activeCustomer._id, data: { status: newStatus } } })
   }
+  const {
+    register: amountChangeRegister,
+    errors: amountChangeErrors,
+    control: amountChangeControl,
+    handleSubmit: amountHandleSubmit,
+    reset: amountReset
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange'
+  })
   const onSubmit = (data, e) => {
     setAnchorElAmount(null)
-    updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000 } } })
+    updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000, note: data.note } } })
   }
   const [deleteCustomerProjectState, { loading: deleteMutationLoading }] = useMutation(DELETE_CUSTOMER_PROJECT_STATE, {
     refetchQueries: [{ query: FIND_PROJECTS_BY_ID, variables: { id } }],
@@ -117,12 +124,12 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     onCompleted: () => handlePopperClose()
   })
   return (
-    <>
+    <div style={{ overflowX: 'scroll' }}>
       <Typography>{error}</Typography>
-      <div style={{ display: 'flex', width: '100%' }}>
+      <div style={{ display: 'flex' }}>
         {statuses.map(status => {
           return (
-            <Card key={status.name} style={{ width: 300, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
+            <Card key={status.name} style={{ minWidth: 300, maxWidth: 300, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
               <CardContent style={{ padding: 8 }}>
                 <div style={{ display: 'flex', alignItems: 'center', height: 40 }}>
                   <Typography
@@ -142,7 +149,15 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     const formattedAmount = amountShortFormat(customer.amount)
                     return (
                       <Card key={customer.customerRef.account} style={{ marginBottom: 8 }} variant='outlined'>
-                        <CardActionArea onClick={handlePopperClick(customer)}>
+                        <CardActionArea
+                          onClick={(e) => {
+                            amountReset({
+                              amount: customer.amount / 10000,
+                              note: customer.note
+                            })
+                            handlePopperClick(e, customer)
+                          }}
+                        >
                           <CardContent style={{ padding: 8 }}>
                             <div style={{ display: 'flex', marginBottom: 4 }}>
                               <Paper elevation={0} style={{ paddingLeft: 4, paddingRight: 4, marginRight: 4, backgroundColor: 'lightgrey' }}>
@@ -158,6 +173,13 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                             <Typography color='textSecondary' style={{ marginLeft: 4 }}>
                               {customer.customerRef.name}
                             </Typography>
+                            {customer.note && (
+                              <div style={{ marginLeft: 4 }}>
+                                <Typography color='textSecondary' variant='caption'>
+                                  {customer.note}
+                                </Typography>
+                              </div>
+                            )}
                           </CardContent>
                         </CardActionArea>
                       </Card>
@@ -286,37 +308,51 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                         color='textSecondary'
                         gutterBottom
                       >
-                        Update Quote Amount
+                        Update Quote Info
                       </Typography>
                     }
                   />
-                  <FormControl error={!!amountChangeErrors.amount} variant='outlined' fullWidth>
-                    <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
-                    <Controller
-                      name='amount'
-                      control={amountChangeControl}
-                      defaultValue={intialState.amount}
-                      rules={{ required: true }}
-                      render={props => {
-                        return (
-                          <OutlinedInput
-                            {...props}
-                            autoComplete='off'
-                            id='outlined-adornment-amount'
-                            startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                            aria-describedby='outlined-adornment-amount'
-                            inputProps={{
-                              'aria-label': 'amount'
-                            }}
-                            labelWidth={70}
-                            type='number'
-                          />
-                        )
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <FormControl error={!!amountChangeErrors.amount} variant='outlined'>
+                      <InputLabel required htmlFor='outlined-adornment-amount'>Amount</InputLabel>
+                      <Controller
+                        name='amount'
+                        control={amountChangeControl}
+                        rules={{ required: true }}
+                        render={props => {
+                          return (
+                            <OutlinedInput
+                              {...props}
+                              autoComplete='off'
+                              id='outlined-adornment-amount'
+                              startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                              aria-describedby='outlined-adornment-amount'
+                              inputProps={{
+                                'aria-label': 'amount'
+                              }}
+                              labelWidth={70}
+                              type='number'
+                            />
+                          )
+                        }}
+                      />
+                      {!!amountChangeErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
+                    </FormControl>
+                    <TextField
+                      variant='outlined'
+                      name='note'
+                      id='note'
+                      label='Note'
+                      margin='normal'
+                      autoComplete='off'
+                      error={!!amountChangeErrors.note}
+                      inputRef={amountChangeRegister()}
+                      InputLabelProps={{
+                        shrink: true
                       }}
                     />
-                    {!!amountChangeErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
-                  </FormControl>
-                  <Button variant='contained' type='submit' size='small' style={{ marginTop: 10 }} disableElevation>Save</Button>
+                    <Button variant='contained' type='submit' size='small' style={{ marginTop: 10 }} disableElevation>Save</Button>
+                  </div>
                 </CardContent>
               </Card>
             </form>
@@ -333,7 +369,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
         mutationLoading={addMutationLoading}
         mutationError={addMutationError}
       />
-    </>
+    </div>
   )
 }
 
