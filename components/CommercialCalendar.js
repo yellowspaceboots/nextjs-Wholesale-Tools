@@ -23,7 +23,6 @@ import Typography from '@material-ui/core/Typography'
 import ToggleButton from '@material-ui/core/ToggleButton'
 import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup'
 import CalendarMonth from './CalendarMonth'
-import InternalLink from './InternalLink'
 import locale from 'date-fns/locale/en-US'
 import CalendarWeek from './CalendarWeek'
 import CalendarDay from './CalendarDay'
@@ -32,6 +31,7 @@ import { useRouter } from 'next/router'
 import Button from '@material-ui/core/Button'
 import DesktopDatePicker from '@material-ui/lab/DatePicker'
 import Box from '@material-ui/core/Box'
+import { NextLinkComposed } from './Link'
 
 const CommercialCalendar = ({ view, year, month, day }) => {
   const router = useRouter()
@@ -114,12 +114,31 @@ const CommercialCalendar = ({ view, year, month, day }) => {
   const title = view !== 'week' ? format(viewDate, titleFormats[view]) : `${format(startOfWeek(viewDate), titleFormats[view])} - ${format(endOfWeek(viewDate), titleFormats.week2)}`
   return (
     <Grid container direction='column'>
-      <Grid container item alignItems='center' xs={12}>
-        <Button variant='outlined' href='/calendar/[...params]' as={todayUrl} component={InternalLink} style={{ marginRight: 10 }}>Today</Button>
-        <IconButton href='/calendar/[...params]' as={previousUrl} component={InternalLink} color='inherit' size='small' aria-label='Previous'>
+      <Grid container item alignItems='center' xs={12} style={{ marginBottom: 6 }}>
+        <Button
+          variant='outlined'
+          to={{ pathname: todayUrl }}
+          component={NextLinkComposed}
+          style={{ marginRight: 10 }}
+        >
+          Today
+        </Button>
+        <IconButton
+          to={{ pathname: previousUrl }}
+          component={NextLinkComposed}
+          color='inherit'
+          size='small'
+          aria-label='Previous'
+        >
           <ChevronLeftIcon />
         </IconButton>
-        <IconButton href='/calendar/[...params]' as={nextUrl} component={InternalLink} color='inherit' size='small' aria-label='Previous'>
+        <IconButton
+          to={{ pathname: nextUrl }}
+          component={NextLinkComposed}
+          color='inherit'
+          size='small'
+          aria-label='Previous'
+        >
           <ChevronRightIcon />
         </IconButton>
         <Typography variant='h5' style={{ marginLeft: 15, flexGrow: 1 }}>{title}</Typography>

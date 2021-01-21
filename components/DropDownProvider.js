@@ -12,8 +12,10 @@ const DropDownProvider = ({ children }) => {
   if (customerLoading) return null
   const salesmen = salesmenData.salesmenUsedByCommercialProjects.data
   const customers = customerData.customersUsedByCommercialProjects.data
+  const outsideSalesmen = [...new Map(customers.map(customer => customer.salesRef).map(item =>
+    [item._id, item])).values()]
   return (
-    <DropDownContext.Provider value={{ salesmen, customers }}>{children}</DropDownContext.Provider>
+    <DropDownContext.Provider value={{ salesmen, customers, outsideSalesmen }}>{children}</DropDownContext.Provider>
   )
 }
 

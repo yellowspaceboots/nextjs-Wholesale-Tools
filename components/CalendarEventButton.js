@@ -2,8 +2,8 @@ import React from 'react'
 import { format } from 'date-fns'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
-import InternalLink from './InternalLink'
 import { green, red } from '@material-ui/core/colors'
+import { NextLinkComposed } from './Link'
 
 const useStyles = makeStyles(theme => ({
   root: props => ({
@@ -77,9 +77,8 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
         ? (
           <Button
             {...props}
-            href='/quotations/[id]'
-            as={`/quotations/${event._id}`}
-            component={InternalLink}
+            to={{ pathname: `/quotations/${event._id}` }}
+            component={NextLinkComposed}
             onClick={(e) => e.stopPropagation()}
             variant='contained'
             classes={{
@@ -93,9 +92,8 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
         : (
           <Button
             {...props}
-            href='/quotations/[id]'
-            as={`/quotations/${event._id}`}
-            component={InternalLink}
+            to={{ pathname: `/quotations/${event._id}` }}
+            component={NextLinkComposed}
             color={selectedButton.color}
             onClick={(e) => e.stopPropagation()}
             variant='contained'

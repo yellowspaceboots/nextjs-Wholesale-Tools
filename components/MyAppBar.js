@@ -18,7 +18,6 @@ import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
 import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
 import Badge from '@material-ui/core/Badge'
-import InternalLink from './InternalLink'
 import WLogo from './WLogo'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Backspace from '@material-ui/icons/Backspace'
@@ -32,6 +31,7 @@ import AddChartIcon from '@material-ui/icons/Addchart'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import AddCustomerDialog from './AddCustomerDialog'
 import SearchBar from './SearchBar'
+import { NextLinkComposed } from './Link'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -342,9 +342,9 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
         >
           <MenuIcon />
         </IconButton>
-        <InternalLink href='/'>
+        <NextLinkComposed to={{ pathname: '/' }}>
           <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ margin: 15, marginLeft: -16, marginRight: 12 }} />
-        </InternalLink>
+        </NextLinkComposed>
         <Hidden smDown implementation='css'>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <Typography variant='h5' noWrap style={{ fontWeight: 700 }}>Wholesale Electric</Typography>

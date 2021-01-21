@@ -12,6 +12,7 @@ export const DROP_DOWN_QUERY = gql`
         salesRef {
           _id
           name
+          number
         }
       }
     }

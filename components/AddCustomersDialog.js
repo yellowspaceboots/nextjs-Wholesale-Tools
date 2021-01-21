@@ -15,7 +15,7 @@ import ListboxComponent from './VirtualizedList'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import { Controller, useForm } from 'react-hook-form'
-import matchSorter from 'match-sorter'
+import { matchSorter } from 'match-sorter'
 import { useDrowDown } from './DropDownProvider'
 
 const AddCustomersDialog = ({

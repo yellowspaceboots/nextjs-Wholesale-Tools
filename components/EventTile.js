@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import Tooltip from '@material-ui/core/Tooltip'
 import { motion } from 'framer-motion'
 import DateIcon from './DateIcon'
-import InternalLink from './InternalLink'
+import { NextLinkComposed } from './Link'
 
 const EventTile = ({ event }) => (
   useMemo(() => {
@@ -16,9 +16,8 @@ const EventTile = ({ event }) => (
       <Grid item>
         <motion.div whileHover={{ y: -10 }}>
           <Button
-            href='/quotations/[id]'
-            as={`/quotations/${event._id}`}
-            component={InternalLink}
+            to={{ pathname: `/quotations/${event._id}` }}
+            component={NextLinkComposed}
             onClick={(e) => e.stopPropagation()}
             style={{ borderRadius: '20px', display: 'flex', alignItems: 'flex-start' }}
           >

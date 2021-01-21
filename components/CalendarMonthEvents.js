@@ -3,8 +3,8 @@ import { compareAsc } from 'date-fns'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import { makeStyles } from '@material-ui/core/styles'
-import InternalLink from './InternalLink'
 import CalendarEventButton from './CalendarEventButton'
+import { NextLinkComposed } from './Link'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,9 +39,8 @@ const CalendarMonthEvents = ({ events, day, dateCount }) => {
       {needsSlicing &&
         <Button
           fullWidth
-          component={InternalLink}
-          href='/calendar/[...params]'
-          as={`/calendar/day/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}`}
+          to={{ pathname: `/calendar/day/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}` }}
+          component={NextLinkComposed}
           onClick={(e) => e.stopPropagation()}
           variant='contained'
           startIcon={<AddIcon style={{ fontSize: 10, marginLeft: 10, marginRight: -5 }} />}

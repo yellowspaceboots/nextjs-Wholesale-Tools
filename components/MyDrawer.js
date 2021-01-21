@@ -1,20 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import clsx from 'clsx'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
-import InternalLink from './InternalLink'
 import HomeIcon from '@material-ui/icons/Home'
-import Backspace from '@material-ui/icons/Backspace'
-import NestedNavigation from './NestedNavigation'
-import WidgetsIcon from '@material-ui/icons/Widgets'
 import EventIcon from '@material-ui/icons/Event'
 import SettingsIcon from '@material-ui/icons/Settings'
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
@@ -22,6 +16,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Tooltip from '@material-ui/core/Tooltip'
 import Permission from './Permission'
 import AssessmentIcon from '@material-ui/icons/Assessment'
+import { NextLinkComposed } from './Link'
 
 const drawerWidth = 180
 
@@ -86,93 +81,35 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen })
   const today = new Date()
   const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
   const classes = useStyles(styleProps)
-  const drawerNavConfig = [
-    {
-      sectionTitle: 'Project Management',
-      icon: WidgetsIcon,
-      linkList: [
-        {
-          name: 'Request Log',
-          href: '/commercial-projects/request-log'
-        },
-        {
-          name: 'Material Status',
-          href: '/commercial-projects/material-status'
-        }
-      ]
-    },
-    {
-      sectionTitle: 'Accounting',
-      icon: AttachMoneyIcon,
-      linkList: [
-        {
-          name: 'End of Month',
-          href: '/accounting/end-of-month'
-        }
-      ]
-    },
-    {
-      sectionTitle: 'Settings',
-      icon: SettingsIcon,
-      linkList: [
-        {
-          name: 'Profile',
-          href: '/settings/profile'
-        },
-        {
-          name: 'Account Settings',
-          href: '/settings/account'
-        },
-        {
-          name: 'User Management',
-          href: '/settings/users'
-        }
-      ]
-    }
-  ]
   const drawer = (
     <div className={classes.root}>
       <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
         <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button href='/' as='/' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+          <ListItem button to={{ pathname: '/' }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><HomeIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button href='/quotations' as='/quotations' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+          <ListItem button to={{ pathname: '/quotations', query: { status: 'open' } }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><AssessmentIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button href='/calendar/[...params]' as={calendarURL} component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+          <ListItem button to={{ pathname: calendarURL }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><EventIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <Permission availableTo={['MANAGER']}>
           <DrawerTooltip title='Settings' drawerOpen={mobileOpen || drawerOpen}>
-            <ListItem button href='/settings' as='/settings' component={InternalLink} onClick={mobileOpen ? handleDrawerToggle : null}>
+            <ListItem button to={{ pathname: '/settings' }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
               <ListItemIcon style={{ minWidth: styleProps.navPadding }}><SettingsIcon className={classes.drawerIcon} /></ListItemIcon>
               <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Settings</Typography>} />
             </ListItem>
           </DrawerTooltip>
         </Permission>
-
-        {/* drawerNavConfig.map(nestedNavigation => {
-          const Icon = nestedNavigation.icon
-          const title = nestedNavigation.sectionTitle
-          return (
-            <NestedNavigation key={title} padding={navPadding} icon={<Icon className={classes.drawerIcon} />} title={title} color={styleProps.navColor}>
-              {nestedNavigation.linkList.map(listItem => (
-                <ListItem key={listItem.name} button href={listItem.href} component={InternalLink} onClick={mobile && handleDrawerToggle}>
-                  <ListItemText style={{ paddingLeft: navPadding }} inset disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>{listItem.name}</Typography>} />
-                </ListItem>
-              ))}
-            </NestedNavigation>
-          )
-        }) */}
       </List>
       <List>
         <ListItem button onClick={() => setDrawerOpen(!drawerOpen)}>
