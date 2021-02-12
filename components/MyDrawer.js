@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Permission from './Permission'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import { NextLinkComposed } from './Link'
+import { useAuth } from './AuthProvider'
 
 const drawerWidth = 180
 
@@ -76,10 +77,15 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
 )
 
 const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen }) => {
+  const { user } = useAuth()
   const theme = useTheme()
   const styleProps = { navColor: 'lightgrey', navPadding: 44 }
   const today = new Date()
-  const calendarURL = `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
+  const calendarURL = { pathname: `/calendar/month/${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}` }
+  const quoteURLQuery = user.role === 'INSIDESALES'
+    ? { inside: user.salesRef.number }
+    : user.role === 'OUTSIDESALES' ? { outside: user.salesRef.number } : {}
+  const quoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'open' } }
   const classes = useStyles(styleProps)
   const drawer = (
     <div className={classes.root}>
@@ -91,13 +97,13 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen })
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button to={{ pathname: '/quotations', query: { status: 'open' } }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
+          <ListItem button to={quoteURL} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><AssessmentIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
-          <ListItem button to={{ pathname: calendarURL }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
+          <ListItem button to={calendarURL} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><EventIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>

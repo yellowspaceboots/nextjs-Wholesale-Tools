@@ -69,7 +69,6 @@ const AddCustomersDialog = ({
       open={dialogOpen}
       onClose={handleClose}
       aria-labelledby='responsive-dialog-title'
-      disableBackdropClick={mutationLoading}
     >
       {mutationLoading &&
         <div

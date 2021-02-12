@@ -29,7 +29,7 @@ const EventTile = ({ event }) => (
               justify='flex-start'
               spacing={1}
               style={{
-                width: 180,
+                width: 170,
                 paddingBottom: 5
               }}
             >

@@ -16,7 +16,7 @@ const IndexPage = () => {
       )
     case 'OUTSIDESALES':
       return (
-        <div>Outisde Sales Dashboard coming soon.</div>
+        <div>Outside Sales Dashboard coming soon.</div>
       )
     default:
       return null

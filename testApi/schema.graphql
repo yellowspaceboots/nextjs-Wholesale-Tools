@@ -147,6 +147,15 @@ input DateRangeInput @embedded  {
   end: String!
 }
 
+input QuotationQueryInput @embedded  {
+  start: String
+  end: String
+  account: String
+  inside: String
+  outsideSales: String
+  status: String
+}
+
 input LoginUserInput {
   email: String!
   password: String!
@@ -168,6 +177,7 @@ type Query {
   getActiveProjects(active: Boolean! = true): [Projects!]!
   getSalesmenByType(type: String!): [Salesmen!]!
   getAllOpenProjects(statusPage: String!): [Projects!]! @resolver(name: "get_all_open_jobs", paginated: true)
+  getQuotations(input: QuotationQueryInput!): [Projects!]! @resolver(name: "get_quotations", paginated: true)
   getAllPendingProjects: [Projects!]! @resolver(name: "get_all_pending_jobs", paginated: true)
   getAllClosedProjects: [Projects!]! @resolver(name: "get_all_closed_jobs", paginated: true)
   getQuotationsByDateRange(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range", paginated: true)

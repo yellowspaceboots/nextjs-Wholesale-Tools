@@ -71,16 +71,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apollo/client@npm:^3.3.8":
-  version: 3.3.8
-  resolution: "@apollo/client@npm:3.3.8"
+"@apollo/client@npm:^3.3.9":
+  version: 3.3.9
+  resolution: "@apollo/client@npm:3.3.9"
   dependencies:
     "@graphql-typed-document-node/core": ^3.0.0
     "@types/zen-observable": ^0.8.0
     "@wry/context": ^0.5.2
     "@wry/equality": ^0.3.0
     fast-json-stable-stringify: ^2.0.0
-    graphql-tag: ^2.11.0
+    graphql-tag: ^2.12.0
     hoist-non-react-statics: ^3.3.2
     optimism: ^0.14.0
     prop-types: ^15.7.2
@@ -97,7 +97,7 @@ __metadata:
       optional: true
     subscriptions-transport-ws:
       optional: true
-  checksum: 316c325d042909440c5afe1354e9fc27ae69bd130e3290feea16929e9664219243736b09a092720df5a86c616f9518c2d28ed0304bb0fbbf694929757c0835d7
+  checksum: 8b0662d70e6ef203d7e3df6e013205c891967f42f3b639cafb56d87e7cdf56c1c150358e6fd69cdc5fb9e894ed352785cdf26d7d15b76921ed028f8247fdb6a2
   languageName: node
   linkType: hard
 
@@ -2961,12 +2961,14 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
-"graphql-tag@npm:^2.11.0":
-  version: 2.11.0
-  resolution: "graphql-tag@npm:2.11.0"
+"graphql-tag@npm:^2.12.0":
+  version: 2.12.1
+  resolution: "graphql-tag@npm:2.12.1"
+  dependencies:
+    tslib: ^1.14.1
   peerDependencies:
     graphql: ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-  checksum: 400355590180cce2f39df5c599cad20ee982bb7e4a63ad70857aa0fe2e82e3ef6233a4db2b80a03e6dfa84bf3ecb13dc2947936eaf31753c94876e22be45ea78
+  checksum: 24598a32799130942d6a86346794798fd3b4533fbc9c2f76af3546ea099778803387ead881c8099db76c6607d3064c970b3e59607d057554d14f82627a536d22
   languageName: node
   linkType: hard
 
@@ -6164,7 +6166,7 @@ fsevents@~2.3.1:
   version: 0.0.0-use.local
   resolution: "wholesale-tools@workspace:."
   dependencies:
-    "@apollo/client": ^3.3.8
+    "@apollo/client": ^3.3.9
     "@emotion/cache": latest
     "@emotion/react": latest
     "@emotion/server": latest

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { motion, AnimatePresence } from 'framer-motion'
 import Divider from '@material-ui/core/Divider'
@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import ProjectsByStatus from './ProjectsByStatus'
 import { useRouter } from 'next/router'
+import { startOfDay, endOfDay } from 'date-fns'
 
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props
@@ -28,7 +29,7 @@ const TabPanel = (props) => {
   )
 }
 
-const ProjectList = ({ filterOpen, status }) => {
+const ProjectList = () => {
   const statusMatrix = {
     open: 0,
     pending: 1,
@@ -38,7 +39,16 @@ const ProjectList = ({ filterOpen, status }) => {
     2: 'closed'
   }
   const router = useRouter()
-
+  const status = router.query.status
+  const start = router.query?.start ? startOfDay(new Date(router.query.start)).toISOString() : null
+  const end = router.query?.end ? endOfDay(new Date(router.query.end)).toISOString() : null
+  const fullQuery = useMemo(() => ({
+    start: start,
+    end: end,
+    inside: router.query?.inside || null,
+    outsideSales: router.query?.outside || null,
+    account: router.query?.account || null
+  }))
   const tabValue = statusMatrix[status]
   const handleChange = (event, newValue) => {
     const query = {
@@ -68,7 +78,7 @@ const ProjectList = ({ filterOpen, status }) => {
               indicatorColor='primary'
               textColor='primary'
               centered
-              style={{ paddingBottom: 10 }}
+              style={{ paddingBottom: 20 }}
             >
               <Tab label='Open' />
               <Tab label='Pending' />
@@ -76,13 +86,13 @@ const ProjectList = ({ filterOpen, status }) => {
             </Tabs>
           </Grid>
           <TabPanel value={tabValue} index={0}>
-            <ProjectsByStatus statusPage='Open' />
+            <ProjectsByStatus input={{ ...fullQuery, status: 'Open' }} />
           </TabPanel>
           <TabPanel value={tabValue} index={1}>
-            <ProjectsByStatus statusPage='Pending' />
+            <ProjectsByStatus input={{ ...fullQuery, status: 'Pending' }} />
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
-            <ProjectsByStatus statusPage='Closed' />
+            <ProjectsByStatus input={{ ...fullQuery, status: 'Closed' }} />
           </TabPanel>
         </Grid>
       </motion.div>

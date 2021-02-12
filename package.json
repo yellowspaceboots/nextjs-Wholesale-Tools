@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@apollo/client": "^3.3.8",
+    "@apollo/client": "^3.3.9",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
