@@ -1,3 +1,29 @@
+type Manufacturers {
+    parent_name: String
+    parent_id: Int
+    name: String
+    id: Int
+    image: ManufacturersImage
+  }
+
+type ManufacturersImage @embedded {
+  name: String
+  weight: Int
+  uri: String
+  sizes: ManufacturersImageSizes
+}
+
+type ManufacturersImageSizes @embedded {
+  thumb: ManufacturersImageSizesUri
+  small: ManufacturersImageSizesUri
+  medium: ManufacturersImageSizesUri
+  large: ManufacturersImageSizesUri
+}
+
+type ManufacturersImageSizesUri @embedded {
+  uri: String
+}
+
 type User {
   email: String! @unique
   role: UserRole!

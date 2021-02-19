@@ -50,7 +50,7 @@ const CalendarEvent = ({ id }) => {
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const event = data.findProjectsByID
-  const sortedComments = data.findProjectsByID.comments.data.slice().sort((a, b) => compareDesc(new Date(a.dateCreated), new Date(b.dateCreated)))
+  const sortedComments = data.findProjectsByID?.comments.data.slice().sort((a, b) => compareDesc(new Date(a.dateCreated), new Date(b.dateCreated)))
   const groupedComments = groupBy(sortedComments, 'replyTo')
   const fullComments = groupedComments.null || []
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }

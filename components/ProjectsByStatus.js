@@ -11,9 +11,9 @@ import Image from 'next/image'
 const ProjectsByStatus = ({ input }) => {
   const { error, data, fetchMore, networkStatus } = useQuery(GET_QUOTATIONS, {
     variables: { cursor: null, input },
-    notifyOnNetworkStatusChange: true
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'network-only'
   })
-  console.log(networkStatus)
   if (networkStatus === 1 || networkStatus === 2) {
     return (
       <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>

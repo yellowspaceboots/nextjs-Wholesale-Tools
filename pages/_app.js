@@ -17,6 +17,7 @@ const MyApp = (props) => {
   const { Component, pageProps } = props
   const getLayout = Component.getLayout || (page => page)
   const client = useApollo(pageProps.initialApolloState)
+  // const apolloClient = useApollo(pageProps)
 
   useEffect(() => {
     const jssStyles = document.querySelector('#jss-server-side')
@@ -43,7 +44,5 @@ const MyApp = (props) => {
     </CacheProvider>
   )
 }
-
-// export default withApollo()(MyApp)
 
 export default MyApp
