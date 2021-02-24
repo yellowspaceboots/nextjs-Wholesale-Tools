@@ -12,7 +12,8 @@ const ProjectsByStatus = ({ input }) => {
   const { error, data, fetchMore, networkStatus } = useQuery(GET_QUOTATIONS, {
     variables: { cursor: null, input },
     notifyOnNetworkStatusChange: true,
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first'
   })
   if (networkStatus === 1 || networkStatus === 2) {
     return (
