@@ -2,7 +2,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import { amountShortFormat } from '../testApi/utils'
+import { amountShortFormat } from '../lib/utils'
 import Paper from '@material-ui/core/Paper'
 import { CardActionArea } from '@material-ui/core'
 

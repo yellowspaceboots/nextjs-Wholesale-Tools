@@ -12,7 +12,7 @@ import { Controller, useForm } from 'react-hook-form'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import ListboxComponent from './VirtualizedList'
-import { deepEqual } from '../testApi/utils'
+import { deepEqual } from '../lib/utils'
 import isValid from 'date-fns/isValid'
 import DesktopDatePicker from '@material-ui/lab/DatePicker'
 import format from 'date-fns/format'
@@ -100,7 +100,7 @@ const FilterForm = () => {
                 render={props => {
                   return (
                     <DesktopDatePicker
-                      {...props}
+                      {...props.field}
                       label='Start'
                       renderInput={(params) => (
                         <TextField {...params} size='small' style={{ width: 175 }} variant='outlined' helperText={!!filterControl.start && 'Not a valid Date'} />
@@ -119,7 +119,7 @@ const FilterForm = () => {
                 render={props => {
                   return (
                     <DesktopDatePicker
-                      {...props}
+                      {...props.field}
                       label='End'
                       renderInput={(params) => (
                         <TextField {...params} size='small' style={{ width: 175 }} variant='outlined' helperText={!!filterControl.end && 'Not a valid Date'} />
@@ -133,7 +133,7 @@ const FilterForm = () => {
               <Controller
                 name='customer'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='customer'
@@ -175,7 +175,7 @@ const FilterForm = () => {
               <Controller
                 name='outsideSalesmen'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='outsideSalesmen'
@@ -216,7 +216,7 @@ const FilterForm = () => {
               <Controller
                 name='insideSalesmen'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='insideSalesmen'

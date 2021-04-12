@@ -6,9 +6,9 @@ import { useTheme } from '@material-ui/core/styles'
 import AddProjectForm from './AddProjectForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { CREATE_PROJECT } from '../testApi/mutations/createProject'
+import { CREATE_PROJECT } from '../lib/mutations/createProject'
 import { useMutation } from '@apollo/client'
-import { GET_ALL_OPEN_PROJECTS } from '../testApi/queries/getAllOpenProjects'
+import { GET_ALL_OPEN_PROJECTS } from '../lib/queries/getAllOpenProjects'
 
 const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
   const theme = useTheme()

@@ -6,8 +6,8 @@ import { useTheme } from '@material-ui/core/styles'
 import AddCustomerForm from './AddCustomerForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { ADD_NEW_CUSTOMER } from '../testApi/mutations/addNewCustomer'
-import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/customersUsedByCommercialProjects'
+import { ADD_NEW_CUSTOMER } from '../lib/mutations/addNewCustomer'
+import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/customersUsedByCommercialProjects'
 import { useMutation } from '@apollo/client'
 
 const AddCustomerDialog = ({ dialogOpen, setDialogOpen }) => {

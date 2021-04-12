@@ -1,6 +1,6 @@
 import React from 'react'
 import Switch from '@material-ui/core/Switch'
-import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/customersUsedByCommercialProjects'
+import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/customersUsedByCommercialProjects'
 
 const CommercialEditCustomerToggle = ({ id, currentState, updateCustomers }) => {
   return (

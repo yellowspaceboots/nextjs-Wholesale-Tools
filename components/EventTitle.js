@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import DateIcon from './DateIcon'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
-import { getStatusColor } from '../testApi/utils'
+import { getStatusColor } from '../lib/utils'
 import { formatDistanceToNow } from 'date-fns'
 
 const EventTitle = ({ event }) => {

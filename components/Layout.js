@@ -12,6 +12,7 @@ import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Zoom from '@material-ui/core/Zoom'
+import Hidden from '@material-ui/core/Hidden'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   content: props => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    maxWidth: props.drawerOpen ? 'calc(100% - 179px)' : `calc(100% - ${theme.spacing(7)} + 1px)`,
+    maxWidth: `calc(100% - ${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.down('sm')]: {
       maxWidth: '100%'
     }
@@ -76,9 +77,12 @@ const Layout = ({ children }) => {
       <div className={classes.root}>
         {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
         <MyAppBar id='back-to-top-anchor' handleDrawerToggle={handleDrawerToggle} logout={logout} />
-        <MyDrawer handleDrawerToggle={handleDrawerToggle} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+        <MyDrawer handleDrawerToggle={handleDrawerToggle} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
+          <Hidden smUp implementation='css'>
+            <div style={{ height: 30 }} />
+          </Hidden>
           {children}
           <Zoom in={trigger}>
             <div role='presentation' className={classes.scroll}>

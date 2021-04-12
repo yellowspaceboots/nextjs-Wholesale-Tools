@@ -5,7 +5,7 @@ import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../testApi/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
 import { useAuth } from './AuthProvider'
 import CalendarCount from './CalendarCount'
 

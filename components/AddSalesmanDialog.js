@@ -6,8 +6,8 @@ import { useTheme } from '@material-ui/core/styles'
 import AddSalesmanForm from './AddSalesmanForm'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import { CREATE_SALESMEN } from '../testApi/mutations/createSalesmen'
-import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/salesmenUsedByCommercialProjects'
+import { CREATE_SALESMEN } from '../lib/mutations/createSalesmen'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
 import { useMutation } from '@apollo/client'
 
 const AddSalesmanDialog = ({ dialogOpen, setDialogOpen }) => {

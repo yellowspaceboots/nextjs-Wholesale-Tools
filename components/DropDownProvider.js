@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react'
 import { useQuery } from '@apollo/client'
-import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/salesmenUsedByCommercialProjects'
-import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../testApi/queries/customersUsedByCommercialProjects'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
+import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/customersUsedByCommercialProjects'
 
 const DropDownContext = createContext()
 

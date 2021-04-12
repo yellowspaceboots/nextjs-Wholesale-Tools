@@ -13,10 +13,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { useMutation } from '@apollo/client'
 import cookie from 'js-cookie'
-import { LOGIN_USER } from '../testApi/mutations/loginUser'
+import { LOGIN_USER } from '../lib/mutations/loginUser'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import Image from 'next/image'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +28,10 @@ const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center'
+  },
+  imageTest: {
+    zIndex: -20,
+    height: '100vh'
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -60,21 +65,18 @@ const Login = () => {
         expires: 2
       })
       Router.reload(window.location.pathname)
-    }
+    },
+    onError: (error) => console.log(error)
   })
   const intialState = {
     email: '',
     password: ''
   }
   const {
-    register: loginRegister,
-    errors: loginErrors,
-    handleSubmit: loginHandleSubmit
-  } = useForm({
-    mode: 'onChange',
-    reValidateMode: 'onChange',
-    defaultValues: intialState
-  })
+    formState: { errors: loginErrors },
+    handleSubmit: loginHandleSubmit,
+    control: loginControl
+  } = useForm({ defaultValues: intialState })
   const onSubmit = (formData, e) => {
     loginUser({
       variables: {
@@ -85,6 +87,7 @@ const Login = () => {
       }
     })
   }
+  const onError = (errors, e) => console.log(errors, e)
   if (user) return null
   return (
     <>
@@ -99,7 +102,47 @@ const Login = () => {
             <Typography component='h1' variant='h5'>
               Sign in
             </Typography>
-            <form className={classes.form} onSubmit={loginHandleSubmit(onSubmit)}>
+            <form className={classes.form} onSubmit={loginHandleSubmit(onSubmit, onError)}>
+              <Controller
+                render={({ field }) => <TextField
+                  {...field}
+                  autoComplete='email'
+                  variant='outlined'
+                  name='email'
+                  id='email'
+                  label='Email Address'
+                  fullWidth
+                  autoFocus
+                  margin='normal'
+                  error={!!loginErrors.email || mutationError}
+                  helperText={loginErrors.email && 'Email Cannot Be Blank'}
+                                       />}
+                name='email'
+                control={loginControl}
+                rules={{ required: true }}
+                defaultValue=''
+              />
+              <Controller
+                render={({ field }) => <TextField
+                  {...field}
+                  autoComplete='current-password'
+                  variant='outlined'
+                  name='password'
+                  label='Password'
+                  type='password'
+                  id='password'
+                  fullWidth
+                  autoFocus
+                  margin='normal'
+                  error={!!loginErrors.password || mutationError}
+                  helperText={loginErrors.password ? 'Password Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                                       />}
+                name='password'
+                control={loginControl}
+                rules={{ required: true }}
+                defaultValue=''
+              />
+              {/*
               <TextField
                 autoComplete='email'
                 variant='outlined'
@@ -111,7 +154,7 @@ const Login = () => {
                 margin='normal'
                 error={!!loginErrors.email || mutationError}
                 helperText={loginErrors.email ? 'Email Cannot Be Blank' : mutationError ? mutationError.message : ''}
-                inputRef={loginRegister({ required: true })}
+                inputRef={{ ...loginRegister('email', { required: true }) }}
               />
               <TextField
                 autoComplete='current-password'
@@ -125,8 +168,10 @@ const Login = () => {
                 margin='normal'
                 error={!!loginErrors.password || mutationError}
                 helperText={loginErrors.password ? 'Password Cannot Be Blank' : mutationError ? mutationError.message : ''}
-                inputRef={loginRegister({ required: true })}
+                inputRef={{ ...loginRegister('password', { required: true }) }}
               />
+              */}
+
               <FormControlLabel
                 control={<Checkbox value='remember' color='primary' />}
                 label='Remember me'

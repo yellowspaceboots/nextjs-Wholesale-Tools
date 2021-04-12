@@ -69,8 +69,8 @@ const ProjectList = () => {
         exit='out'
         variants={pageVariants}
       >
-        <Grid container spacing={4}>
-          <Grid item xs={12}>
+        <Grid container spacing={3} style={{ marginLeft: -10 }}>
+          <Grid item xs={12} style={{ paddingLeft: 0 }}>
             <Divider />
             <Tabs
               value={tabValue}

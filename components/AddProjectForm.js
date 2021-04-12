@@ -31,7 +31,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   }
   const {
     register: addRegister,
-    errors: addErrors,
+    formState: { errors: addErrors },
     control: addControl,
     handleSubmit: addHandleSubmit,
     formState: addFormState
@@ -75,7 +75,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
               fullWidth
               error={!!addErrors.projectName || mutationError}
               helperText={addErrors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
-              inputRef={addRegister({ required: true })}
+              inputRef={{ ...addRegister('projectName', { required: true }) }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -257,7 +257,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
               variant='outlined'
               fullWidth
               error={!!addErrors.description}
-              inputRef={addRegister()}
+              inputRef={{ ...addRegister('description') }}
             />
           </Grid>
         </Grid>

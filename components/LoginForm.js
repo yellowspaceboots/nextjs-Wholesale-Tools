@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
-import { LOGIN_USER } from '../testApi/mutations/loginUser'
+import { LOGIN_USER } from '../lib/mutations/loginUser'
 import { Button } from '@material-ui/core'
 
 const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {

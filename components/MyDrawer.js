@@ -76,7 +76,7 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
   </Tooltip>
 )
 
-const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen }) => {
+const MyDrawer = ({ handleDrawerToggle, setMobileOpen, mobileOpen, drawerOpen, setDrawerOpen }) => {
   const { user } = useAuth()
   const theme = useTheme()
   const styleProps = { navColor: 'lightgrey', navPadding: 44 }
@@ -87,29 +87,29 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen })
     : user.role === 'OUTSIDESALES' ? { outside: user.salesRef.number } : {}
   const quoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'open' } }
   const classes = useStyles(styleProps)
-  const drawer = (
+  const drawer = (perm) => (
     <div className={classes.root}>
-      <List style={{ padding: 0, marginTop: mobileOpen ? 10 : 75, flex: 1 }}>
-        <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen || drawerOpen}>
+      <List style={{ padding: 0, marginTop: !perm ? 10 : 75, flex: 1 }}>
+        <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen}>
           <ListItem button to={{ pathname: '/' }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><HomeIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Dashboard</Typography>} />
           </ListItem>
         </DrawerTooltip>
-        <DrawerTooltip title='Quotations' drawerOpen={mobileOpen || drawerOpen}>
+        <DrawerTooltip title='Quotations' drawerOpen={mobileOpen}>
           <ListItem button to={quoteURL} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><AssessmentIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Quotations</Typography>} />
           </ListItem>
         </DrawerTooltip>
-        <DrawerTooltip title='Calendar' drawerOpen={mobileOpen || drawerOpen}>
+        <DrawerTooltip title='Calendar' drawerOpen={mobileOpen}>
           <ListItem button to={calendarURL} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><EventIcon className={classes.drawerIcon} /></ListItemIcon>
             <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Calendar</Typography>} />
           </ListItem>
         </DrawerTooltip>
         <Permission availableTo={['MANAGER']}>
-          <DrawerTooltip title='Settings' drawerOpen={mobileOpen || drawerOpen}>
+          <DrawerTooltip title='Settings' drawerOpen={mobileOpen}>
             <ListItem button to={{ pathname: '/settings' }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
               <ListItemIcon style={{ minWidth: styleProps.navPadding }}><SettingsIcon className={classes.drawerIcon} /></ListItemIcon>
               <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Settings</Typography>} />
@@ -118,9 +118,14 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen })
         </Permission>
       </List>
       <List>
-        <ListItem button onClick={() => setDrawerOpen(!drawerOpen)}>
+        <ListItem
+          button onClick={() => {
+            setDrawerOpen(!drawerOpen)
+            setMobileOpen(false)
+          }}
+        >
           <ListItemIcon>{!drawerOpen ? <NavigateNextIcon className={classes.drawerIcon} /> : <NavigateBeforeIcon className={classes.drawerIcon} />}</ListItemIcon>
-          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Collapse</Typography>} />
+          <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Pin</Typography>} />
         </ListItem>
       </List>
     </div>
@@ -141,27 +146,29 @@ const MyDrawer = ({ handleDrawerToggle, mobileOpen, drawerOpen, setDrawerOpen })
             keepMounted: true // Better open performance on mobile.
           }}
         >
-          {drawer}
+          {drawer(false)}
         </Drawer>
       </Hidden>
-      <Hidden smDown implementation='css'>
-        <Drawer
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: drawerOpen,
-            [classes.drawerClose]: !drawerOpen
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: drawerOpen,
-              [classes.drawerClose]: !drawerOpen
-            })
-          }}
-          variant='permanent'
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Hidden>
+      {drawerOpen && (
+        <Hidden smDown implementation='css'>
+          <Drawer
+            className={clsx(classes.drawer, {
+              [classes.drawerOpen]: !drawerOpen,
+              [classes.drawerClose]: drawerOpen
+            })}
+            classes={{
+              paper: clsx({
+                [classes.drawerOpen]: !drawerOpen,
+                [classes.drawerClose]: drawerOpen
+              })
+            }}
+            variant='permanent'
+            open
+          >
+            {drawer(true)}
+          </Drawer>
+        </Hidden>
+      )}
     </nav>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { GET_ALL_OPEN_PROJECTS } from '../testApi/queries/getAllOpenProjects'
-import { GET_QUOTATIONS } from '../testApi/queries/getQuotations'
+import { GET_ALL_OPEN_PROJECTS } from '../lib/queries/getAllOpenProjects'
+import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
 import { useQuery } from '@apollo/client'
 import EventTile from './EventTile'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -45,7 +45,7 @@ const ProjectsByStatus = ({ input }) => {
       {projectList.length > 0
         ? (
           <>
-            <Grid container spacing={2} style={{ width: '98%', paddingLeft: 20 }}>
+            <Grid container item spacing={1} justifyContent='center' alignItems='stretch'>
               {projectList.map((event, i) =>
                 <React.Fragment key={event._id}>
                   <EventTile event={event} />

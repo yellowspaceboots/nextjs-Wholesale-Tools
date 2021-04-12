@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { getLayout } from '../../../components/Layout'
 import CommercialEditSalesmanToggle from '../../../components/CommercialEditSalesmanToggle'
 import TextField from '@material-ui/core/TextField'
-import { GET_ALL_SALESMEN } from '../../../testApi/queries/getAllSalesmen'
+import { GET_ALL_SALESMEN } from '../../../lib/queries/getAllSalesmen'
 import { useQuery, useMutation } from '@apollo/client'
-import { UPDATE_SALESMAN } from '../../../testApi/mutations/updateSalesman'
+import { UPDATE_SALESMAN } from '../../../lib/mutations/updateSalesman'
 import DataTable from '../../../components/TableTest'
 
 const EditSalesmanList = () => {

@@ -61,7 +61,17 @@ const useStyles = makeStyles(theme => ({
     height: '100vh'
   },
   appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    height: 80
+  },
+  appBar2: {
     zIndex: theme.zIndex.drawer + 1
+  },
+  toolbarCol: {
+    height: 80
+  },
+  toolbarCol2: {
+    height: 40
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -331,63 +341,104 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
     <AddProjectDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
   )
   return (
-    <AppBar position='fixed' elevation={0} className={classes.appBar}>
-      <Toolbar>
-        <IconButton
-          color='inherit'
-          aria-label='Open drawer'
-          edge='start'
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
-        <NextLinkComposed to={{ pathname: '/' }}>
-          <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ margin: 15, marginLeft: -16, marginRight: 12 }} />
-        </NextLinkComposed>
-        <Hidden smDown implementation='css'>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant='h5' noWrap style={{ fontWeight: 700 }}>Wholesale Electric</Typography>
-            <Typography variant='caption' noWrap style={{ marginTop: -8, textTransform: 'uppercase' }}>Supply Company of Houston</Typography>
-          </div>
-        </Hidden>
-        <div style={{ display: 'flex', flexGrow: 1 }} />
-        <SearchBar />
-        <Permission availableTo={['MANAGER']}>
+    <>
+      <AppBar position='fixed' elevation={0} className={classes.appBar}>
+        <Toolbar className={classes.toolbarCol}>
+          <Hidden smDown implementation='css'>
+            <IconButton
+              color='inherit'
+              aria-label='Open drawer'
+              edge='start'
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <Hidden smUp implementation='css'>
+            <NextLinkComposed to={{ pathname: '/' }}>
+              <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ marginLeft: -8, marginRight: 16 }} />
+            </NextLinkComposed>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <IconButton
+              color='inherit'
+              aria-label='Open drawer'
+              edge='start'
+              onClick={handleDrawerToggle}
+              style={{ marginLeft: -19, marginRight: 4 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <NextLinkComposed to={{ pathname: '/' }}>
+              <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ marginRight: 10 }} />
+            </NextLinkComposed>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: 20 }}>
+              <Typography noWrap style={{ fontWeight: 700, fontFamily: 'Times New Roman', textTransform: 'uppercase', fontSize: 21 }}>Wholesale</Typography>
+              <Typography noWrap style={{ marginTop: -14, fontWeight: 700, fontFamily: 'Times New Roman', textTransform: 'uppercase', fontSize: 26 }}>Electric</Typography>
+              <Typography noWrap style={{ marginTop: -8, fontFamily: 'Times New Roman', textTransform: 'uppercase', fontSize: 9 }}>Supply Company of Houston</Typography>
+            </div>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <div style={{ display: 'flex', flexGrow: 1 }} />
+          </Hidden>
+          <SearchBar id='desktop' />
+          <Permission availableTo={['MANAGER']}>
+            <IconButton
+              color='inherit'
+              aria-label='Add'
+              onClick={addClick}
+            >
+              <AddCircleIcon />
+            </IconButton>
+            {renderAddMenu}
+          </Permission>
           <IconButton
             color='inherit'
-            aria-label='Add'
-            onClick={addClick}
+            aria-label='Notifications'
+            onClick={notificationClick}
           >
-            <AddCircleIcon />
+            <Badge color='secondary' overlap='circular' variant='dot'>
+              <NotificationsNoneIcon />
+            </Badge>
           </IconButton>
-          {renderAddMenu}
-        </Permission>
-        <IconButton
-          color='inherit'
-          aria-label='Notifications'
-          onClick={notificationClick}
-        >
-          <Badge color='secondary' overlap='circular' variant='dot'>
-            <NotificationsNoneIcon />
-          </Badge>
-        </IconButton>
-        {renderNotificationMenu}
-        <IconButton
-          edge='end'
-          aria-label='account of current user'
-          aria-haspopup='true'
-          onClick={profileClick}
-          color='inherit'
-        >
-          <AccountCircle />
-        </IconButton>
-        {renderProfileMenu}
-      </Toolbar>
-      {renderAddDialog}
-      <AddSalesmanDialog dialogOpen={salesDialogOpen} setDialogOpen={setSalesDialogOpen} />
-      <AddCustomerDialog dialogOpen={customerDialogOpen} setDialogOpen={setCustomerDialogOpen} />
-    </AppBar>
+          {renderNotificationMenu}
+          <IconButton
+            edge='end'
+            aria-label='account of current user'
+            aria-haspopup='true'
+            onClick={profileClick}
+            color='inherit'
+          >
+            <AccountCircle />
+          </IconButton>
+          {renderProfileMenu}
+        </Toolbar>
+        {renderAddDialog}
+        <AddSalesmanDialog dialogOpen={salesDialogOpen} setDialogOpen={setSalesDialogOpen} />
+        <AddCustomerDialog dialogOpen={customerDialogOpen} setDialogOpen={setCustomerDialogOpen} />
+      </AppBar>
+      <Hidden smUp implementation='css'>
+        <AppBar elevation={0} className={classes.appBar2} style={{ marginTop: 50 }}>
+          <Toolbar className={classes.toolbarCol2}>
+            <IconButton
+              color='inherit'
+              aria-label='Open drawer'
+              edge='start'
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <SearchBar id='mobile' />
+          </Toolbar>
+        </AppBar>
+      </Hidden>
+    </>
   )
 }
 

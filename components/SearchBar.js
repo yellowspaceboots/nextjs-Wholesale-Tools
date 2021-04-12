@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, alpha } from '@material-ui/core/styles'
 import { useLazyQuery } from '@apollo/client'
-import { PROJECT_SEARCH } from '../testApi/queries/projectSearch'
+import { PROJECT_SEARCH } from '../lib/queries/projectSearch'
 import useDebounce from '../utils/useDebounce'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import AssessmentIcon from '@material-ui/icons/Assessment'
@@ -16,30 +16,12 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: theme.palette.common.white,
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25)
+      backgroundColor: theme.palette.common.white
     },
     marginLeft: 0,
-    marginRight: 10,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto'
-    },
-    '& .MuiAutocomplete-input': {
-      color: 'white',
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 300,
-        '&:focus': {
-          width: 300
-        }
-      }
-    },
-    '& .MuiAutocomplete-clearIndicator': {
-      color: 'white'
-    }
+    marginRight: 10
   },
   avatar: {
     margin: 10,
@@ -65,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SearchBar = () => {
+const SearchBar = ({ id }) => {
   const classes = useStyles()
   const [value, setValue] = useState(null)
   const [inputValue, setInputValue] = useState('')
@@ -98,8 +80,8 @@ const SearchBar = () => {
 
   return (
     <Autocomplete
-      id='search-bar'
-      style={{ width: 300 }}
+      id={`search-bar-${id || ''}`}
+      fullWidth
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.title}
       filterOptions={(x) => x}
@@ -121,7 +103,7 @@ const SearchBar = () => {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder='Search'
+          placeholder='Search by Quote Name...'
           fullWidth
           size='small'
           InputProps={{
