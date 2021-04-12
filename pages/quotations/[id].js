@@ -22,7 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { compareDesc } from 'date-fns'
 import { groupBy } from '../../lib/utils'
 import CustomerStatusBoard from '../../components/CustomerStatusBoard'
-import { initializeApollo, addApolloState } from '../../lib/testApollo'
+import { initializeApollo, addApolloState } from '../../lib/apollo'
 
 const Event = (props) => {
   console.log(props)

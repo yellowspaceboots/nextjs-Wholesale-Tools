@@ -1,7 +1,7 @@
 import { getLayout } from '../../components/Layout'
 import CalendarEvent from '../../components/CalendarEvent'
 import { useRouter } from 'next/router'
-import { initializeApollo, addApolloState } from '../../lib/testApollo'
+import { initializeApollo, addApolloState } from '../../lib/apollo'
 import { FIND_MANUFACTURERS_BY_ID } from '../../lib/queries/findManufacturersById'
 import { useQuery } from '@apollo/client'
 import Image from 'next/image'
