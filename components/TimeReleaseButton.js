@@ -27,8 +27,8 @@ const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) =
       onMouseLeave={() => handleDelete('up')}
       onMouseUp={() => handleDelete('up')}
       startIcon={deleteDown ? <CircularProgress size={20} variant='determinate' value={timer} style={{ color: 'red' }} /> : icon}
-      pendingPosition='start'
-      pending={pending}
+      loadingPosition='start'
+      loading={pending}
     >
       {buttonText}
     </LoadingButton>

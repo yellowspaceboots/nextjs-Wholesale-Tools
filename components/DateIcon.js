@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import { format, isAfter } from 'date-fns'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import Badge from '@material-ui/core/Badge'
 import { getStatusColor, amountShortFormat, pad } from '../lib/utils'
 

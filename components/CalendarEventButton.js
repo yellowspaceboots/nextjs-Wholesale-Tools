@@ -1,7 +1,7 @@
 import React from 'react'
 import { format } from 'date-fns'
 import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import { green, red } from '@material-ui/core/colors'
 import { NextLinkComposed } from './Link'
 
@@ -16,6 +16,11 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: props.selectedButton.color,
     '&:hover': {
       backgroundColor: props.selectedButton.hover
+    },
+    '.MuiButton-label': {
+      justifyContent: 'flex-start',
+      whiteSpace: props.wrap ? 'wrap' : 'nowrap',
+      textOverflow: 'ellipsis'
     }
   }),
   unThemedRoot: props => ({
@@ -81,9 +86,18 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
             component={NextLinkComposed}
             onClick={(e) => e.stopPropagation()}
             variant='contained'
-            classes={{
-              root: classes.root,
-              label: classes.label
+            sx={{
+              fontSize: 12,
+              height: wrap ? 'auto' : 18,
+              overflow: 'hidden',
+              marginBottom: '4px',
+              color: selectedButton.textColor,
+              backgroundColor: selectedButton.color,
+              '&:hover': {
+                backgroundColor: selectedButton.hover
+              },
+              justifyContent: 'flex-start',
+              whiteSpace: wrap ? 'wrap' : 'nowrap'
             }}
           >
             {buttonText}
@@ -97,9 +111,13 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
             color={selectedButton.color}
             onClick={(e) => e.stopPropagation()}
             variant='contained'
-            classes={{
-              root: classes.unThemedRoot,
-              label: classes.label
+            sx={{
+              fontSize: 12,
+              height: wrap ? 'auto' : 18,
+              overflow: 'hidden',
+              marginBottom: '4px',
+              justifyContent: 'flex-start',
+              whiteSpace: wrap ? 'wrap' : 'nowrap'
             }}
           >
             {buttonText}

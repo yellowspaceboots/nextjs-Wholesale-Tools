@@ -226,8 +226,8 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                       size='small'
                       onClick={(event) => component.onClick(event)}
                       startIcon={component.icon}
-                      pendingPosition='start'
-                      pending={component.pending}
+                      loadingPosition='start'
+                      loading={component.pending}
                     >
                       {component.text}
                     </LoadingButton>

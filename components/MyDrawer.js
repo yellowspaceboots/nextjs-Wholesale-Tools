@@ -1,6 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -10,7 +11,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import EventIcon from '@material-ui/icons/Event'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Drawer from '@material-ui/core/Drawer'
-import Hidden from '@material-ui/core/Hidden'
+// import Hidden from '@material-ui/core/Hidden'
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -18,15 +19,19 @@ import Permission from './Permission'
 import AssessmentIcon from '@material-ui/icons/Assessment'
 import { NextLinkComposed } from './Link'
 import { useAuth } from './AuthProvider'
+import useMediaQuery from '@material-ui/core/useMediaQuery'
+import GmailTreeView from './TreeTest'
 
-const drawerWidth = 180
+const drawerWidth = 200
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    paddingRight: 10,
+    paddingTop: 10
   },
   drawer: {
     [theme.breakpoints.up('sm')]: {
@@ -77,6 +82,8 @@ const DrawerTooltip = ({ children, drawerOpen, title }) => (
 )
 
 const MyDrawer = ({ handleDrawerToggle, setMobileOpen, mobileOpen, drawerOpen, setDrawerOpen }) => {
+  const hiddenUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
+  const hiddenDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { user } = useAuth()
   const theme = useTheme()
   const styleProps = { navColor: 'lightgrey', navPadding: 44 }
@@ -89,7 +96,8 @@ const MyDrawer = ({ handleDrawerToggle, setMobileOpen, mobileOpen, drawerOpen, s
   const classes = useStyles(styleProps)
   const drawer = (perm) => (
     <div className={classes.root}>
-      <List style={{ padding: 0, marginTop: !perm ? 10 : 75, flex: 1 }}>
+      {/*
+      <List style={{ marginTop: !perm ? 10 : 75, flex: 1 }}>
         <DrawerTooltip title='Dashboard' drawerOpen={mobileOpen}>
           <ListItem button to={{ pathname: '/' }} component={NextLinkComposed} onClick={mobileOpen ? handleDrawerToggle : null}>
             <ListItemIcon style={{ minWidth: styleProps.navPadding }}><HomeIcon className={classes.drawerIcon} /></ListItemIcon>
@@ -128,46 +136,73 @@ const MyDrawer = ({ handleDrawerToggle, setMobileOpen, mobileOpen, drawerOpen, s
           <ListItemText disableTypography primary={<Typography variant='body2' className={classes.drawerFont}>Pin</Typography>} />
         </ListItem>
       </List>
+
+    */}
+
+      <GmailTreeView />
+
     </div>
   )
   return (
     <nav aria-label='mailbox folders'>
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-      <Hidden smUp implementation='css'>
-        <Drawer
-          variant='temporary'
-          anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          ModalProps={{
-            keepMounted: true // Better open performance on mobile.
-          }}
-        >
-          {drawer(false)}
-        </Drawer>
-      </Hidden>
+      {
+      //  <Hidden smUp implementation='css'>
+  !hiddenUp && (
+    <Drawer
+      variant='permanent'
+      anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+      open={mobileOpen}
+      onClose={handleDrawerToggle}
+      classes={{
+        paper: classes.drawerPaper
+      }}
+      ModalProps={{
+        keepMounted: true // Better open performance on mobile.
+      }}
+    >
+      <div style={{ height: 80 }} />
+      {drawer(false)}
+    </Drawer>
+  )
+ // </Hidden>
+}
       {drawerOpen && (
-        <Hidden smDown implementation='css'>
-          <Drawer
-            className={clsx(classes.drawer, {
+        <>
+          {/* <Drawer
+          className={clsx(classes.drawer, {
+            [classes.drawerOpen]: drawerOpen,
+            [classes.drawerClose]: !drawerOpen
+          })}
+          classes={{
+            paper: clsx({
               [classes.drawerOpen]: !drawerOpen,
               [classes.drawerClose]: drawerOpen
+            })
+          }}
+          variant='permanent'
+          open
+        >
+          {drawer(true)}
+        </Drawer> */}
+          <Drawer
+            className={clsx(classes.drawer, {
+              [classes.drawerOpen]: drawerOpen,
+              [classes.drawerClose]: !drawerOpen
             })}
             classes={{
               paper: clsx({
-                [classes.drawerOpen]: !drawerOpen,
-                [classes.drawerClose]: drawerOpen
+                [classes.drawerOpen]: drawerOpen,
+                [classes.drawerClose]: !drawerOpen
               })
             }}
             variant='permanent'
             open
           >
+            <div style={{ height: 80 }} />
             {drawer(true)}
           </Drawer>
-        </Hidden>
+        </>
       )}
     </nav>
   )

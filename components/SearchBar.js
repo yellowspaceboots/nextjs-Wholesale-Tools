@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField'
 import Autocomplete from '@material-ui/core/Autocomplete'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles, alpha } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import { useLazyQuery } from '@apollo/client'
 import { PROJECT_SEARCH } from '../lib/queries/projectSearch'
 import useDebounce from '../utils/useDebounce'
@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.white,
     '&:hover': {
       backgroundColor: theme.palette.common.white
-    },
-    marginLeft: 0,
-    marginRight: 10
+    }
   },
   avatar: {
     margin: 10,
@@ -90,6 +88,8 @@ const SearchBar = ({ id }) => {
       autoComplete
       popupIcon={false}
       includeInputInList
+      openOnFocus
+      freeSolo
       classes={{ root: classes.search }}
       filterSelectedOptions
       value={value}
@@ -106,14 +106,6 @@ const SearchBar = ({ id }) => {
           placeholder='Search by Quote Name...'
           fullWidth
           size='small'
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {params.InputProps.endAdornment}
-              </>
-            )
-          }}
         />
       )}
       renderOption={(props, option) => {

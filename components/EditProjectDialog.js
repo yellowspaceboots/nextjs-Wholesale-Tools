@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import { UPDATE_PROJECT } from '../lib/mutations/updateProject'
 import { useMutation } from '@apollo/client'
 
-const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event }) => {
+const EditProjectDialog = ({ dialogOpen, setDialogOpen, event }) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [error, setError] = useState()
@@ -47,10 +47,10 @@ const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event 
             }}
           >
             <CircularProgress style={{ color: 'white' }} />
-            <Typography style={{ color: 'white' }}>Updating Project...</Typography>
+            <Typography style={{ color: 'white' }}>Updating Quotation...</Typography>
             {mutationError && <p>Error :( Please try again</p>}
           </div>}
-        <DialogTitle id='responsive-dialog-title'>Edit Project</DialogTitle>
+        <DialogTitle id='responsive-dialog-title'>Edit Quotation</DialogTitle>
         <EditProjectForm handleClose={handleClose} updateProject={updateProject} mutationError={error} event={event} />
       </Dialog>
     </>

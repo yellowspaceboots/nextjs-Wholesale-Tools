@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import LinearProgress from '@material-ui/core/LinearProgress'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import MyDrawer from './MyDrawer'
 import MyAppBar from './MyAppBar'
 import { useAuth } from '../components/AuthProvider'
@@ -12,7 +12,8 @@ import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Zoom from '@material-ui/core/Zoom'
-import Hidden from '@material-ui/core/Hidden'
+// import Hidden from '@material-ui/core/Hidden'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   content: props => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    maxWidth: `calc(100% - ${theme.spacing(7)} + 1px)`,
+    maxWidth: props.drawerOpen ? 'calc(100% - 179px)' : `calc(100% - ${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.down('sm')]: {
       maxWidth: '100%'
     }
@@ -55,7 +56,7 @@ const Layout = ({ children }) => {
   const { user, checked, setUser } = useAuth()
   const client = useApolloClient()
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(true)
   const classes = useStyles({ drawerOpen })
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
   const logout = () => {
@@ -80,9 +81,12 @@ const Layout = ({ children }) => {
         <MyDrawer handleDrawerToggle={handleDrawerToggle} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
+          <Box component='div' sx={{ display: { sm: 'none', xs: 'block' }, height: 30 }} />
+          {/*
           <Hidden smUp implementation='css'>
             <div style={{ height: 30 }} />
           </Hidden>
+          */}
           {children}
           <Zoom in={trigger}>
             <div role='presentation' className={classes.scroll}>

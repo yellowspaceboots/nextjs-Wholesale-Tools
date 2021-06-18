@@ -27,25 +27,15 @@ const ProjectsByStatus = ({ input }) => {
   const wayPointHandler = () => {
     const cursor = data.getQuotations.after
     fetchMore({
-      variables: { cursor, input },
-      updateQuery: (prevResult, { fetchMoreResult }) => {
-        const newResult = {
-          ...fetchMoreResult,
-          getQuotations: {
-            ...fetchMoreResult.getQuotations,
-            data: [...prevResult.getQuotations.data, ...fetchMoreResult.getQuotations.data]
-          }
-        }
-        return newResult
-      }
+      variables: { cursor, input }
     })
   }
   return (
-    <Grid container>
+    <Grid container alignItems='center'>
       {projectList.length > 0
         ? (
           <>
-            <Grid container item spacing={1} justifyContent='center' alignItems='stretch'>
+            <Grid container item spacing={1} alignItems='stretch' style={{ flexShrink: 1 }}>
               {projectList.map((event, i) =>
                 <React.Fragment key={event._id}>
                   <EventTile event={event} />

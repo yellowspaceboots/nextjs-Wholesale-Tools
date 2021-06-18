@@ -43,6 +43,7 @@ const EditSalesmanList = () => {
     {
       field: 'used',
       headerName: 'Assignable',
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => <CommercialEditSalesmanToggle id={params.getValue('_id')} currentState={Boolean(params.value)} updateSalesman={updateSalesman} />
     }
   ]

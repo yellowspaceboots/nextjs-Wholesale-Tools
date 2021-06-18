@@ -69,7 +69,7 @@ const Customer = ({ id }) => {
                   })}
                   style={{ marginTop: 30, marginBottom: 12 }}
                 />
-                <LoadingButton disabled={!newSalesFormState.isValid} type='submit' color='primary' pending={mutationLoading} variant='outlined'>
+                <LoadingButton disabled={!newSalesFormState.isValid} type='submit' color='primary' loading={mutationLoading} variant='outlined'>
                   Save
                 </LoadingButton>
               </Grid>

@@ -38,6 +38,7 @@ const EditCustomerList = () => {
       field: 'account',
       headerName: 'Account',
       width: 80,
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => (
         <Link href={`edit-customer-list/${params.getValue('_id')}`} variant='body2'>
           {params.value}
@@ -55,6 +56,7 @@ const EditCustomerList = () => {
     {
       field: 'used',
       headerName: 'Assignable',
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => <CommercialEditCustomerToggle id={params.getValue('_id')} currentState={Boolean(params.value)} updateCustomers={updateCustomers} />
     }
   ]

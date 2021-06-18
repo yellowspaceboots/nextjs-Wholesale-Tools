@@ -9,15 +9,17 @@ import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/styles'
 import LinearProgress from '@material-ui/core/LinearProgress'
 import { useMutation } from '@apollo/client'
 import cookie from 'js-cookie'
 import { LOGIN_USER } from '../lib/mutations/loginUser'
+import { GET_ME } from '../lib/queries/getMe'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
 import Image from 'next/image'
+import { initializeApollo } from '../lib/apollo'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,6 +59,21 @@ const useStyles = makeStyles(theme => ({
 const Login = () => {
   const classes = useStyles()
   const { user } = useAuth()
+
+  const signin = async (email, password) => {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+
+    if (response.status !== 200) {
+      throw new Error(await response.text())
+    }
+
+    Router.reload(window.location.pathname)
+  }
+  /*
   const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN_USER, {
     onCompleted: data => {
       cookie.set('token', data.loginUser.token, {
@@ -64,10 +81,11 @@ const Login = () => {
         secure: process.env.NODE_ENV === 'production',
         expires: 2
       })
-      Router.reload(window.location.pathname)
+      // Router.reload(window.location.pathname)
     },
     onError: (error) => console.log(error)
   })
+*/
   const intialState = {
     email: '',
     password: ''
@@ -77,21 +95,22 @@ const Login = () => {
     handleSubmit: loginHandleSubmit,
     control: loginControl
   } = useForm({ defaultValues: intialState })
-  const onSubmit = (formData, e) => {
-    loginUser({
-      variables: {
-        input: {
-          email: formData.email.trim(),
-          password: formData.password.trim()
-        }
-      }
-    })
+
+  const onSubmit = async (formData, e) => {
+    const email = formData.email.trim()
+    const password = formData.password.trim()
+    try {
+      await signin(email, password)
+      // loginUser({ variables: { input: { email, password } } })
+    } catch (error) {
+      console.error(error)
+    }
   }
   const onError = (errors, e) => console.log(errors, e)
   if (user) return null
   return (
     <>
-      {mutationLoading && <LinearProgress color='secondary' style={{ position: 'absolute', top: 0, left: 0, width: '100%' }} />}
+      {/* mutationLoading && <LinearProgress color='secondary' style={{ position: 'absolute', top: 0, left: 0, width: '100%' }} /> */}
       <Grid container component='main' className={classes.root}>
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -114,7 +133,7 @@ const Login = () => {
                   fullWidth
                   autoFocus
                   margin='normal'
-                  error={!!loginErrors.email || mutationError}
+                  error={!!loginErrors.email}
                   helperText={loginErrors.email && 'Email Cannot Be Blank'}
                                        />}
                 name='email'
@@ -130,12 +149,12 @@ const Login = () => {
                   name='password'
                   label='Password'
                   type='password'
-                  id='password'
+                  id='current-password'
                   fullWidth
                   autoFocus
                   margin='normal'
-                  error={!!loginErrors.password || mutationError}
-                  helperText={loginErrors.password ? 'Password Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                  error={!!loginErrors.password}
+                  helperText={loginErrors.password ? 'Password Cannot Be Blank' : ''}
                                        />}
                 name='password'
                 control={loginControl}
@@ -199,15 +218,15 @@ const Login = () => {
     </>
   )
 }
-/*
+
 export async function getServerSideProps (ctx) {
-  const apolloClient = initializeApollo(null, ctx)
+  const apolloClient = initializeApollo(ctx, null)
   await apolloClient.query({ query: GET_ME })
   return {
     props: {
-      initialApolloState: apolloClient.cache.extract(),
-    },
+      initialApolloState: apolloClient.cache.extract()
+    }
   }
 }
-*/
+
 export default Login

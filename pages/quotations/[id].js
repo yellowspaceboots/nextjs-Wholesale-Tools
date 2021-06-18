@@ -20,7 +20,7 @@ import { CREATE_COMMENT } from '../../lib/mutations/createComment'
 import { useAuth } from '../../components/AuthProvider'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { compareDesc } from 'date-fns'
-import { groupBy } from '../../lib/utils'
+import { groupBy, parseCookies } from '../../lib/utils'
 import CustomerStatusBoard from '../../components/CustomerStatusBoard'
 import { initializeApollo, addApolloState } from '../../lib/apollo'
 
@@ -52,6 +52,7 @@ const Event = (props) => {
     },
     onCompleted: () => setComment('')
   })
+
   const { loading, error, data } = useQuery(FIND_PROJECTS_BY_ID, { variables: { id } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
@@ -74,7 +75,7 @@ const Event = (props) => {
           variants={pageVariants}
         >
           <Grid container alignItems='center'>
-            <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Average Project Value: {fullAmount}</Typography>
+            <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Average Quotation Value: {fullAmount}</Typography>
             <Tooltip title='Edit Project' placement='right'>
               <IconButton aria-label='edit' onClick={() => handleClickOpen()}>
                 <EditIcon fontSize='small' />
@@ -135,7 +136,9 @@ const Event = (props) => {
 Event.getLayout = getLayout
 
 export async function getServerSideProps(context) {
-  const apolloClient = initializeApollo(context)
+  const cookies = parseCookies(context.req)
+  console.log(cookies)
+  const apolloClient = initializeApollo(context, null, cookies)
 
   await apolloClient.query({
     query: FIND_PROJECTS_BY_ID,
@@ -145,13 +148,6 @@ export async function getServerSideProps(context) {
   return addApolloState(apolloClient, {
     props: {},
   })
-/*
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract(),
-    }
-  }
-  */
 }
 
 export default Event
