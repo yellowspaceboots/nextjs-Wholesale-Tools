@@ -5,28 +5,31 @@ import TextField from '@material-ui/core/TextField'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation } from '@apollo/client'
 import { FIND_CUSTOMERS_BY_ID } from '../lib/queries/findCustomersById'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import LoadingButton from '@material-ui/lab/LoadingButton'
 import { CHANGE_CUSTOMER_SALESMAN } from '../lib/mutations/changeCustomerSalesman'
 
 const Customer = ({ id }) => {
+  const initialState = {
+    newSalesNumber: ''
+  }
   const {
-    register: newSalesRegister,
-    errors: newSalesErrors,
+    control: newSalesControl,
     handleSubmit: newSalesHandleSubmit,
     formState: newSalesFormState,
     reset: newSalesReset
   } = useForm({
     mode: 'onChange',
-    reValidateMode: 'onChange'
+    reValidateMode: 'onChange',
+    defaultValues: initialState
   })
-  const [myError, setMyError] = useState()
   const [changeCustomerSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(CHANGE_CUSTOMER_SALESMAN, {
     onError: (error) => console.log(error),
     onCompleted: () => {
       newSalesReset()
     }
   })
+  const { errors: newSalesErrors, isValid: isValidState } = newSalesFormState
   const onSubmit = (data, e) => changeCustomerSalesman({ variables: { input: { id, salesmanNumber: data.newSalesNumber.toUpperCase() } } })
   const { loading, error, data } = useQuery(FIND_CUSTOMERS_BY_ID, { variables: { id } })
   if (loading) return 'Loading...'
@@ -47,29 +50,38 @@ const Customer = ({ id }) => {
             <Typography>{customerObj.salesRef.name} - {customerObj.salesRef.number}</Typography>
             <form onSubmit={newSalesHandleSubmit(onSubmit)}>
               <Grid container alignItems='center' direction='column'>
-                <TextField
-                  id='standard-multiline-static'
-                  label='New Sales Number'
-                  autoComplete='off'
+                <Controller
                   name='newSalesNumber'
-                  inputProps={{
-                    maxLength: 4,
-                    style: {
-                      textTransform: 'uppercase'
-                    }
-                  }}
-                  variant='outlined'
-                  helperText='Must be 4 Characters'
-                  error={!!newSalesErrors.salesman}
-                  inputRef={newSalesRegister({
+                  control={newSalesControl}
+                  rules={{
                     required: true,
                     maxLength: 4,
                     minLength: 4,
                     validate: value => value.toLowerCase().trim() !== customerObj.salesRef.number.toLowerCase().trim()
-                  })}
-                  style={{ marginTop: 30, marginBottom: 12 }}
+                  }}
+                  render={({ field }) => {
+                    return (
+                      <TextField
+                        {...field}
+                        id='standard-multiline-static'
+                        label='New Sales Number'
+                        autoComplete='off'
+                        name='newSalesNumber'
+                        inputProps={{
+                          maxLength: 4,
+                          style: {
+                            textTransform: 'uppercase'
+                          }
+                        }}
+                        variant='outlined'
+                        helperText='Must be 4 Characters'
+                        error={!!newSalesErrors.newSalesNumber}
+                        style={{ marginTop: 30, marginBottom: 12 }}
+                      />
+                    )
+                  }}
                 />
-                <LoadingButton disabled={!newSalesFormState.isValid} type='submit' color='primary' loading={mutationLoading} variant='outlined'>
+                <LoadingButton disabled={!isValidState} type='submit' color='primary' loading={mutationLoading} variant='outlined'>
                   Save
                 </LoadingButton>
               </Grid>

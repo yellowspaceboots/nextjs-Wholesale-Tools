@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
 const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
-  const intialState = {
+  const initialState = {
     salesmanName: '',
     salesmanNumber: '',
     store: '0072',
@@ -19,15 +19,16 @@ const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
   }
   const {
     register: addSalesmanRegister,
-    errors: addSalesmanErrors,
     control: addSalesmanControl,
     handleSubmit: addSalesmanHandleSubmit,
     formState: addSalesmanFormState
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
+
+  const { errors, isValid } = addSalesmanFormState
   const onSubmit = (data, e) => {
     const payload = {
       name: data.salesmanName.trim(),
@@ -43,52 +44,71 @@ const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
       <DialogContent style={{ width: 400 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              autoComplete='off'
-              variant='outlined'
+            <Controller
               name='salesmanName'
-              id='salesman-name'
-              label='Name'
-              fullWidth
-              error={!!addSalesmanErrors.salesmanName || mutationError}
-              helperText={addSalesmanErrors.salesmanName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
-              inputRef={addSalesmanRegister({ required: true })}
+              control={addSalesmanControl}
+              rules={{ required: true }}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    autoComplete='off'
+                    variant='outlined'
+                    name='salesmanName'
+                    id='salesman-name'
+                    label='Name'
+                    fullWidth
+                    error={!!errors.salesmanName || mutationError}
+                    helperText={errors.salesmanName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
-            <TextField
-              autoComplete='off'
-              variant='outlined'
+            <Controller
               name='salesmanNumber'
-              id='salesman-number'
-              inputProps={{ maxLength: 4 }}
-              label='Number'
-              fullWidth
-              error={!!addSalesmanErrors.salesmanNumber || mutationError}
-              helperText={addSalesmanErrors.salesmanNumber ? 'Number Must be 4 Characters and Cannot Be Blank' : mutationError ? mutationError.message : ''}
-              inputRef={addSalesmanRegister({
+              control={addSalesmanControl}
+              rules={{
                 required: true,
                 maxLength: 4,
                 minLength: 4
-              })}
+              }}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    autoComplete='off'
+                    variant='outlined'
+                    name='salesmanNumber'
+                    id='salesman-number'
+                    inputProps={{ maxLength: 4 }}
+                    label='Number'
+                    fullWidth
+                    error={!!errors.salesmanNumber || mutationError}
+                    helperText={errors.salesmanNumber ? 'Number Must be 4 Characters and Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <Controller
               name='type'
               control={addSalesmanControl}
-              defaultValue={intialState.type}
-              render={props => {
+              defaultValue={initialState.type}
+              rules={{ required: true }}
+              render={({ field }) => {
                 return (
                   <TextField
                     id='outlined-select-size'
-                    {...props}
+                    {...field}
                     select
                     fullWidth
                     label='Type'
                     variant='outlined'
-                    error={!!addSalesmanErrors.type}
-                    helperText={!!addSalesmanErrors.type && 'Type Cannot Be Blank'}
+                    error={!!errors.type}
+                    helperText={!!errors.type && 'Type Cannot Be Blank'}
                   >
                     <MenuItem value='Inside'>
                       Inside
@@ -114,18 +134,19 @@ const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
             <Controller
               name='store'
               control={addSalesmanControl}
-              defaultValue={intialState.store}
-              render={props => {
+              defaultValue={initialState.store}
+              rules={{ required: true }}
+              render={({ field }) => {
                 return (
                   <TextField
-                    {...props}
+                    {...field}
                     id='outlined-select-size'
                     select
                     fullWidth
                     label='Store'
                     variant='outlined'
-                    error={!!addSalesmanErrors.store}
-                    helperText={!!addSalesmanErrors.store && 'Store Cannot Be Blank'}
+                    error={!!errors.store}
+                    helperText={!!errors.store && 'Store Cannot Be Blank'}
                   >
                     <MenuItem value='0054'>0054- CMMS BAYTOWN</MenuItem>
                     <MenuItem value='0058'>0058- ANNISTON</MenuItem>
@@ -171,14 +192,11 @@ const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
             <Controller
               control={addSalesmanControl}
               name='assignable'
-              render={({ onChange, onBlur, value, name, ref }) => (
+              render={({ field }) => (
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onBlur={onBlur}
-                      onChange={e => onChange(e.target.checked)}
-                      checked={value}
-                      inputRef={ref}
+                      {...field}
                     />
                   }
                   label='Assignable'
@@ -190,7 +208,7 @@ const AddSalesmanForm = ({ handleClose, createSalesmen, mutationError }) => {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={!addSalesmanFormState.isValid} type='submit' color='primary'>
+        <Button disabled={!isValid} type='submit' color='primary'>
           Save
         </Button>
         <Button onClick={handleClose} type='reset' color='primary' autoFocus>

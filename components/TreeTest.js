@@ -13,13 +13,12 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn'
 import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import ArchiveIcon from '@material-ui/icons/Archive'
-import { NextLinkComposed } from './Link'
 import { useRouter } from 'next/router'
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: 'white',
   [`& .${treeItemClasses.content}`]: {
-    color: 'white',
+    color: theme.palette.text.secondary,
     borderTopRightRadius: theme.spacing(2),
     borderBottomRightRadius: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -28,7 +27,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
       fontWeight: theme.typography.fontWeightRegular
     },
     '&:hover': {
-      backgroundColor: theme.palette.primary.light
+      backgroundColor: theme.palette.action.hover,
     },
     '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
@@ -145,15 +144,15 @@ export default function GmailTreeView () {
         nodeId='1'
         labelText='Dashboard'
         labelIcon={HomeIcon}
-        color='#1e3f76'
-        bgColor='white'
+        color='white'
+        bgColor='#1e3f76'
       />
       <StyledTreeItem
         nodeId='2'
         labelText='Quotations'
         labelIcon={AssignmentIcon}
-        color='#1e3f76'
-        bgColor='white'
+        color='white'
+        bgColor='#1e3f76'
       >
         <StyledTreeItem
           nodeId='5'
@@ -184,8 +183,8 @@ export default function GmailTreeView () {
         nodeId='3'
         labelText='Calendar'
         labelIcon={EventIcon}
-        color='#1e3f76'
-        bgColor='white'
+        color='white'
+        bgColor='#1e3f76'
       >
         <StyledTreeItem
           nodeId='8'
@@ -216,8 +215,8 @@ export default function GmailTreeView () {
         nodeId='4'
         labelText='Settings'
         labelIcon={SettingsIcon}
-        color='#1e3f76'
-        bgColor='white'
+        color='white'
+        bgColor='#1e3f76'
       />
     </TreeView>
   )

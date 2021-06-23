@@ -91,6 +91,7 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
               height: wrap ? 'auto' : 18,
               overflow: 'hidden',
               marginBottom: '4px',
+              marginRight: '4px',
               color: selectedButton.textColor,
               backgroundColor: selectedButton.color,
               '&:hover': {
@@ -116,6 +117,7 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
               height: wrap ? 'auto' : 18,
               overflow: 'hidden',
               marginBottom: '4px',
+              marginRight: '4px',
               justifyContent: 'flex-start',
               whiteSpace: wrap ? 'wrap' : 'nowrap'
             }}

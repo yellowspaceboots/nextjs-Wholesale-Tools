@@ -22,7 +22,7 @@ const FilterForm = () => {
   const router = useRouter()
   const [filterOpen, toggleFilterOpen] = useState(false)
   const handleToggleFilterOpen = () => toggleFilterOpen(!filterOpen)
-  const intialState = {
+  const initialState = {
     start: router.query.start ? new Date(router.query.start) : null,
     end: router.query.end ? new Date(router.query.end) : null,
     outsideSalesmen: router.query.outside ? outsideSalesmen.filter(outsideSalesmen => outsideSalesmen.number === router.query.outside)[0] : null,
@@ -31,7 +31,7 @@ const FilterForm = () => {
   }
   useEffect(() => {
     if (router.query) {
-      filterReset(intialState)
+      filterReset(initialState)
     }
   }, [router.query])
   const {
@@ -42,7 +42,7 @@ const FilterForm = () => {
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
   const onSubmit = (data, e) => {
     const fullQuery = {
@@ -68,9 +68,9 @@ const FilterForm = () => {
     end: watchEnd ? format(new Date(watchEnd), 'MM/dd/yyyy') : null
   }
   const compareInitialState = {
-    ...intialState,
-    start: intialState.start ? format(new Date(intialState.start), 'MM/dd/yyyy') : null,
-    end: intialState.end ? format(new Date(intialState.end), 'MM/dd/yyyy') : null
+    ...initialState,
+    start: initialState.start ? format(new Date(initialState.start), 'MM/dd/yyyy') : null,
+    end: initialState.end ? format(new Date(initialState.end), 'MM/dd/yyyy') : null
   }
   const buttonDisabled = deepEqual(compareWatch, compareInitialState)
   return (
@@ -96,7 +96,7 @@ const FilterForm = () => {
                 name='start'
                 rules={{ validate: value => isValid(value) || value === null }}
                 control={filterControl}
-                defaultValue={intialState.start}
+                defaultValue={initialState.start}
                 render={props => {
                   return (
                     <DesktopDatePicker
@@ -115,7 +115,7 @@ const FilterForm = () => {
                 name='end'
                 rules={{ validate: value => isValid(value) || value === null }}
                 control={filterControl}
-                defaultValue={intialState.end}
+                defaultValue={initialState.end}
                 render={props => {
                   return (
                     <DesktopDatePicker
@@ -142,7 +142,7 @@ const FilterForm = () => {
                       style={{ minWidth: 400 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.account === value.account}
+                      isOptionEqualToValue={(option, value) => option.account === value.account}
                       renderInput={(params) =>
                         <TextField
                           {...params}
@@ -184,7 +184,7 @@ const FilterForm = () => {
                       style={{ minWidth: 240 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.number === value.number}
+                      isOptionEqualToValue={(option, value) => option.number === value.number}
                       renderInput={(params) =>
                         <TextField
                           {...params}
@@ -225,7 +225,7 @@ const FilterForm = () => {
                       style={{ minWidth: 240 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.number === value.number}
+                      isOptionEqualToValue={(option, value) => option.number === value.number}
                       renderInput={(params) =>
                         <TextField
                           {...params}

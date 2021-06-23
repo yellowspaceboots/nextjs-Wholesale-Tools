@@ -21,7 +21,7 @@ import { deepEqual } from '../lib/utils'
 
 const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {
   const { user } = useAuth()
-  const intialState = {
+  const initialState = {
     projectName: event.title,
     amount: event.amount / 10000,
     size: event.size,
@@ -41,7 +41,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
   const onSubmit = (data, e) => {
     const payload = {
@@ -65,8 +65,8 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
     dateDue: watchDue ? format(new Date(watchDue), 'MM/dd/yyyy') : null
   }
   const compareInitialState = {
-    ...intialState,
-    dateDue: intialState.dateDue ? format(new Date(intialState.dateDue), 'MM/dd/yyyy') : null
+    ...initialState,
+    dateDue: initialState.dateDue ? format(new Date(initialState.dateDue), 'MM/dd/yyyy') : null
   }
   const buttonDisabled = deepEqual(compareWatch, compareInitialState)
   return (
@@ -106,7 +106,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
                     onChange={(e, val) => onChange(val)}
                     disabled={user.role === 'INSIDESALES'}
                     getOptionLabel={(option) => option.name}
-                    getOptionSelected={(option, value) => option.number === value.number}
+                    isOptionEqualToValue={(option, value) => option.number === value.number}
                     renderInput={(params) =>
                       <TextField
                         {...params}

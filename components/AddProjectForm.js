@@ -13,12 +13,12 @@ import Grid from '@material-ui/core/Grid'
 import { DevTool } from '@hookform/devtools'
 import Button from '@material-ui/core/Button'
 import { useDrowDown } from './DropDownProvider'
-import DateTimePicker from '@material-ui/lab/DateTimePicker'
+import DesktopDatePicker from '@material-ui/lab/DatePicker'
 import isValid from 'date-fns/isValid'
 
 const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue, { keys: [item => item.name] })
-  const intialState = {
+  const initialState = {
     projectName: '',
     amount: '',
     size: '',
@@ -30,16 +30,15 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
     dateDue: new Date()
   }
   const {
-    register: addRegister,
-    formState: { errors: addErrors },
     control: addControl,
     handleSubmit: addHandleSubmit,
     formState: addFormState
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
+  const { errors, isValid: isValidState } = addFormState
   const onSubmit = (data, e) => {
     const payload = {
       title: data.projectName.trim(),
@@ -66,25 +65,31 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              autoComplete='off'
-              variant='outlined'
+            <Controller
               name='projectName'
-              id='project-name'
-              label='Name'
-              fullWidth
-              error={!!addErrors.projectName || mutationError}
-              helperText={addErrors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
-              inputRef={{ ...addRegister('projectName', { required: true }) }}
+              control={addControl}
+              rules={{ required: true }}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    autoComplete='off'
+                    variant='outlined'
+                    label='Name'
+                    fullWidth
+                    error={!!errors.projectName || mutationError}
+                    helperText={errors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={12}>
             <Controller
               name='customers'
               control={addControl}
-              defaultValue={intialState.customers}
               rules={{ validate: value => value.length > 0 }}
-              render={({ onChange, onBlur, value }) => {
+              render={({ field: { onChange, onBlur, value } }) => {
                 return (
                   <Autocomplete
                     id='customers'
@@ -93,14 +98,14 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
                     options={customers}
                     filterOptions={filterOptions}
                     fullWidth
-                    getOptionSelected={(option, value) => option.account === value.account}
+                    isOptionEqualToValue={(option, value) => option.account === value.account}
                     getOptionLabel={(option) => option.name}
                     ListboxComponent={ListboxComponent}
                     renderInput={(params) =>
                       <TextField
                         {...params}
-                        error={!!addErrors.customers}
-                        helperText={!!addErrors.customers && 'Customers Cannot Be Blank'}
+                        error={!!errors.customers}
+                        helperText={!!errors.customers && 'Customers Cannot Be Blank'}
                         label='Customers'
                         variant='outlined'
                       />}
@@ -127,21 +132,20 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
             <Controller
               name='salesman'
               control={addControl}
-              defaultValue={intialState.salesman}
-              rules={{ validate: value => !!value }}
-              render={({ onChange, onBlur, value }) => {
+              rules={{ required: true }}
+              render={({ field: { onChange, onBlur, value } }) => {
                 return (
                   <Autocomplete
                     id='salesman'
                     options={salesmen}
                     onChange={(e, val) => onChange(val)}
                     getOptionLabel={(option) => option.name}
-                    getOptionSelected={(option, value) => option.number === value.number}
+                    isOptionEqualToValue={(option, value) => option.number === value.number}
                     renderInput={(params) =>
                       <TextField
                         {...params}
-                        error={!!addErrors.salesman}
-                        helperText={!!addErrors.salesman && 'Assigned To Cannot Be Blank'}
+                        error={!!errors.salesman}
+                        helperText={!!errors.salesman && 'Assigned To Cannot Be Blank'}
                         label='Assigned To'
                         variant='outlined'
                       />}
@@ -168,16 +172,15 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
           <Grid item xs={6}>
             <Controller
               name='dateDue'
-              rules={{ validate: value => isValid(value) }}
+              rules={{ validate: value => isValid(value), required: true }}
               control={addControl}
-              defaultValue={intialState.dateDue}
-              render={props => {
+              render={({ field }) => {
                 return (
-                  <DateTimePicker
-                    {...props}
+                  <DesktopDatePicker
+                    {...field}
                     label='Date Due'
                     renderInput={(params) => (
-                      <TextField {...params} fullWidth variant='outlined' helperText={!!addErrors.dateDue && 'Not a valid Date'} />
+                      <TextField {...params} fullWidth variant='outlined' helperText={!!addControl.dateDue && 'Not a valid Date'} />
                     )}
                   />
                 )
@@ -188,18 +191,18 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
             <Controller
               name='size'
               control={addControl}
-              defaultValue={intialState.size}
-              render={props => {
+              rules={{ required: true }}
+              render={({ field }) => {
                 return (
                   <TextField
-                    {...props}
+                    {...field}
                     id='outlined-select-size'
                     select
                     fullWidth
                     label='Size'
                     variant='outlined'
-                    error={!!addErrors.size}
-                    helperText={!!addErrors.size && 'Size Cannot Be Blank'}
+                    error={!!errors.size}
+                    helperText={!!errors.size && 'Size Cannot Be Blank'}
                   >
                     <MenuItem value='Small'>
                       Small
@@ -219,18 +222,18 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
             <Controller
               name='status'
               control={addControl}
-              defaultValue={intialState.status}
-              render={props => {
+              rules={{ required: true }}
+              render={({ field }) => {
                 return (
                   <TextField
                     id='outlined-select-size'
-                    {...props}
+                    {...field}
                     select
                     fullWidth
                     label='Status'
                     variant='outlined'
-                    error={!!addErrors.status}
-                    helperText={!!addErrors.status && 'Status Cannot Be Blank'}
+                    error={!!errors.status}
+                    helperText={!!errors.status && 'Status Cannot Be Blank'}
                   >
                     <MenuItem value='On Track'>
                       On Track
@@ -247,23 +250,31 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              id='standard-multiline-static'
-              label='Description'
-              multiline
-              autoComplete='off'
+            <Controller
               name='description'
-              rows={4}
-              variant='outlined'
-              fullWidth
-              error={!!addErrors.description}
-              inputRef={{ ...addRegister('description') }}
+              control={addControl}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    id='standard-multiline-static'
+                    label='Description'
+                    multiline
+                    autoComplete='off'
+                    name='description'
+                    rows={4}
+                    variant='outlined'
+                    fullWidth
+                    error={!!errors.description}
+                  />
+                )
+              }}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={!addFormState.isValid} type='submit' color='primary'>
+        <Button disabled={!isValidState} type='submit' color='primary'>
           Save
         </Button>
         <Button onClick={handleClose} type='reset' color='primary' autoFocus>

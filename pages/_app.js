@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,20 +11,13 @@ import { CacheProvider } from '@emotion/react'
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider'
 
-export const cache = createCache({ key: 'css' })
+const cache = createCache({ key: 'css' })
+cache.compat = true
 
 const MyApp = (props) => {
   const { Component, pageProps } = props
   const getLayout = Component.getLayout || (page => page)
   const client = useApollo(pageProps)
-  // const apolloClient = useApollo(pageProps)
-
-  useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
   return (
     <CacheProvider value={cache}>
       <ApolloProvider client={client}>

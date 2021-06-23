@@ -78,15 +78,15 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     updateCustomerProjectStatus({ variables: { id: activeCustomer._id, data: { status: newStatus } } })
   }
   const {
-    register: amountChangeRegister,
-    errors: amountChangeErrors,
     control: amountChangeControl,
     handleSubmit: amountHandleSubmit,
-    reset: amountReset
+    reset: amountReset,
+    formState: amountFormState
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange'
   })
+  const { errors: amountChangeErrors, isValid } = amountFormState
   const onSubmit = (data, e) => {
     setAnchorElAmount(null)
     updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000, note: data.note } } })
@@ -319,10 +319,10 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                         name='amount'
                         control={amountChangeControl}
                         rules={{ required: true }}
-                        render={props => {
+                        render={({ field }) => {
                           return (
                             <OutlinedInput
-                              {...props}
+                              {...field}
                               autoComplete='off'
                               id='outlined-adornment-amount'
                               startAdornment={<InputAdornment position='start'>$</InputAdornment>}
@@ -338,17 +338,25 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                       />
                       {!!amountChangeErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
                     </FormControl>
-                    <TextField
-                      variant='outlined'
+                    <Controller
                       name='note'
-                      id='note'
-                      label='Note'
-                      margin='normal'
-                      autoComplete='off'
-                      error={!!amountChangeErrors.note}
-                      inputRef={amountChangeRegister()}
-                      InputLabelProps={{
-                        shrink: true
+                      control={amountChangeControl}
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            variant='outlined'
+                            name='note'
+                            id='note'
+                            label='Note'
+                            margin='normal'
+                            autoComplete='off'
+                            error={!!amountChangeErrors.note}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                          />
+                        )
                       }}
                     />
                     <Button variant='contained' type='submit' size='small' style={{ marginTop: 10 }} disableElevation>Save</Button>

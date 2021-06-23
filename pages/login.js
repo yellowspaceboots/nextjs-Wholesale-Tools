@@ -86,7 +86,7 @@ const Login = () => {
     onError: (error) => console.log(error)
   })
 */
-  const intialState = {
+  const initialState = {
     email: '',
     password: ''
   }
@@ -94,7 +94,7 @@ const Login = () => {
     formState: { errors: loginErrors },
     handleSubmit: loginHandleSubmit,
     control: loginControl
-  } = useForm({ defaultValues: intialState })
+  } = useForm({ defaultValues: initialState })
 
   const onSubmit = async (formData, e) => {
     const email = formData.email.trim()
