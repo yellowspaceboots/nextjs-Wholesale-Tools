@@ -1,9 +1,6 @@
 import React, { useMemo } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { motion, AnimatePresence } from 'framer-motion'
-import Divider from '@material-ui/core/Divider'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
 import ProjectsByStatus from './ProjectsByStatus'
 import { useRouter } from 'next/router'
 import { startOfDay, endOfDay } from 'date-fns'
@@ -50,16 +47,6 @@ const ProjectList = () => {
     account: router.query?.account || null
   }))
   const tabValue = statusMatrix[status]
-  const handleChange = (event, newValue) => {
-    const query = {
-      ...router.query,
-      status: statusMatrix[newValue]
-    }
-    router.push({
-      pathname: '/quotations',
-      query
-    })
-  }
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
   return (
     <AnimatePresence>
@@ -69,22 +56,8 @@ const ProjectList = () => {
         exit='out'
         variants={pageVariants}
       >
-        <Grid container spacing={3} style={{ marginLeft: -10 }}>
-          <Grid item xs={12} style={{ paddingLeft: 0 }}>
-            <Divider />
-            <Tabs
-              value={tabValue}
-              onChange={handleChange}
-              indicatorColor='primary'
-              textColor='primary'
-              centered
-              style={{ paddingBottom: 20 }}
-            >
-              <Tab label='Open' />
-              <Tab label='Pending' />
-              <Tab label='Closed' />
-            </Tabs>
-          </Grid>
+        <Grid container spacing={3} style={{ marginLeft: 0 }}>
+          <Grid item xs={12} style={{ paddingLeft: 0 }} />
           <TabPanel value={tabValue} index={0}>
             <ProjectsByStatus input={{ ...fullQuery, status: 'Open' }} />
           </TabPanel>

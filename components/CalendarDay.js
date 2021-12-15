@@ -38,6 +38,7 @@ const CalendarDay = ({
   })
   const lowerBounds = filteredDayHours.findIndex(val => val.eventsCount > 0 || val.eventsCount > 0)
   const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.eventsCount > 0 || val.eventsCount > 0)
+  if (filteredDayList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />

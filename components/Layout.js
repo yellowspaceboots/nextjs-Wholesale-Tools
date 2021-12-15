@@ -8,11 +8,11 @@ import { useAuth } from '../components/AuthProvider'
 import { useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
 import { DropDownProvider } from '../components/DropDownProvider'
+import { DrawerDataProvider } from '../components/DrawerDataProvider'
 import Fab from '@material-ui/core/Fab'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 import Zoom from '@material-ui/core/Zoom'
-// import Hidden from '@material-ui/core/Hidden'
 import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
@@ -75,28 +75,25 @@ const Layout = ({ children }) => {
   if (!user) return null
   return (
     <DropDownProvider>
-      <div className={classes.root}>
-        {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
-        <MyAppBar id='back-to-top-anchor' handleDrawerToggle={handleDrawerToggle} logout={logout} />
-        <MyDrawer handleDrawerToggle={handleDrawerToggle} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Box component='div' sx={{ display: { sm: 'none', xs: 'block' }, height: 30 }} />
-          {/*
-          <Hidden smUp implementation='css'>
-            <div style={{ height: 30 }} />
-          </Hidden>
-          */}
-          {children}
-          <Zoom in={trigger}>
-            <div role='presentation' className={classes.scroll}>
-              <Fab color='secondary' size='small' aria-label='scroll back to top' onClick={() => scrollTop()}>
-                <KeyboardArrowUpIcon />
-              </Fab>
-            </div>
-          </Zoom>
-        </main>
-      </div>
+      <DrawerDataProvider>
+        <div className={classes.root}>
+          {loading && <LinearProgress color='secondary' style={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
+          <MyAppBar id='back-to-top-anchor' handleDrawerToggle={handleDrawerToggle} logout={logout} />
+          <MyDrawer handleDrawerToggle={handleDrawerToggle} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
+          <main className={classes.content}>
+            <div className={classes.toolbar} />
+            <Box component='div' sx={{ display: { sm: 'none', xs: 'block' }, height: 30 }} />
+            {children}
+            <Zoom in={trigger}>
+              <div role='presentation' className={classes.scroll}>
+                <Fab color='secondary' size='small' aria-label='scroll back to top' onClick={() => scrollTop()}>
+                  <KeyboardArrowUpIcon />
+                </Fab>
+              </div>
+            </Zoom>
+          </main>
+        </div>
+      </DrawerDataProvider>
     </DropDownProvider>
   )
 }

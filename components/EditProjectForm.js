@@ -14,7 +14,6 @@ import Button from '@material-ui/core/Button'
 import { useAuth } from './AuthProvider'
 import { useDrowDown } from './DropDownProvider'
 import DateTimePicker from '@material-ui/lab/DateTimePicker'
-import DesktopDatePicker from '@material-ui/lab/DatePicker'
 import isValid from 'date-fns/isValid'
 import format from 'date-fns/format'
 import { deepEqual } from '../lib/utils'
@@ -32,11 +31,9 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
     dateDue: new Date(event.dateDue)
   }
   const {
-    register,
     formState: { errors },
     control,
     handleSubmit,
-    formState: editFormState,
     watch: editWatch
   } = useForm({
     mode: 'onChange',
@@ -140,7 +137,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
               control={control}
               render={props => {
                 return (
-                  <DesktopDatePicker
+                  <DateTimePicker
                     {...props.field}
                     label='Date Due'
                     renderInput={(params) => (

@@ -66,6 +66,7 @@ const CalendarWeek = ({
   })
   const lowerBounds = filteredDayHours.findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
   const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
+  if (weekProjectList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />

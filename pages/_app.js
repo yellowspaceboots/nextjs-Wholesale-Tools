@@ -6,20 +6,19 @@ import theme from '../components/theme'
 import { AuthProvider } from '../components/AuthProvider'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/apollo'
-import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider'
+import createEmotionCache from '../utils/creatEmotionCache'
 
-const cache = createCache({ key: 'css' })
-cache.compat = true
+const clientSideEmotionCache = createEmotionCache()
 
 const MyApp = (props) => {
-  const { Component, pageProps } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   const getLayout = Component.getLayout || (page => page)
   const client = useApollo(pageProps)
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider value={emotionCache}>
       <ApolloProvider client={client}>
         <Head>
           <title>Wholesale Electric Tools</title>

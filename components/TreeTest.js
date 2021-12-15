@@ -14,6 +14,13 @@ import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import { useRouter } from 'next/router'
+import Permission from './Permission'
+import { useDrawerData } from './DrawerDataProvider'
+import CalendarViewDayIcon from '@material-ui/icons/CalendarViewDay'
+import CalendarViewMonthIcon from '@material-ui/icons/CalendarViewMonth'
+import CalendarViewWeekIcon from '@material-ui/icons/CalendarViewWeek'
+import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned'
+import { useAuth } from './AuthProvider'
 
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: 'white',
@@ -27,7 +34,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
       fontWeight: theme.typography.fontWeightRegular
     },
     '&:hover': {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: theme.palette.action.hover
     },
     '&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused': {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
@@ -60,7 +67,7 @@ function StyledTreeItem (props) {
   return (
     <StyledTreeItemRoot
       label={
-        <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5, pr: 0, pl: 0 }}>
           <Box component={LabelIcon} color='inherit' sx={{ mr: 1 }} />
           <Typography variant='body2' sx={{ fontWeight: 'inherit', flexGrow: 1 }}>
             {labelText}
@@ -80,7 +87,15 @@ function StyledTreeItem (props) {
 }
 
 export default function GmailTreeView () {
+  const { user } = useAuth()
   const router = useRouter()
+  const { counts } = useDrawerData()
+  const quoteURLQuery = user.role === 'INSIDESALES'
+    ? { inside: user.salesRef.number }
+    : user.role === 'OUTSIDESALES' ? { outside: user.salesRef.number } : {}
+  const openQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'open' } }
+  const pendingQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'pending' } }
+  const closedQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'closed' } }
   const today = new Date()
   const todayYear = today.getFullYear()
   const todayMonth = today.getMonth() + 1
@@ -89,33 +104,38 @@ export default function GmailTreeView () {
   const weekLink = `/calendar/week/${todayYear}/${todayMonth}/${todayDay}`
   const dayLink = `/calendar/day/${todayYear}/${todayMonth}/${todayDay}`
 
+  const pastDueURL = { pathname: '/quotations', query: { end: `${todayMonth}/${todayDay}/${todayYear}`, ...quoteURLQuery, status: 'open' } }
+
   const urlToNodeId = {
     '/': '1',
     '/settings': '4',
-    '/quotations?status=open': '5',
-    '/quotations?status=pending': '6',
-    '/quotations?status=closed': '7',
+    [openQuoteURL]: '5',
+    [pendingQuoteURL]: '6',
+    [closedQuoteURL]: '7',
     [monthLink]: '8',
     [weekLink]: '9',
-    [dayLink]: '10'
+    [dayLink]: '10',
+    [pastDueURL]: '11'
   }
   const [selected, setSelected] = useState(null)
+
   const handleSelect = (event, nodeIds) => {
     const nodeIdToUrl = {
       1: '/',
       4: '/settings',
-      5: '/quotations?status=open',
-      6: '/quotations?status=pending',
-      7: '/quotations?status=closed',
+      5: openQuoteURL,
+      6: pendingQuoteURL,
+      7: closedQuoteURL,
       8: monthLink,
       9: weekLink,
-      10: dayLink
+      10: dayLink,
+      11: pastDueURL
     }
     const myRoute = nodeIdToUrl[nodeIds] || null
     if (myRoute) { router.push(myRoute) }
   }
+
   const handleRouteChange = () => {
-    console.log('boom')
     setSelected(null)
     setSelected(urlToNodeId[router.asPath] || null)
   }
@@ -144,21 +164,29 @@ export default function GmailTreeView () {
         nodeId='1'
         labelText='Dashboard'
         labelIcon={HomeIcon}
-        color='white'
-        bgColor='#1e3f76'
+        color='#1e3f76'
+        bgColor='#dde2ee'
       />
       <StyledTreeItem
         nodeId='2'
         labelText='Quotations'
         labelIcon={AssignmentIcon}
-        color='white'
-        bgColor='#1e3f76'
+        color='grey'
+        bgColor='white'
       >
+        <StyledTreeItem
+          nodeId='11'
+          labelText='Past Due'
+          labelIcon={AssignmentLateIcon}
+          labelInfo={counts.pastDue}
+          color='#d32f2f'
+          bgColor='#ffe6e6'
+        />
         <StyledTreeItem
           nodeId='5'
           labelText='Open'
           labelIcon={AssignmentLateIcon}
-          labelInfo='90'
+          labelInfo={counts.open}
           color='green'
           bgColor='#e8feeb'
         />
@@ -166,15 +194,15 @@ export default function GmailTreeView () {
           nodeId='6'
           labelText='Pending'
           labelIcon={AssignmentTurnedInIcon}
-          labelInfo='2,294'
+          labelInfo={counts.pending}
           color='#ffbb41'
           bgColor='#fff6e6'
         />
         <StyledTreeItem
           nodeId='7'
           labelText='Closed'
-          labelIcon={ArchiveIcon}
-          labelInfo='3,566'
+          labelIcon={AssignmentReturnedIcon}
+          labelInfo={counts.closed}
           color='grey'
           bgColor='whitesmoke'
         />
@@ -183,41 +211,43 @@ export default function GmailTreeView () {
         nodeId='3'
         labelText='Calendar'
         labelIcon={EventIcon}
-        color='white'
-        bgColor='#1e3f76'
+        color='grey'
+        bgColor='white'
       >
         <StyledTreeItem
-          nodeId='8'
-          labelText='This Month'
-          labelIcon={AssignmentLateIcon}
-          labelInfo='90'
-          color='green'
-          bgColor='#e8feeb'
+          nodeId='10'
+          labelText='Today'
+          labelIcon={CalendarViewDayIcon}
+          labelInfo={counts.today}
+          color='#1e3f76'
+          bgColor='#dde2ee'
         />
         <StyledTreeItem
           nodeId='9'
           labelText='This Week'
-          labelIcon={AssignmentTurnedInIcon}
-          labelInfo='2,294'
-          color='#ffbb41'
-          bgColor='#fff6e6'
+          labelIcon={CalendarViewWeekIcon}
+          labelInfo={counts.thisWeek}
+          color='#1e3f76'
+          bgColor='#dde2ee'
         />
         <StyledTreeItem
-          nodeId='10'
-          labelText='Today'
-          labelIcon={ArchiveIcon}
-          labelInfo='3,566'
-          color='grey'
-          bgColor='whitesmoke'
+          nodeId='8'
+          labelText='This Month'
+          labelIcon={CalendarViewMonthIcon}
+          labelInfo={counts.thisMonth}
+          color='#1e3f76'
+          bgColor='#dde2ee'
         />
       </StyledTreeItem>
-      <StyledTreeItem
-        nodeId='4'
-        labelText='Settings'
-        labelIcon={SettingsIcon}
-        color='white'
-        bgColor='#1e3f76'
-      />
+      <Permission availableTo={['MANAGER']}>
+        <StyledTreeItem
+          nodeId='4'
+          labelText='Settings'
+          labelIcon={SettingsIcon}
+          color='#1e3f76'
+          bgColor='#dde2ee'
+        />
+      </Permission>
     </TreeView>
   )
 }

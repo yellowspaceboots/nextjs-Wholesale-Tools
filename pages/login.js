@@ -101,6 +101,7 @@ const Login = () => {
     const password = formData.password.trim()
     try {
       await signin(email, password)
+      Router.reload(window.location.pathname)
       // loginUser({ variables: { input: { email, password } } })
     } catch (error) {
       console.error(error)
@@ -218,7 +219,7 @@ const Login = () => {
     </>
   )
 }
-
+/*
 export async function getServerSideProps (ctx) {
   const apolloClient = initializeApollo(ctx, null)
   await apolloClient.query({ query: GET_ME })
@@ -228,5 +229,5 @@ export async function getServerSideProps (ctx) {
     }
   }
 }
-
+*/
 export default Login

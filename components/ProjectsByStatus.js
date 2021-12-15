@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import { GET_ALL_OPEN_PROJECTS } from '../lib/queries/getAllOpenProjects'
 import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
 import { useQuery } from '@apollo/client'
 import EventTile from './EventTile'

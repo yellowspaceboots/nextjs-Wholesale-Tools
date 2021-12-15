@@ -22,7 +22,7 @@ import { useAuth } from './AuthProvider'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import GmailTreeView from './TreeTest'
 
-const drawerWidth = 200
+const drawerWidth = 190
 
 const useStyles = makeStyles(theme => ({
   root: {

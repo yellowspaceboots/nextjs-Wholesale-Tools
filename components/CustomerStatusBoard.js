@@ -129,7 +129,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
       <div style={{ display: 'flex' }}>
         {statuses.map(status => {
           return (
-            <Card key={status.name} style={{ minWidth: 300, maxWidth: 300, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
+            <Card key={status.name} style={{ minWidth: 270, maxWidth: 270, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
               <CardContent style={{ padding: 8 }}>
                 <div style={{ display: 'flex', alignItems: 'center', height: 40 }}>
                   <Typography
@@ -139,10 +139,17 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     {status.name}
                   </Typography>
                   {status.name === 'Open' && (
-                    <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
-                      <GroupAddIcon style={{ color: 'white' }} />
-                    </IconButton>
+                    <Tooltip title='Add Customer'>
+                      <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
+                        <GroupAddIcon style={{ color: 'white' }} />
+                      </IconButton>
+                    </Tooltip>
                   )}
+                  <Tooltip title='Move All'>
+                    <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
+                      <ArrowForwardIcon style={{ color: 'white' }} />
+                    </IconButton>
+                  </Tooltip>
                 </div>
                 <div style={{ height: 400, overflow: 'auto' }}>
                   {status.customerList.map(customer => {
