@@ -1,8 +1,8 @@
 import React from 'react'
 import { format } from 'date-fns'
-import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/styles'
-import { green, red } from '@material-ui/core/colors'
+import Button from '@mui/material/Button'
+import { makeStyles } from '@mui/styles'
+import { green, red } from '@mui/material/colors'
 import { NextLinkComposed } from './Link'
 
 const useStyles = makeStyles(theme => ({

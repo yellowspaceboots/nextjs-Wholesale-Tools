@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getLayout } from '../../../components/Layout'
 import CommercialEditSalesmanToggle from '../../../components/CommercialEditSalesmanToggle'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 import { GET_ALL_SALESMEN } from '../../../lib/queries/getAllSalesmen'
 import { useQuery, useMutation } from '@apollo/client'
 import { UPDATE_SALESMAN } from '../../../lib/mutations/updateSalesman'

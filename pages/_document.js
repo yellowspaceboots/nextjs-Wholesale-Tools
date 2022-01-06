@@ -56,7 +56,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   const cache = createEmotionCache()
   const { extractCriticalToChunks } = createEmotionServer(cache)
-
+/*
   ctx.renderPage = () =>
     originalRenderPage({
       // Take precedence over the CacheProvider in our custom _app.js
@@ -67,8 +67,8 @@ MyDocument.getInitialProps = async (ctx) => {
           </CacheProvider>
         )
     })
+*/
 
-/*
 ctx.renderPage = () =>
 originalRenderPage({
   enhanceApp: (App) =>
@@ -76,7 +76,7 @@ originalRenderPage({
       return <App emotionCache={cache} {...props} />;
     },
 });
-*/
+
   const initialProps = await Document.getInitialProps(ctx)
   const emotionStyles = extractCriticalToChunks(initialProps.html)
   const emotionStyleTags = emotionStyles.styles.map((style) => (

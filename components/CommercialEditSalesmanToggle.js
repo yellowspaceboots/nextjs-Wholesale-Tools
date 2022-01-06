@@ -1,5 +1,5 @@
 import React from 'react'
-import Switch from '@material-ui/core/Switch'
+import Switch from '@mui/material/Switch'
 import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
 
 const CommercialEditSalesmanToggle = ({ id, currentState, updateSalesman }) => {

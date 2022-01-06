@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 import { motion, AnimatePresence } from 'framer-motion'
 import ProjectsByStatus from './ProjectsByStatus'
 import { useRouter } from 'next/router'

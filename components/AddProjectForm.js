@@ -1,19 +1,19 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/core/Autocomplete'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import { matchSorter } from 'match-sorter'
 import { Controller, useForm } from 'react-hook-form'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
 import ListboxComponent from './VirtualizedList'
-import MenuItem from '@material-ui/core/MenuItem'
-import Grid from '@material-ui/core/Grid'
-import { DevTool } from '@hookform/devtools'
-import Button from '@material-ui/core/Button'
+import MenuItem from '@mui/material/MenuItem'
+import Grid from '@mui/material/Grid'
+// import { DevTool } from '@hookform/devtools'
+import Button from '@mui/material/Button'
 import { useDrowDown } from './DropDownProvider'
-import DesktopDatePicker from '@material-ui/lab/DatePicker'
+import DesktopDatePicker from '@mui/lab/DatePicker'
 import isValid from 'date-fns/isValid'
 
 const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
@@ -61,7 +61,6 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
   const { salesmen, customers } = useDrowDown()
   return (
     <form onSubmit={addHandleSubmit(onSubmit)}>
-      <DevTool control={addControl} />
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import LoadingButton from '@material-ui/lab/LoadingButton'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LoadingButton from '@mui/lab/LoadingButton'
+import CircularProgress from '@mui/material/CircularProgress'
 import useTimer from '../utils/useTimer'
 
 const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) => {

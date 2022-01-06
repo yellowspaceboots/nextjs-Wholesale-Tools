@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation } from '@apollo/client'
 import { FIND_CUSTOMERS_BY_ID } from '../lib/queries/findCustomersById'
 import { Controller, useForm } from 'react-hook-form'
-import LoadingButton from '@material-ui/lab/LoadingButton'
+import LoadingButton from '@mui/lab/LoadingButton'
 import { CHANGE_CUSTOMER_SALESMAN } from '../lib/mutations/changeCustomerSalesman'
 
 const Customer = ({ id }) => {

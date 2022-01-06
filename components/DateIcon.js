@@ -1,8 +1,8 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { format, isAfter } from 'date-fns'
-import { makeStyles } from '@material-ui/styles'
-import Badge from '@material-ui/core/Badge'
+import { makeStyles } from '@mui/styles'
+import Badge from '@mui/material/Badge'
 import { getStatusColor, amountShortFormat, pad } from '../lib/utils'
 
 const useStyles = makeStyles(theme => ({

@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/core/styles'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import EditProjectForm from './EditProjectForm'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
 import { UPDATE_PROJECT } from '../lib/mutations/updateProject'
 import { useMutation } from '@apollo/client'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '@material-ui/core/Button'
+import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
 
 const EditCustomerDialog = ({ dialogOpen, setDialogOpen, customer }) => {
   const theme = useTheme()

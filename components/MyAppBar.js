@@ -1,147 +1,38 @@
 import React, { useState } from 'react'
-import { alpha } from '@material-ui/core/styles'
-import { makeStyles } from '@material-ui/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-// import Hidden from '@material-ui/core/Hidden'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Fade from '@material-ui/core/Fade'
-import Avatar from '@material-ui/core/Avatar'
-import AlarmIcon from '@material-ui/icons/Alarm'
-import AssignmentLateIcon from '@material-ui/icons/AssignmentLate'
-import AnnouncementIcon from '@material-ui/icons/Announcement'
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone'
-import Badge from '@material-ui/core/Badge'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Fade from '@mui/material/Fade'
+import Avatar from '@mui/material/Avatar'
+import AlarmIcon from '@mui/icons-material/Alarm'
+import AssignmentLateIcon from '@mui/icons-material/AssignmentLate'
+import AnnouncementIcon from '@mui/icons-material/Announcement'
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
+import Badge from '@mui/material/Badge'
 import WLogo from './WLogo'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import Backspace from '@material-ui/icons/Backspace'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import Backspace from '@mui/icons-material/Backspace'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 import AddProjectDialog from './AddProjectDialog'
 import AddSalesmanDialog from './AddSalesmanDialog'
 import { formatDistanceToNow } from 'date-fns'
 import Permission from './Permission'
-import AddBusinessIcon from '@material-ui/icons/AddBusiness'
-import AddChartIcon from '@material-ui/icons/Addchart'
-import GroupAddIcon from '@material-ui/icons/GroupAdd'
+import AddBusinessIcon from '@mui/icons-material/AddBusiness'
+import AddChartIcon from '@mui/icons-material/Addchart'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import AddCustomerDialog from './AddCustomerDialog'
 import SearchBar from './SearchBar'
 import { NextLinkComposed } from './Link'
-import Tooltip from '@material-ui/core/Tooltip'
-import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import Slide from '@material-ui/core/Slide'
-import Button from '@material-ui/core/Button'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-
-const useStyles = makeStyles(theme => ({
-  avatar: {
-    margin: 10,
-    marginLeft: 0
-  },
-  blueAvatar: {
-    margin: 10,
-    marginLeft: 0,
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main
-  },
-  yellowAvatar: {
-    margin: 10,
-    marginLeft: 0,
-    color: '#fff',
-    backgroundColor: theme.palette.secondary.main
-  },
-  greenAvatar: {
-    margin: 10,
-    marginLeft: 0,
-    color: '#fff',
-    backgroundColor: 'green'
-  },
-  root: {
-    display: 'flex',
-    height: '100vh'
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    height: 80
-  },
-  appBar2: {
-    zIndex: theme.zIndex.drawer + 1
-  },
-  toolbarCol: {
-    height: 80
-  },
-  toolbarCol2: {
-    height: 40
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
-      display: 'none'
-    }
-  },
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25)
-    },
-    marginLeft: 0,
-    marginRight: 10,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto'
-    },
-    '& .MuiAutocomplete-input': {
-      color: 'white',
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 300,
-        '&:focus': {
-          width: 300
-        }
-      }
-    },
-    '& .MuiAutocomplete-clearIndicator': {
-      color: 'white'
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  inputRoot: {
-    color: 'inherit'
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200
-      }
-    }
-  }
-}))
+import Tooltip from '@mui/material/Tooltip'
+import useScrollTrigger from '@mui/material/useScrollTrigger'
+import Slide from '@mui/material/Slide'
 
 const HideOnScroll = ({ children, trigger }) => {
   return (
@@ -152,8 +43,6 @@ const HideOnScroll = ({ children, trigger }) => {
 }
 
 const MyAppBar = ({ handleDrawerToggle, logout }) => {
-  const hiddenUp = useMediaQuery(theme => theme.breakpoints.up('sm'))
-  const hiddenDown = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const trigger = useScrollTrigger()
   const dateToNow = formatDistanceToNow(new Date(), { addSuffix: true })
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -168,7 +57,6 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
   const handleCustomerClickOpen = () => {
     setCustomerDialogOpen(true)
   }
-  const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const notificationClick = (event) => setAnchorEl(event.currentTarget)
   const notificationClose = () => setAnchorEl(null)
@@ -194,7 +82,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       <Divider />
       <MenuItem onClick={notificationClose}>
         <ListItemIcon>
-          <Avatar className={classes.yellowAvatar}>
+          <Avatar sx={{ m: 1.3, ml: 0, color: '#fff', backgroundColor: 'secondary.main' }}>
             <AlarmIcon />
           </Avatar>
         </ListItemIcon>
@@ -206,7 +94,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       </MenuItem>
       <MenuItem onClick={notificationClose}>
         <ListItemIcon>
-          <Avatar className={classes.blueAvatar}>
+          <Avatar sx={{ m: 1.3, ml: 0, color: '#fff', backgroundColor: 'primary.main' }}>
             <AssignmentLateIcon />
           </Avatar>
         </ListItemIcon>
@@ -218,7 +106,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       </MenuItem>
       <MenuItem onClick={notificationClose}>
         <ListItemIcon>
-          <Avatar className={classes.greenAvatar}>
+          <Avatar sx={{ m: 1.3, ml: 0, color: '#fff', backgroundColor: 'green' }}>
             <AnnouncementIcon />
           </Avatar>
         </ListItemIcon>
@@ -231,7 +119,7 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
       <Divider />
       <MenuItem onClick={notificationClose}>
         <ListItemIcon>
-          <Avatar className={classes.avatar}>
+          <Avatar sx={{ m: 1.3, ml: 0 }}>
             <NotificationsNoneIcon />
           </Avatar>
         </ListItemIcon>
@@ -271,7 +159,6 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
           profileClose()
           logout()
         }}
-
       >
         <ListItemIcon>
           <Backspace />
@@ -356,17 +243,14 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
   )
   return (
     <>
-      {
-     // <Hidden smDown implementation='css'>
-     !hiddenDown && (
-       <AppBar position='fixed' elevation={5} className={classes.appBar}>
-         <Toolbar className={classes.toolbarCol}>
+       <AppBar position='fixed' elevation={5} sx={{ zIndex: 'myAppBar', height: 80, display: { xs: 'none', sm: 'block' } }}>
+         <Toolbar sx={{ height: 80 }}>
            <IconButton
              color='inherit'
              aria-label='Open drawer'
              edge='start'
              onClick={handleDrawerToggle}
-             className={classes.menuButton}
+             sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
            >
              <MenuIcon />
            </IconButton>
@@ -430,16 +314,9 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
          <AddSalesmanDialog dialogOpen={salesDialogOpen} setDialogOpen={setSalesDialogOpen} />
          <AddCustomerDialog dialogOpen={customerDialogOpen} setDialogOpen={setCustomerDialogOpen} />
        </AppBar>
-     )
-    //  </Hidden>
-      }
-      {
-   //   <Hidden smUp implementation='css'>
-   !hiddenUp && (
-     <>
        <HideOnScroll trigger={trigger}>
-         <AppBar position='fixed' elevation={0} className={classes.appBar}>
-           <Toolbar className={classes.toolbarCol2}>
+         <AppBar position='fixed' elevation={0} sx={{ height: 80, display: { xs: 'block', sm: 'none' } }}>
+           <Toolbar sx={{ height: 40 }}>
              <NextLinkComposed to={{ pathname: '/' }}>
                <WLogo size={40} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ marginLeft: -8, marginRight: 16 }} />
              </NextLinkComposed>
@@ -488,8 +365,8 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
          </AppBar>
        </HideOnScroll>
 
-       <AppBar elevation={0} className={classes.appBar2} style={{ marginTop: trigger ? 0 : 50 }}>
-         <Toolbar className={classes.toolbarCol2}>
+       <AppBar elevation={0} sx={{ display: { xs: 'block', sm: 'none' } }} style={{ marginTop: trigger ? 0 : 50 }}>
+         <Toolbar sx={{ height: 40 }}>
            {trigger && (
              <NextLinkComposed to={{ pathname: '/' }}>
                <WLogo size={30} color='#1e3f76' borderColor='white' borderSize={4} containerStyle={{ marginLeft: -8, marginRight: 16 }} />
@@ -500,17 +377,13 @@ const MyAppBar = ({ handleDrawerToggle, logout }) => {
              aria-label='Open drawer'
              edge='start'
              onClick={handleDrawerToggle}
-             className={classes.menuButton}
+             sx={{ mr: 2, display: { xs: 'block', sm: 'none' } }}
            >
              <MenuIcon />
            </IconButton>
            <SearchBar id='mobile' />
          </Toolbar>
        </AppBar>
-     </>
-   )
-  //    </Hidden>
-      }
     </>
   )
 }

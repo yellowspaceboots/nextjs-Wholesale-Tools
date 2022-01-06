@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
 import Comment from './Comment'
 
 const ProjectComments = ({ id, myComments, myReplies, fullComments }) => {

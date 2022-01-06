@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { getLayout } from '../../../../components/Layout'
 import CommercialEditCustomerToggle from '../../../../components/CommercialEditCustomerToggle'
-import TextField from '@material-ui/core/TextField'
+import TextField from '@mui/material/TextField'
 import { GET_ALL_CUSTOMERS } from '../../../../lib/queries/getAllCustomers'
 import { useQuery, useMutation } from '@apollo/client'
 import { UPDATE_CUSTOMERS } from '../../../../lib/mutations/updateCustomer'

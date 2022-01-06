@@ -1,8 +1,8 @@
 import React from 'react'
 import { compareAsc } from 'date-fns'
-import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
-import { makeStyles } from '@material-ui/styles'
+import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add'
+import { makeStyles } from '@mui/styles'
 import CalendarEventButton from './CalendarEventButton'
 import { NextLinkComposed } from './Link'
 

@@ -1,14 +1,14 @@
 import React from 'react'
 import Head from 'next/head'
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import theme from '../components/theme'
 import { AuthProvider } from '../components/AuthProvider'
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/apollo'
 import { CacheProvider } from '@emotion/react'
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import createEmotionCache from '../utils/creatEmotionCache'
 
 const clientSideEmotionCache = createEmotionCache()

@@ -1,10 +1,10 @@
 import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
+import Typography from '@mui/material/Typography'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
 import { amountShortFormat } from '../lib/utils'
-import Paper from '@material-ui/core/Paper'
-import { CardActionArea } from '@material-ui/core'
+import Paper from '@mui/material/Paper'
+import { CardActionArea } from '@mui/material'
 
 const CustomerStatusCard = ({ customer, handlePopperClick }) => {
   const formattedAmount = amountShortFormat(customer.amount)
