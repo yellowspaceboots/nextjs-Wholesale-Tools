@@ -33,6 +33,7 @@ const FilterForm = ({ name, route, filterOpenDefault }) => {
     if (router.query) {
       filterReset(initialState)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
   const {
     control: filterControl,

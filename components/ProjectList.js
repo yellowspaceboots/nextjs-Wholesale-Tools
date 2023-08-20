@@ -39,7 +39,7 @@ const ProjectList = () => {
   const status = router.query.status
   const start = router.query?.start ? startOfDay(new Date(router.query.start)).toISOString() : null
   const end = router.query?.end ? endOfDay(new Date(router.query.end)).toISOString() : null
-  const fullQuery = useMemo(() => ({
+  const fullQuery = {
     start: start,
     end: end,
     inside: router.query?.inside || null,
@@ -47,7 +47,7 @@ const ProjectList = () => {
     account: router.query?.account || null,
     status: status ? status.charAt(0).toUpperCase() + status.substr(1).toLowerCase() : null,
     search: router.query?.search || null
-  }))
+  }
   const tabValue = statusMatrix[status]
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
   return (

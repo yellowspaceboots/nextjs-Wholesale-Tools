@@ -22,6 +22,7 @@ const useContainerDimensions = myRef => {
     return () => {
       window.removeEventListener('resize', handleResize)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [myRef])
 
   return dimensions

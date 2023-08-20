@@ -10,6 +10,7 @@ const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) =
     if (timer === 385) {
       timeReleaseFunction(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer])
   const handleDelete = (direction) => {
     setDeleteDown(direction === 'down')

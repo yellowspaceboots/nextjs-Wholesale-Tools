@@ -98,6 +98,7 @@ const SearchBar = ({ id }) => {
     return () => {
       active = false
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchValue, router.asPath])
   return (
     <form onSubmit={searchHandleSubmit(onSubmit)} style={{width: '100%'}}>
@@ -146,7 +147,7 @@ const SearchBar = ({ id }) => {
               }
               const avatarIcon = avatarSelector[option.status] || classes.avatar
               return (
-                <Link key={option._id} href={'/quotations/' + option._id}>
+                <Link key={option._id} href={'/quotations/' + option._id} passHref>
                   <li {...props}>
                     <Grid container alignItems='center'>
                       <Grid item>
