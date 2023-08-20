@@ -47,7 +47,8 @@ const ProjectList = () => {
     end: end,
     inside: router.query?.inside || null,
     outsideSales: router.query?.outside || null,
-    account: router.query?.account || null
+    account: router.query?.account || null,
+    search: router.query?.search || null
   }))
   const tabValue = statusMatrix[status]
   const handleChange = (event, newValue) => {
