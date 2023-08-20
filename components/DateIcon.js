@@ -51,6 +51,7 @@ const DateIcon = ({ event, status }) => {
   const dueTime = format(new Date(eventDate), 'p')
   const dateDay = format(new Date(eventDate), 'd')
   const dateMonth = format(new Date(eventDate), 'MMM')
+  const dateYear = format(new Date(eventDate), 'yyyy')
   const dateDayName = format(new Date(eventDate), 'EEEE')
   const statusColor = getStatusColor(event.status)
   const isLate = isAfter(new Date(), new Date(eventDate)) & statusMap[event.status] === 'open'
@@ -74,7 +75,7 @@ const DateIcon = ({ event, status }) => {
         <Badge overlap='circular' badgeContent=' ' invisible={!status} classes={{ badge: classes.customBadge }}>
           <div className={classes.iconRoot}>
             <Typography variant='caption' align='center' className={classes.iconTitle}>
-              {dateMonth}
+              {dateMonth} {dateYear}
             </Typography>
             <Typography variant='h5' className={classes.iconBody}>{dateDay}</Typography>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

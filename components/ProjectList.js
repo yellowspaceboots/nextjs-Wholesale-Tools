@@ -44,7 +44,9 @@ const ProjectList = () => {
     end: end,
     inside: router.query?.inside || null,
     outsideSales: router.query?.outside || null,
-    account: router.query?.account || null
+    account: router.query?.account || null,
+    status: status ? status.charAt(0).toUpperCase() + status.substr(1).toLowerCase() : null,
+    search: router.query?.search || null
   }))
   const tabValue = statusMatrix[status]
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
@@ -58,6 +60,8 @@ const ProjectList = () => {
       >
         <Grid container spacing={3} style={{ marginLeft: 0 }}>
           <Grid item xs={12} style={{ paddingLeft: 0 }} />
+          <ProjectsByStatus input={{ ...fullQuery }} />
+          {/*
           <TabPanel value={tabValue} index={0}>
             <ProjectsByStatus input={{ ...fullQuery, status: 'Open' }} />
           </TabPanel>
@@ -66,7 +70,7 @@ const ProjectList = () => {
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
             <ProjectsByStatus input={{ ...fullQuery, status: 'Closed' }} />
-          </TabPanel>
+          </TabPanel> */}
         </Grid>
       </motion.div>
     </AnimatePresence>

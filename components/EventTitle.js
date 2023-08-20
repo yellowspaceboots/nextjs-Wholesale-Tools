@@ -21,7 +21,6 @@ const EventTitle = ({ event }) => {
       </Grid>
       <Grid item xs={12}>
         <Grid container style={{ marginBottom: 12 }}>
-          <Typography variant='h5' style={{ fontWeight: 'light', marginRight: 10 }}>{event.title}</Typography>
           <Chip
             label={event.status}
             variant='outlined'

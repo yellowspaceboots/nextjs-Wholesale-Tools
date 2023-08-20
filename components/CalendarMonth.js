@@ -46,7 +46,7 @@ const CalendarMonth = ({
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
-      <ImageList rowHeight='auto' cols={7} gap={2} style={{ maxWidth: '100%' }}>
+      <ImageList rowHeight='auto' cols={7} gap={1} style={{ maxWidth: '100%' }}>
         <>
           {weekdays.map((day, i) => (
             <ImageListItem
@@ -91,7 +91,7 @@ const CalendarMonth = ({
                   </div>
                   )
                 : (
-                  <div style={{ maxWidth: 275, minWidth: 275 }}>
+                  <div style={{ maxWidth: 250, minWidth: 250 }}>
                     <CalendarMonthEvents events={day.quotations} day={day.day} dateCount={calendarDates.length} />
                   </div>
                   )}

@@ -44,7 +44,7 @@ const Layout = ({ children }) => {
     cookie.remove('token')
     setUser(false)
   }
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' }) 
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 100 })
   const drawerWidth = 190
   if (!checked) return null
@@ -52,16 +52,16 @@ const Layout = ({ children }) => {
   return (
     <DropDownProvider>
       <DrawerDataProvider>
-      <Box sx={{ display: 'flex', height: '100vh' }}>
+        <Box sx={{ display: 'flex', height: '100vh' }}>
           {loading && <LinearProgress color='secondary' sx={{ position: 'absolute', padding: 0, width: '100%', zIndex: 3000 }} />}
           <MyAppBar id='back-to-top-anchor' handleDrawerToggle={handleDrawerToggle} logout={logout} />
           <MyDrawer drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle} setMobileOpen={setMobileOpen} mobileOpen={mobileOpen} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} />
-          <Box component="main" sx={{ flexGrow: 1, p: 3, maxWidth: '100%', ml: { xs: 0, sm: drawerWidth/8 } }}>
-          <Offset />
+          <Box component='main' sx={{ flexGrow: 1, p: 3, maxWidth: '100%', ml: { xs: 0, sm: drawerWidth / 8 } }}>
+            <Offset />
             <Box sx={{ display: { sm: 'none', xs: 'block' }, height: 30 }} />
             {children}
             <Zoom in={trigger}>
-              <Box role='presentation' sx={{ position: 'fixed', bottom: 30, right: 20 }}>
+              <Box role='presentation' sx={{ position: 'fixed', bottom: 30, right: 20, zIndex: 1050 }}>
                 <Fab color='secondary' size='small' aria-label='scroll back to top' onClick={() => scrollTop()}>
                   <KeyboardArrowUpIcon />
                 </Fab>

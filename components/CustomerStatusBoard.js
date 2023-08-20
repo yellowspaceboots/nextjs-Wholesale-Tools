@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import CancelIcon from '@mui/icons-material/Cancel'
+import BusinessIcon from '@mui/icons-material/Business'
 import Grid from '@mui/material/Grid'
 import Radio from '@mui/material/Radio'
 import { motion } from 'framer-motion'
@@ -35,8 +36,10 @@ import InputAdornment from '@mui/material/InputAdornment'
 import FormHelperText from '@mui/material/FormHelperText'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { Controller, useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
 const CustomerStatusBoard = ({ id, customerList }) => {
+  const router = useRouter()
   const statuses = ['Open', 'Pending', 'Won', 'Lost'].map(name => {
     const color = getStatusColor(name)
     return {
@@ -206,6 +209,18 @@ const CustomerStatusBoard = ({ id, customerList }) => {
               direction='column'
               alignItems={activeCustomer.status === 'Lost' ? 'flex-end' : 'flex-start'}
             >
+              <Grid item style={{ padding: 4, paddingTop: 0 }}>
+                <motion.div whileHover={{ x: activeCustomer.status === 'Lost' ? -6 : 6 }}>
+                  <Button
+                    variant='contained'
+                    size='small'
+                    startIcon={<BusinessIcon />}
+                    onClick={() => router.push(`/settings/commercial-projects/edit-customer-list/${activeCustomer.customerRef._id}`)}
+                    >
+                    Customer
+                    </Button>
+                </motion.div>
+              </Grid>
               {[
                 {
                   onClick: (event) => setAnchorElAmount(event.currentTarget === anchorElAmount ? null : event.currentTarget),

@@ -194,6 +194,7 @@ input QuotationQueryInput @embedded  {
   inside: String
   outsideSales: String
   status: String
+  search: String
 }
 
 input LoginUserInput {
@@ -223,6 +224,7 @@ type Query {
   getAllClosedProjects: [Projects!]! @resolver(name: "get_all_closed_jobs", paginated: true)
   getQuotationsByDateRange(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range", paginated: true)
   projectSearch(input: String!): [Projects!]! @resolver(name: "projectSearch", paginated: true)
+  projectSearchV2(input: String!): [Projects!]! @resolver(name: "projectSearchV2", paginated: true)
 }
 
 type Mutation {

@@ -5,12 +5,15 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
 import { useLazyQuery } from '@apollo/client'
-import { PROJECT_SEARCH } from '../lib/queries/projectSearch'
+import { PROJECT_SEARCHV2 } from '../lib/queries/projectSearchV2'
 import useDebounce from '../utils/useDebounce'
 import CircularProgress from '@mui/material/CircularProgress'
 import AssessmentIcon from '@mui/icons-material/Assessment'
 import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Controller, useForm, useWatch } from 'react-hook-form'
+import { DevTool } from '@hookform/devtools'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -46,100 +49,129 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SearchBar = ({ id }) => {
+  const {
+    control: searchControl,
+    handleSubmit: searchHandleSubmit,
+    reset: searchReset,
+    watch: searchWatch
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange'
+  })
+
+  const onSubmit = (data) => {
+      if (data.search ? data.search.trim().length > 2 : false) {
+        searchReset()
+        setOptions([])
+        router.push(`/search?search=${data.search}`)
+      }
+  }
+
+  const router = useRouter()
   const classes = useStyles()
-  const [value, setValue] = useState(null)
-  const [inputValue, setInputValue] = useState('')
   const [options, setOptions] = useState([])
-  const debouncedSearch = useDebounce((nextValue) => projectSearch({ variables: { input: nextValue } }), 700)
-  const [projectSearch, { loading, data }] = useLazyQuery(PROJECT_SEARCH, {
+  const searchValue = searchWatch('search')
+  const debouncedSearch = useDebounce((nextValue) => projectSearchV2({ variables: { input: nextValue } }), 700)
+  
+  const [projectSearchV2, { loading, data }] = useLazyQuery(PROJECT_SEARCHV2, {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
-      console.log(data)
-      setOptions(data.projectSearch.data)
+      if (searchValue) {
+        setOptions(data.projectSearchV2.data)
+      }
     },
     onError: (error) => console.log(error)
   })
 
+
   useEffect(() => {
     let active = true
-    if (inputValue === '') {
-      setOptions(value ? [value] : [])
+    if (searchValue === '') {
+      setOptions(searchValue ? [searchValue] : [])
       return undefined
     }
 
-    if (active && inputValue.trim().length > 2) {
-      debouncedSearch(inputValue)
+    if (active && (searchValue ? searchValue.trim().length > 2 : false)) {
+      debouncedSearch(searchValue)
     }
 
     return () => {
       active = false
     }
-  }, [value, inputValue])
-
+  }, [searchValue, router.asPath])
   return (
-    <Autocomplete
-      id={`search-bar-${id || ''}`}
-      fullWidth
-      getOptionLabel={(option) =>
-        typeof option === 'string' ? option : option.title}
-      filterOptions={(x) => x}
-      options={options}
-      loading={loading}
-      autoComplete
-      popupIcon={false}
-      includeInputInList
-      openOnFocus
-      freeSolo
-      classes={{ root: classes.search }}
-      filterSelectedOptions
-      value={value}
-      onChange={(event, newValue) => {
-        setOptions(newValue ? [newValue, ...options] : options)
-        setValue(newValue)
-      }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue)
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          placeholder='Search by Quote Name...'
-          fullWidth
-          size='small'
-        />
-      )}
-      renderOption={(props, option) => {
-        const avatarSelector = {
-          'On Track': classes.greenAvatar,
-          'At Risk': classes.greenAvatar,
-          Pending: classes.yellowAvatar,
-          'Off Track': classes.greenAvatar,
-          Closed: classes.avatar
-        }
-        const avatarIcon = avatarSelector[option.status] || classes.avatar
+    <form onSubmit={searchHandleSubmit(onSubmit)} style={{width: '100%'}}>
+      <Controller
+      name='search'
+      control={searchControl}
+      defaultValue=''
+      render={({ field: { onChange, onBlur, value, ref } }) => {
         return (
-          <Link key={option._id} href={'/quotations/' + option._id}>
-            <li {...props}>
-              <Grid container alignItems='center'>
-                <Grid item>
-                  <Avatar className={avatarIcon}>
-                    <AssessmentIcon />
-                  </Avatar>
-                </Grid>
-                <Grid item xs>
-                  <Typography variant='body2' color='textSecondary'>
-                    {option.title}
-                  </Typography>
-                  <Typography variant='body2' color='textSecondary'>
-                    {option.status}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </li>
-          </Link>
+          <Autocomplete
+            id={`search-bar-${id || ''}`}
+            fullWidth
+            getOptionLabel={(option) =>
+              typeof option === 'string' ? option : option.title}
+            filterOptions={(x) => x}
+            options={options}
+            loading={loading}
+            popupIcon={false}
+            freeSolo
+            classes={{ root: classes.search }}
+            filterSelectedOptions
+            value={value}
+            onInputChange={(e, val) => onChange(val)}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  // Prevent's default 'Enter' behavior.
+                  event.defaultMuiPrevented = true;
+                  // your handler code
+                }
+              }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder='Search by Quote Name...'
+                fullWidth
+                size='small'
+              />
+            )}
+            renderOption={(props, option) => {
+              const avatarSelector = {
+                'On Track': classes.greenAvatar,
+                'At Risk': classes.greenAvatar,
+                Pending: classes.yellowAvatar,
+                'Off Track': classes.greenAvatar,
+                Closed: classes.avatar
+              }
+              const avatarIcon = avatarSelector[option.status] || classes.avatar
+              return (
+                <Link key={option._id} href={'/quotations/' + option._id}>
+                  <li {...props}>
+                    <Grid container alignItems='center'>
+                      <Grid item>
+                        <Avatar className={avatarIcon}>
+                          <AssessmentIcon />
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs>
+                        <Typography variant='body2' color='textSecondary'>
+                          {option.title}
+                        </Typography>
+                        <Typography variant='body2' color='textSecondary'>
+                          {option.status}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </li>
+                </Link>
+              )
+            }}
+          />
         )
       }}
     />
+  </form>
   )
 }
 

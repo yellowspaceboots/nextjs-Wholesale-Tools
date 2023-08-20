@@ -86,8 +86,8 @@ const CalendarWeek = ({
               border: '1px solid lightgrey',
               justifyContent: 'center',
               alignItems: 'center',
-              maxWidth: (i === 0 || i === 6) ? 'none' : 275,
-              minWidth: (i === 0 || i === 6) ? 'none' : 275
+              maxWidth: (i === 0 || i === 6) ? 'none' : 250,
+              minWidth: (i === 0 || i === 6) ? 'none' : 250
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>

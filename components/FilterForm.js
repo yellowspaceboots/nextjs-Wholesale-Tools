@@ -17,10 +17,10 @@ import isValid from 'date-fns/isValid'
 import DesktopDatePicker from '@mui/lab/DatePicker'
 import format from 'date-fns/format'
 
-const FilterForm = () => {
+const FilterForm = ({ name, route, filterOpenDefault }) => {
   const { salesmen, customers, outsideSalesmen } = useDrowDown()
   const router = useRouter()
-  const [filterOpen, toggleFilterOpen] = useState(false)
+  const [filterOpen, toggleFilterOpen] = useState(filterOpenDefault || false)
   const handleToggleFilterOpen = () => toggleFilterOpen(!filterOpen)
   const initialState = {
     start: router.query.start ? new Date(router.query.start) : null,
@@ -51,13 +51,12 @@ const FilterForm = () => {
       status: router.query.status,
       inside: data.insideSalesmen?.number,
       outside: data.outsideSalesmen?.number,
-      account: data.customer?.account
+      account: data.customer?.account,
+      search: router.query?.search,
     }
     const query = Object.fromEntries(Object.entries(fullQuery).filter(([_, v]) => v != null))
-    router.push({
-      pathname: '/quotations',
-      query
-    })
+    const filterRoute = { pathname: route, query: { ...query, selector: router.query.selector ? router.query.selector : route === '/' ? 1 : null } }
+    router.push(filterRoute)
   }
   const watchAllFields = filterWatch()
   const watchStart = filterWatch('start')
@@ -81,7 +80,7 @@ const FilterForm = () => {
         justifyContent='space-between'
         alignItems='center'
       >
-        <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Quotations</Typography>
+        <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>{name}</Typography>
         <div>
           <IconButton aria-label='filter' onClick={handleToggleFilterOpen}>
             <FilterListIcon />

@@ -1,7 +1,13 @@
 import React from 'react'
+import FilterForm from './FilterForm'
 
 const ManagerDashboard = () => {
-  return <div>Manager Dashboard Coming Soon</div>
+  return (
+    <>
+  <FilterForm name='Manager Dashboard' route='/' filterOpenDefault={true} />     
+    </>
+
+  )
 }
 
 export default ManagerDashboard

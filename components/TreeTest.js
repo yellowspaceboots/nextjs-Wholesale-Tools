@@ -89,35 +89,28 @@ function StyledTreeItem (props) {
 export default function GmailTreeView () {
   const { user } = useAuth()
   const router = useRouter()
+  const lowerPath = router.asPath.toLowerCase()
+  const routeSelector = router.query.selector
+    ? router.query.selector
+    : lowerPath === '/'
+      ? '1'
+      : lowerPath.includes('settings') ? '4' : '0'
   const { counts } = useDrawerData()
   const quoteURLQuery = user.role === 'INSIDESALES'
     ? { inside: user.salesRef.number }
     : user.role === 'OUTSIDESALES' ? { outside: user.salesRef.number } : {}
-  const openQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'open' } }
-  const pendingQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'pending' } }
-  const closedQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'closed' } }
+  const openQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'open', selector: '5' } }
+  const pendingQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'pending', selector: '6' } }
+  const closedQuoteURL = { pathname: '/quotations', query: { ...quoteURLQuery, status: 'closed', selector: '7' } }
   const today = new Date()
   const todayYear = today.getFullYear()
   const todayMonth = today.getMonth() + 1
   const todayDay = today.getDate()
-  const monthLink = `/calendar/month/${todayYear}/${todayMonth}/${todayDay}`
-  const weekLink = `/calendar/week/${todayYear}/${todayMonth}/${todayDay}`
-  const dayLink = `/calendar/day/${todayYear}/${todayMonth}/${todayDay}`
+  const monthLink = { pathname: `/calendar/month/${todayYear}/${todayMonth}/${todayDay}`, query: { selector: '8' } }
+  const weekLink = { pathname: `/calendar/week/${todayYear}/${todayMonth}/${todayDay}`, query: { selector: '9' } }
+  const dayLink = { pathname: `/calendar/day/${todayYear}/${todayMonth}/${todayDay}`, query: { selector: '10' } }
 
-  const pastDueURL = { pathname: '/quotations', query: { end: `${todayMonth}/${todayDay}/${todayYear}`, ...quoteURLQuery, status: 'open' } }
-
-  const urlToNodeId = {
-    '/': '1',
-    '/settings': '4',
-    [openQuoteURL]: '5',
-    [pendingQuoteURL]: '6',
-    [closedQuoteURL]: '7',
-    [monthLink]: '8',
-    [weekLink]: '9',
-    [dayLink]: '10',
-    [pastDueURL]: '11'
-  }
-  const [selected, setSelected] = useState(null)
+  const pastDueURL = { pathname: '/quotations', query: { end: `${todayMonth}/${todayDay}/${todayYear}`, ...quoteURLQuery, status: 'open', selector: '11' } }
 
   const handleSelect = (event, nodeIds) => {
     const nodeIdToUrl = {
@@ -134,20 +127,6 @@ export default function GmailTreeView () {
     const myRoute = nodeIdToUrl[nodeIds] || null
     if (myRoute) { router.push(myRoute) }
   }
-
-  const handleRouteChange = () => {
-    setSelected(null)
-    setSelected(urlToNodeId[router.asPath] || null)
-  }
-  useEffect(() => {
-    if (!selected) {
-      handleRouteChange()
-    }
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events])
   return (
     <TreeView
       aria-label='gmail'
@@ -157,7 +136,7 @@ export default function GmailTreeView () {
       defaultEndIcon={<div style={{ width: 24 }} />}
       onNodeSelect={handleSelect}
       onNodeFocus={() => console.log('placeholder')}
-      selected={selected}
+      selected={routeSelector}
       sx={{ height: 264, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
     >
       <StyledTreeItem

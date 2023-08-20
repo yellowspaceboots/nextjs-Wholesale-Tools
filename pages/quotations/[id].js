@@ -75,6 +75,7 @@ const Event = (props) => {
           variants={pageVariants}
         >
           <Grid container alignItems='center'>
+            <Typography variant='h5' style={{ fontWeight: 'light', marginRight: 10, flexGrow: 1 }}>{event.title}</Typography>
             <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Average Quotation Value: {fullAmount}</Typography>
             <Tooltip title='Edit Project' placement='right'>
               <IconButton aria-label='edit' onClick={() => handleClickOpen()}>
