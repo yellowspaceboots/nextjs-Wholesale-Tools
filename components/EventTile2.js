@@ -1,28 +1,14 @@
 import React, { useMemo } from 'react'
-import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import Avatar from '@mui/material/Avatar'
 import { getStatusColor, getStatusFontColor, amountShortFormat, pad } from '../lib/utils'
-import Tooltip from '@mui/material/Tooltip'
-import { motion } from 'framer-motion'
 import DateIcon from './DateIcon'
 import { NextLinkComposed } from './Link'
-import Card from '@mui/material/Card'
-import { CardActionArea } from '@mui/material'
-import Chip from '@mui/material/Chip'
 import Box from '@mui/material/Box'
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
 
 const EventTile = ({ event }) => (
   useMemo(() => {
-    const formattedId = pad(event.requestId, 5)
     const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
     const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
     const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
-    const formattedAmount = amountShortFormat(avgAmount)
-    const statusColor = getStatusColor(event.status)
-    const statusFontColor = getStatusFontColor(event.status)
     return (
       <>
         <Box
@@ -113,40 +99,6 @@ const EventTile = ({ event }) => (
             })}
           </Box>
         </Box>
-        {/* <Grid item style={{ width: calc(100 % -8) }}>
-          <Card variant='outlined'>
-            <CardActionArea
-              to={{ pathname: `/quotations/${event._id}` }}
-              component={NextLinkComposed}
-              onClick={(e) => e.stopPropagation()}
-              style={{ height: '100%' }}
-            >
-              <Grid
-                container
-                direction='row'
-                alignItems='center'
-                justifyContent='flex-start'
-                spacing={0}
-              >
-                <Grid item>
-                <DateIcon event={event} status />
-              </Grid>
-                <Typography variant='caption' color='textSecondary' style={{ textTransform: 'uppercase' }}>{event.salesRef.name}</Typography>
-                <Grid item container direction='column'>
-                  {event.customerList.data.map(customer => {
-                    const customerStatusColor = getStatusColor(customer.status)
-                    return (
-                      <Chip key={customer.customerRef.account} label={customer.customerRef.name} size='small' sx={{ backgroundColor: customerStatusColor }} />
-                    )
-                  })}
-                </Grid>
-                <Grid item style={{ marginTop: 6 }}>
-                  <Typography variant='body2' color='textSecondary' align='center' style={{ fontWeight: 'bold' }}>{event.title}</Typography>
-                </Grid>
-              </Grid>
-            </CardActionArea>
-          </Card>
-        </Grid> */}
       </>
     )
   }, [event])

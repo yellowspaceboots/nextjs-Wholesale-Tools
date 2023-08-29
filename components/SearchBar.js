@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
 import { useLazyQuery } from '@apollo/client'
 import { PROJECT_SEARCHV2 } from '../lib/queries/projectSearchV2'
+import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
 import useDebounce from '../utils/useDebounce'
 import CircularProgress from '@mui/material/CircularProgress'
 import AssessmentIcon from '@mui/icons-material/Assessment'
@@ -13,7 +14,6 @@ import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Controller, useForm, useWatch } from 'react-hook-form'
-import { DevTool } from '@hookform/devtools'
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -71,13 +71,14 @@ const SearchBar = ({ id }) => {
   const classes = useStyles()
   const [options, setOptions] = useState([])
   const searchValue = searchWatch('search')
-  const debouncedSearch = useDebounce((nextValue) => projectSearchV2({ variables: { input: nextValue } }), 700)
+  const debouncedSearch = useDebounce((nextValue) => getQuotations({ variables: { input: nextValue } }), 700)
   
-  const [projectSearchV2, { loading, data }] = useLazyQuery(PROJECT_SEARCHV2, {
+  const [getQuotations, { loading, data }] = useLazyQuery(GET_QUOTATIONS, {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
       if (searchValue) {
-        setOptions(data.projectSearchV2.data)
+        const myOptions = data.getQuotations.data.splice(5)
+        setOptions(myOptions)
       }
     },
     onError: (error) => console.log(error)
@@ -92,7 +93,16 @@ const SearchBar = ({ id }) => {
     }
 
     if (active && (searchValue ? searchValue.trim().length > 2 : false)) {
-      debouncedSearch(searchValue)
+      const input = {
+        start: null,
+        end: null,
+        inside: null,
+        outsideSales: null,
+        account: null,
+        status:  null,
+        search: searchValue
+      }
+      debouncedSearch(input)
     }
 
     return () => {

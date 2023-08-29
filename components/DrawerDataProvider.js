@@ -33,14 +33,12 @@ const DrawerDataProvider = ({ children }) => {
     startWeek: startWeek,
     endWeek: endWeek
   }
-  console.log(input)
   const { loading, error, data } = useQuery(GET_QUOTATION_COUNTS, {
     variables: { input }
   })
   if (loading) return null
   if (error) return <p>{error.message}</p>
   const quotationCounts = data.getQuotationCounts
-  console.log(quotationCounts)
   return (
     <DrawerDataContext.Provider value={{ counts: quotationCounts }}>{children}</DrawerDataContext.Provider>
   )

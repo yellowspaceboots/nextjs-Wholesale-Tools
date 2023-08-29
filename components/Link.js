@@ -16,9 +16,9 @@ export const NextLinkComposed = React.forwardRef(function NextLinkComposed (prop
       scroll={scroll}
       shallow={shallow}
       passHref={passHref}
-    >
-      <a ref={ref} {...other} />
-    </NextLink>
+      ref={ref}
+      {...other}
+    />
   )
 })
 

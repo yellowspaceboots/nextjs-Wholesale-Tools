@@ -35,18 +35,6 @@ const ProjectsByStatus = ({ input }) => {
       {projectList.length > 0
         ? (
           <>
-            {/*          <Grid container item spacing={1} alignItems='stretch' sx={{ flexShrink: 1, mt: 1 }}>
-              {projectList.map((event, i) =>
-                <React.Fragment key={event._id}>
-                  <EventTile event={event} />
-                  {data.getQuotations.after && i === projectList.length - 10 && (
-                    <Waypoint
-                      onEnter={wayPointHandler}
-                    />
-                  )}
-                </React.Fragment>
-              )}
-            </Grid> */}
             <Grid container item spacing={1} alignItems='stretch' sx={{ flexShrink: 1, mt: 1 }}>
               {projectList.map((event, i) =>
                 <React.Fragment key={event._id}>

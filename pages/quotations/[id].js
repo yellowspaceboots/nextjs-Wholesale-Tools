@@ -135,7 +135,7 @@ const Event = (props) => {
 }
 
 Event.getLayout = getLayout
-
+/*
 export async function getServerSideProps(context) {
   const cookies = parseCookies(context.req)
   console.log(cookies)
@@ -150,5 +150,5 @@ export async function getServerSideProps(context) {
     props: {},
   })
 }
-
+*/
 export default Event

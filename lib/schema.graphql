@@ -225,6 +225,7 @@ type Query {
   getQuotationsByDateRange(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range", paginated: true)
   projectSearch(input: String!): [Projects!]! @resolver(name: "projectSearch", paginated: true)
   projectSearchV2(input: String!): [Projects!]! @resolver(name: "projectSearchV2", paginated: true)
+  getQuotationsByDateRangeWithClosed(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range_with_closed", paginated: true)
 }
 
 type Mutation {
