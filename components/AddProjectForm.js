@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import { useDrowDown } from './DropDownProvider'
 import DesktopDatePicker from '@mui/lab/DatePicker'
+import DateTimePicker  from '@mui/lab/DateTimePicker'
 import isValid from 'date-fns/isValid'
 
 const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
@@ -175,7 +176,7 @@ const AddProjectForm = ({ handleClose, createProject, mutationError }) => {
               control={addControl}
               render={({ field }) => {
                 return (
-                  <DesktopDatePicker
+                  <DateTimePicker
                     {...field}
                     label='Date Due'
                     renderInput={(params) => (
