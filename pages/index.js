@@ -30,8 +30,6 @@ const IndexPage = () => {
   const start = startOfMonth(viewDate)
   const end = endOfMonth(viewDate)
   const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE_WITH_CLOSED, { variables: { input: { start, end } } })
-  switch (user.role) {
-    case 'MANAGER':
       return (
         <ManagerDashboard
         viewDate={viewDate}
@@ -45,17 +43,6 @@ const IndexPage = () => {
         end={end}
         />
       )
-    case 'INSIDESALES':
-      return (
-        <div>Inside Sales Dashboard coming soon.</div>
-      )
-    case 'OUTSIDESALES':
-      return (
-        <div>Outside Sales Dashboard coming soon.</div>
-      )
-    default:
-      return null
-  }
 }
 
 IndexPage.getLayout = getLayout

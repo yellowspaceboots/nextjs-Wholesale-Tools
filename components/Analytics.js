@@ -6,8 +6,21 @@ import {
 import exportFromJSON from 'export-from-json'
 import DataTable from './TableTest'
 import Link from './Link'
+import { useAuth } from './AuthProvider'
 
 const Analytics = ({ data, start, end }) => {
+  const { user } = useAuth()
+  const salesFilter = () => {
+      switch(user.role) {
+    case 'INSIDESALES':
+      return `&inside=${user.salesRef.number}`
+    case 'OUTSIDESALES':
+      return`&outside=${user.salesRef.number}`
+    default:
+      return ''
+  }
+  }
+
   const customers = data.getQuotationsByDateRangeWithClosed.data.map((event) => {
     const eventObj = {
       _id: event._id,
@@ -25,7 +38,7 @@ const Analytics = ({ data, start, end }) => {
         customerId: customer.customerRef._id,
         'Customer Account': customer.customerRef.account,
         'Customer Name': customer.customerRef.name,
-        'Customer Amount': customer.amount,
+        'Customer Amount': customer.amount / 10000,
         'Customer Status': customer.status
       }
       return { ...eventObj, ...customerObj }
@@ -73,7 +86,7 @@ const Analytics = ({ data, start, end }) => {
       width: 50,
       // eslint-disable-next-line react/display-name
       renderCell: (params) => (
-        <Link href={`/quotations?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&account=${params.getValue('customerAccount')}`} variant='body2'>
+        <Link href={`/quotations?start=${encodeURIComponent(format(start, 'MM/dd/yyyy'))}&end=${encodeURIComponent(format(end, 'MM/dd/yyyy'))}&account=${params.getValue('customerAccount')}${salesFilter()}`} variant='body2'>
           {params.value}
         </Link>
       )
