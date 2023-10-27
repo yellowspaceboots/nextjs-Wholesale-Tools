@@ -1,24 +1,26 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/core/Autocomplete'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import { Controller, useForm } from 'react-hook-form'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
 import ListboxComponent from './VirtualizedList'
-import MenuItem from '@material-ui/core/MenuItem'
-import Grid from '@material-ui/core/Grid'
+import MenuItem from '@mui/material/MenuItem'
+import Grid from '@mui/material/Grid'
 import { DevTool } from '@hookform/devtools'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { useAuth } from './AuthProvider'
 import { useDrowDown } from './DropDownProvider'
-import DateTimePicker from '@material-ui/lab/DateTimePicker'
+import DateTimePicker from '@mui/lab/DateTimePicker'
 import isValid from 'date-fns/isValid'
+import format from 'date-fns/format'
+import { deepEqual } from '../lib/utils'
 
 const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) => {
   const { user } = useAuth()
-  const intialState = {
+  const initialState = {
     projectName: event.title,
     amount: event.amount / 10000,
     size: event.size,
@@ -28,10 +30,15 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
     dateEntered: new Date(event.dateEntered),
     dateDue: new Date(event.dateDue)
   }
-  const { register, errors, control, handleSubmit, formState } = useForm({
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+    watch: editWatch
+  } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
   const onSubmit = (data, e) => {
     const payload = {
@@ -48,45 +55,58 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
     updateProject({ variables: { input: payload } })
   }
   const { salesmen } = useDrowDown()
+  const watchAllFields = editWatch()
+  const watchDue = editWatch('dateDue')
+  const compareWatch = {
+    ...watchAllFields,
+    dateDue: watchDue ? format(new Date(watchDue), 'MM/dd/yyyy') : null
+  }
+  const compareInitialState = {
+    ...initialState,
+    dateDue: initialState.dateDue ? format(new Date(initialState.dateDue), 'MM/dd/yyyy') : null
+  }
+  const buttonDisabled = deepEqual(compareWatch, compareInitialState)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <DevTool control={control} />
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <TextField
-              autoComplete='off'
-              variant='outlined'
+            <Controller
               name='projectName'
-              id='project-name'
-              label='Name'
-              fullWidth
-              error={!!errors.projectName || mutationError}
-              helperText={errors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
-              inputRef={register({ required: true })}
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    autoComplete='off'
+                    variant='outlined'
+                    label='Name'
+                    fullWidth
+                    error={!!errors.projectName || mutationError}
+                    helperText={errors.projectName ? 'Name Cannot Be Blank' : mutationError ? mutationError.message : ''}
+                  />
+                )
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <Controller
               name='salesman'
-              rules={{ validate: value => !!value }}
               control={control}
-              defaultValue={intialState.salesman}
-              render={({ onChange, ...props }) => {
+              render={({ field: { onChange, onBlur, value, ref } }) => {
                 return (
                   <Autocomplete
-                    id='salesman'
-                    {...props}
+                    id='insideSalesmen'
+                    options={salesmen}
+                    value={value}
                     onChange={(e, val) => onChange(val)}
                     disabled={user.role === 'INSIDESALES'}
-                    options={salesmen}
                     getOptionLabel={(option) => option.name}
-                    getOptionSelected={(option, value) => option.number === value.number}
+                    isOptionEqualToValue={(option, value) => option.number === value.number}
                     renderInput={(params) =>
                       <TextField
                         {...params}
-                        error={!!errors.salesman}
-                        helperText={!!errors.salesman && 'Assigned To Cannot Be Blank'}
                         label='Assigned To'
                         variant='outlined'
                       />}
@@ -113,21 +133,15 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
           <Grid item xs={6}>
             <Controller
               name='dateDue'
-              rules={{ validate: value => isValid(value) }}
+              rules={{ validate: value => isValid(value) || value === null }}
               control={control}
-              defaultValue={intialState.dateDue}
               render={props => {
                 return (
                   <DateTimePicker
-                    {...props}
+                    {...props.field}
                     label='Date Due'
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        fullWidth
-                        variant='outlined'
-                        helperText={!!errors.dateDue && 'Not a valid Date'}
-                      />
+                      <TextField {...params} fullWidth variant='outlined' helperText={!!control.dateDue && 'Not a valid Date'} />
                     )}
                   />
                 )
@@ -138,12 +152,11 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
             <Controller
               name='size'
               control={control}
-              defaultValue={intialState.size}
-              render={props => {
+              render={({ field }) => {
                 return (
                   <TextField
                     id='outlined-select-size'
-                    {...props}
+                    {...field}
                     select
                     fullWidth
                     label='Size'
@@ -169,12 +182,11 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
             <Controller
               name='status'
               control={control}
-              defaultValue={intialState.status}
-              render={props => {
+              render={({ field }) => {
                 return (
                   <TextField
                     id='outlined-select-size'
-                    {...props}
+                    {...field}
                     select
                     fullWidth
                     label='Status'
@@ -203,23 +215,31 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              id='standard-multiline-static'
-              label='Description'
-              multiline
-              autoComplete='off'
+            <Controller
               name='description'
-              rows={4}
-              variant='outlined'
-              fullWidth
-              error={!!errors.description}
-              inputRef={register()}
+              control={control}
+              render={({ field }) => {
+                return (
+                  <TextField
+                    {...field}
+                    id='standard-multiline-static'
+                    label='Description'
+                    multiline
+                    autoComplete='off'
+                    name='description'
+                    rows={4}
+                    variant='outlined'
+                    fullWidth
+                    error={!!errors.description}
+                  />
+                )
+              }}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={!formState.isValid} type='submit' color='primary'>
+        <Button disabled={buttonDisabled} type='submit' color='primary'>
           Save
         </Button>
         <Button onClick={handleClose} type='reset' color='primary' autoFocus>

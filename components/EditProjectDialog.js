@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/core/styles'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
 import EditProjectForm from './EditProjectForm'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
-import { UPDATE_PROJECT } from '../testApi/mutations/updateProject'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
+import { UPDATE_PROJECT } from '../lib/mutations/updateProject'
 import { useMutation } from '@apollo/client'
 
-const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event }) => {
+const EditProjectDialog = ({ dialogOpen, setDialogOpen, event }) => {
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [error, setError] = useState()
@@ -47,10 +47,10 @@ const EditProjectDialog = ({ dialogOpen, setDialogOpen, query, variables, event 
             }}
           >
             <CircularProgress style={{ color: 'white' }} />
-            <Typography style={{ color: 'white' }}>Updating Project...</Typography>
+            <Typography style={{ color: 'white' }}>Updating Quotation...</Typography>
             {mutationError && <p>Error :( Please try again</p>}
           </div>}
-        <DialogTitle id='responsive-dialog-title'>Edit Project</DialogTitle>
+        <DialogTitle id='responsive-dialog-title'>Edit Quotation</DialogTitle>
         <EditProjectForm handleClose={handleClose} updateProject={updateProject} mutationError={error} event={event} />
       </Dialog>
     </>

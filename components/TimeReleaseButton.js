@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import LoadingButton from '@material-ui/lab/LoadingButton'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import LoadingButton from '@mui/lab/LoadingButton'
+import CircularProgress from '@mui/material/CircularProgress'
 import useTimer from '../utils/useTimer'
 
 const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) => {
@@ -10,6 +10,7 @@ const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) =
     if (timer === 385) {
       timeReleaseFunction(true)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timer])
   const handleDelete = (direction) => {
     setDeleteDown(direction === 'down')
@@ -27,8 +28,8 @@ const TimeReleaseButton = ({ timeReleaseFunction, pending, buttonText, icon }) =
       onMouseLeave={() => handleDelete('up')}
       onMouseUp={() => handleDelete('up')}
       startIcon={deleteDown ? <CircularProgress size={20} variant='determinate' value={timer} style={{ color: 'red' }} /> : icon}
-      pendingPosition='start'
-      pending={pending}
+      loadingPosition='start'
+      loading={pending}
     >
       {buttonText}
     </LoadingButton>

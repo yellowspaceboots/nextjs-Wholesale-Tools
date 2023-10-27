@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { getLayout } from '../../../components/Layout'
 import CommercialEditSalesmanToggle from '../../../components/CommercialEditSalesmanToggle'
-import TextField from '@material-ui/core/TextField'
-import { GET_ALL_SALESMEN } from '../../../testApi/queries/getAllSalesmen'
+import TextField from '@mui/material/TextField'
+import { GET_ALL_SALESMEN } from '../../../lib/queries/getAllSalesmen'
 import { useQuery, useMutation } from '@apollo/client'
-import { UPDATE_SALESMAN } from '../../../testApi/mutations/updateSalesman'
+import { UPDATE_SALESMAN } from '../../../lib/mutations/updateSalesman'
 import DataTable from '../../../components/TableTest'
 
 const EditSalesmanList = () => {
@@ -43,6 +43,7 @@ const EditSalesmanList = () => {
     {
       field: 'used',
       headerName: 'Assignable',
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => <CommercialEditSalesmanToggle id={params.getValue('_id')} currentState={Boolean(params.value)} updateSalesman={updateSalesman} />
     }
   ]

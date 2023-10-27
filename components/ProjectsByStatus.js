@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
-import { GET_ALL_OPEN_PROJECTS } from '../testApi/queries/getAllOpenProjects'
-import { GET_QUOTATIONS } from '../testApi/queries/getQuotations'
+import React from 'react'
+import Grid from '@mui/material/Grid'
+import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
 import { useQuery } from '@apollo/client'
-import EventTile from './EventTile'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import EventTile from './EventTile2'
+import CircularProgress from '@mui/material/CircularProgress'
 import { Waypoint } from 'react-waypoint'
 import Image from 'next/image'
+import Box from '@mui/material/Box'
 
 const ProjectsByStatus = ({ input }) => {
   const { error, data, fetchMore, networkStatus } = useQuery(GET_QUOTATIONS, {
@@ -17,9 +17,9 @@ const ProjectsByStatus = ({ input }) => {
   })
   if (networkStatus === 1 || networkStatus === 2) {
     return (
-      <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+      <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', mt: 1 }}>
         <CircularProgress color='secondary' size={80} />
-      </div>
+      </Box>
     )
   }
   if (error) return `Error! ${error.message}`
@@ -27,25 +27,15 @@ const ProjectsByStatus = ({ input }) => {
   const wayPointHandler = () => {
     const cursor = data.getQuotations.after
     fetchMore({
-      variables: { cursor, input },
-      updateQuery: (prevResult, { fetchMoreResult }) => {
-        const newResult = {
-          ...fetchMoreResult,
-          getQuotations: {
-            ...fetchMoreResult.getQuotations,
-            data: [...prevResult.getQuotations.data, ...fetchMoreResult.getQuotations.data]
-          }
-        }
-        return newResult
-      }
+      variables: { cursor, input }
     })
   }
   return (
-    <Grid container>
+    <Grid container alignItems='center'>
       {projectList.length > 0
         ? (
           <>
-            <Grid container spacing={2} style={{ width: '98%', paddingLeft: 20 }}>
+            <Grid container item spacing={1} alignItems='stretch' sx={{ flexShrink: 1, mt: 1 }}>
               {projectList.map((event, i) =>
                 <React.Fragment key={event._id}>
                   <EventTile event={event} />

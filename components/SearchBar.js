@@ -1,44 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/core/Autocomplete'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles, alpha } from '@material-ui/core/styles'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { makeStyles } from '@mui/styles'
 import { useLazyQuery } from '@apollo/client'
-import { PROJECT_SEARCH } from '../testApi/queries/projectSearch'
+import { PROJECT_SEARCHV2 } from '../lib/queries/projectSearchV2'
+import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
 import useDebounce from '../utils/useDebounce'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import AssessmentIcon from '@material-ui/icons/Assessment'
-import Avatar from '@material-ui/core/Avatar'
+import CircularProgress from '@mui/material/CircularProgress'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import Avatar from '@mui/material/Avatar'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 
 const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    backgroundColor: theme.palette.common.white,
     '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25)
-    },
-    marginLeft: 0,
-    marginRight: 10,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto'
-    },
-    '& .MuiAutocomplete-input': {
-      color: 'white',
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: 300,
-        '&:focus': {
-          width: 300
-        }
-      }
-    },
-    '& .MuiAutocomplete-clearIndicator': {
-      color: 'white'
+      backgroundColor: theme.palette.common.white
     }
   },
   avatar: {
@@ -65,107 +48,141 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const SearchBar = () => {
+const SearchBar = ({ id }) => {
+  const {
+    control: searchControl,
+    handleSubmit: searchHandleSubmit,
+    reset: searchReset,
+    watch: searchWatch
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange'
+  })
+
+  const onSubmit = (data) => {
+      if (data.search ? data.search.trim().length > 2 : false) {
+        searchReset()
+        setOptions([])
+        router.push(`/search?search=${data.search}`)
+      }
+  }
+
+  const router = useRouter()
   const classes = useStyles()
-  const [value, setValue] = useState(null)
-  const [inputValue, setInputValue] = useState('')
   const [options, setOptions] = useState([])
-  const debouncedSearch = useDebounce((nextValue) => projectSearch({ variables: { input: nextValue } }), 700)
-  const [projectSearch, { loading, data }] = useLazyQuery(PROJECT_SEARCH, {
+  const searchValue = searchWatch('search')
+  const debouncedSearch = useDebounce((nextValue) => getQuotations({ variables: { input: nextValue } }), 700)
+  
+  const [getQuotations, { loading, data }] = useLazyQuery(GET_QUOTATIONS, {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
-      console.log(data)
-      setOptions(data.projectSearch.data)
+      if (searchValue) {
+        const myOptions = data.getQuotations.data.splice(5)
+        setOptions(myOptions)
+      }
     },
     onError: (error) => console.log(error)
   })
 
+
   useEffect(() => {
     let active = true
-    if (inputValue === '') {
-      setOptions(value ? [value] : [])
+    if (searchValue === '') {
+      setOptions(searchValue ? [searchValue] : [])
       return undefined
     }
 
-    if (active && inputValue.trim().length > 2) {
-      debouncedSearch(inputValue)
+    if (active && (searchValue ? searchValue.trim().length > 2 : false)) {
+      const input = {
+        start: null,
+        end: null,
+        inside: null,
+        outsideSales: null,
+        account: null,
+        status:  null,
+        search: searchValue
+      }
+      debouncedSearch(input)
     }
 
     return () => {
       active = false
     }
-  }, [value, inputValue])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchValue, router.asPath])
   return (
-    <Autocomplete
-      id='search-bar'
-      style={{ width: 300 }}
-      getOptionLabel={(option) =>
-        typeof option === 'string' ? option : option.title}
-      filterOptions={(x) => x}
-      options={options}
-      loading={loading}
-      autoComplete
-      popupIcon={false}
-      includeInputInList
-      classes={{ root: classes.search }}
-      filterSelectedOptions
-      value={value}
-      onChange={(event, newValue) => {
-        setOptions(newValue ? [newValue, ...options] : options)
-        setValue(newValue)
-      }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue)
-      }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          placeholder='Search'
-          fullWidth
-          size='small'
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <>
-                {params.InputProps.endAdornment}
-              </>
-            )
-          }}
-        />
-      )}
-      renderOption={(props, option) => {
-        const avatarSelector = {
-          'On Track': classes.greenAvatar,
-          'At Risk': classes.greenAvatar,
-          Pending: classes.yellowAvatar,
-          'Off Track': classes.greenAvatar,
-          Closed: classes.avatar
-        }
-        const avatarIcon = avatarSelector[option.status] || classes.avatar
+    <form onSubmit={searchHandleSubmit(onSubmit)} style={{width: '100%'}}>
+      <Controller
+      name='search'
+      control={searchControl}
+      defaultValue=''
+      render={({ field: { onChange, onBlur, value, ref } }) => {
         return (
-          <Link key={option._id} href={'/quotations/' + option._id}>
-            <li {...props}>
-              <Grid container alignItems='center'>
-                <Grid item>
-                  <Avatar className={avatarIcon}>
-                    <AssessmentIcon />
-                  </Avatar>
-                </Grid>
-                <Grid item xs>
-                  <Typography variant='body2' color='textSecondary'>
-                    {option.title}
-                  </Typography>
-                  <Typography variant='body2' color='textSecondary'>
-                    {option.status}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </li>
-          </Link>
+          <Autocomplete
+            id={`search-bar-${id || ''}`}
+            fullWidth
+            getOptionLabel={(option) =>
+              typeof option === 'string' ? option : option.title}
+            filterOptions={(x) => x}
+            options={options}
+            loading={loading}
+            popupIcon={false}
+            freeSolo
+            classes={{ root: classes.search }}
+            filterSelectedOptions
+            value={value}
+            onInputChange={(e, val) => onChange(val)}
+            onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  // Prevent's default 'Enter' behavior.
+                  event.defaultMuiPrevented = true;
+                  // your handler code
+                }
+              }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                placeholder='Search by Quote Name...'
+                fullWidth
+                size='small'
+              />
+            )}
+            renderOption={(props, option) => {
+              const avatarSelector = {
+                'On Track': classes.greenAvatar,
+                'At Risk': classes.greenAvatar,
+                Pending: classes.yellowAvatar,
+                'Off Track': classes.greenAvatar,
+                Closed: classes.avatar
+              }
+              const avatarIcon = avatarSelector[option.status] || classes.avatar
+              return (
+                <Link key={option._id} href={'/quotations/' + option._id} passHref>
+                  <li {...props}>
+                    <Grid container alignItems='center'>
+                      <Grid item>
+                        <Avatar className={avatarIcon}>
+                          <AssessmentIcon />
+                        </Avatar>
+                      </Grid>
+                      <Grid item xs>
+                        <Typography variant='body2' color='textSecondary'>
+                          {option.title}
+                        </Typography>
+                        <Typography variant='body2' color='textSecondary'>
+                          {option.status}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </li>
+                </Link>
+              )
+            }}
+          />
         )
       }}
     />
+  </form>
   )
 }
 

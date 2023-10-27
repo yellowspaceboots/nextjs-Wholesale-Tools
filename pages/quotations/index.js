@@ -6,7 +6,7 @@ import FilterForm from '../../components/FilterForm'
 const Quotations = () => {
   return (
     <>
-      <FilterForm />
+      <FilterForm name='Quotations' route='/quotations' />
       <ProjectList />
     </>
   )

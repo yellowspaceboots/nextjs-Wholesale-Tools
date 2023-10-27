@@ -1,7 +1,7 @@
 import React from 'react'
 import Permission from './Permission'
-import ToggleButton from '@material-ui/core/ToggleButton'
-import ToggleButtonGroup from '@material-ui/core/ToggleButtonGroup'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
 const CalendarCount = ({ data, handleSalesmanFilter, salesmanFilter }) => {
   const uniqueSalesmanList = [...new Set(data.map(quote => quote.salesRef.name))]

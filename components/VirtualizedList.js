@@ -1,7 +1,7 @@
 import React from 'react'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import ListSubheader from '@material-ui/core/ListSubheader'
-import { useTheme } from '@material-ui/core/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import ListSubheader from '@mui/material/ListSubheader'
+import { useTheme } from '@mui/material/styles'
 import { VariableSizeList } from 'react-window'
 
 const LISTBOX_PADDING = 8 // px
@@ -22,6 +22,8 @@ const OuterElementType = React.forwardRef((props, ref) => {
   const outerProps = React.useContext(OuterElementContext)
   return <div ref={ref} {...props} {...outerProps} />
 })
+
+OuterElementType.displayName = "OuterElementTypeForVirtualizedList"
 
 function useResetCache (data) {
   const ref = React.useRef(null)

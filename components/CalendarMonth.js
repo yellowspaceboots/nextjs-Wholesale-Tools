@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { isSameMonth, isSameDay, format, startOfDay, endOfDay, getDay } from 'date-fns'
-import IconButton from '@material-ui/core/IconButton'
-import Typography from '@material-ui/core/Typography'
-import ImageList from '@material-ui/core/ImageList'
-import ImageListItem from '@material-ui/core/ImageListItem'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import ImageList from '@mui/material/ImageList'
+import ImageListItem from '@mui/material/ImageListItem'
 import CalendarMonthEvents from './CalendarMonthEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../testApi/queries/getQuotationsByDateRange'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
+import CircularProgress from '@mui/material/CircularProgress'
 import { NextLinkComposed } from './Link'
 import CalendarCount from './CalendarCount'
 
@@ -46,7 +46,7 @@ const CalendarMonth = ({
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
-      <ImageList rowHeight='auto' cols={7} gap={2} style={{ maxWidth: '100%' }}>
+      <ImageList rowHeight='auto' cols={7} gap={1} style={{ maxWidth: '100%' }}>
         <>
           {weekdays.map((day, i) => (
             <ImageListItem
@@ -91,7 +91,7 @@ const CalendarMonth = ({
                   </div>
                   )
                 : (
-                  <div style={{ maxWidth: 275, minWidth: 275 }}>
+                  <div style={{ maxWidth: 250, minWidth: 250 }}>
                     <CalendarMonthEvents events={day.quotations} day={day.day} dateCount={calendarDates.length} />
                   </div>
                   )}

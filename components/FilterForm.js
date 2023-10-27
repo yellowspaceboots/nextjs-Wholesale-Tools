@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import Typography from '@material-ui/core/Typography'
-import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import FilterListIcon from '@material-ui/icons/FilterList'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import FilterListIcon from '@mui/icons-material/FilterList'
 import { useRouter } from 'next/router'
 import { useDrowDown } from './DropDownProvider'
-import TextField from '@material-ui/core/TextField'
-import Autocomplete from '@material-ui/core/Autocomplete'
-import Button from '@material-ui/core/Button'
+import TextField from '@mui/material/TextField'
+import Autocomplete from '@mui/material/Autocomplete'
+import Button from '@mui/material/Button'
 import { Controller, useForm } from 'react-hook-form'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
 import ListboxComponent from './VirtualizedList'
-import { deepEqual } from '../testApi/utils'
+import { deepEqual } from '../lib/utils'
 import isValid from 'date-fns/isValid'
-import DesktopDatePicker from '@material-ui/lab/DatePicker'
+import DesktopDatePicker from '@mui/lab/DatePicker'
 import format from 'date-fns/format'
 
-const FilterForm = () => {
+const FilterForm = ({ name, route, filterOpenDefault }) => {
   const { salesmen, customers, outsideSalesmen } = useDrowDown()
   const router = useRouter()
-  const [filterOpen, toggleFilterOpen] = useState(false)
+  const [filterOpen, toggleFilterOpen] = useState(filterOpenDefault || false)
   const handleToggleFilterOpen = () => toggleFilterOpen(!filterOpen)
-  const intialState = {
+  const initialState = {
     start: router.query.start ? new Date(router.query.start) : null,
     end: router.query.end ? new Date(router.query.end) : null,
     outsideSalesmen: router.query.outside ? outsideSalesmen.filter(outsideSalesmen => outsideSalesmen.number === router.query.outside)[0] : null,
@@ -31,8 +31,9 @@ const FilterForm = () => {
   }
   useEffect(() => {
     if (router.query) {
-      filterReset(intialState)
+      filterReset(initialState)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
   const {
     control: filterControl,
@@ -42,7 +43,7 @@ const FilterForm = () => {
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
   const onSubmit = (data, e) => {
     const fullQuery = {
@@ -51,13 +52,12 @@ const FilterForm = () => {
       status: router.query.status,
       inside: data.insideSalesmen?.number,
       outside: data.outsideSalesmen?.number,
-      account: data.customer?.account
+      account: data.customer?.account,
+      search: router.query?.search,
     }
     const query = Object.fromEntries(Object.entries(fullQuery).filter(([_, v]) => v != null))
-    router.push({
-      pathname: '/quotations',
-      query
-    })
+    const filterRoute = { pathname: route, query: { ...query, selector: router.query.selector ? router.query.selector : route === '/' ? 1 : null } }
+    router.push(filterRoute)
   }
   const watchAllFields = filterWatch()
   const watchStart = filterWatch('start')
@@ -68,9 +68,9 @@ const FilterForm = () => {
     end: watchEnd ? format(new Date(watchEnd), 'MM/dd/yyyy') : null
   }
   const compareInitialState = {
-    ...intialState,
-    start: intialState.start ? format(new Date(intialState.start), 'MM/dd/yyyy') : null,
-    end: intialState.end ? format(new Date(intialState.end), 'MM/dd/yyyy') : null
+    ...initialState,
+    start: initialState.start ? format(new Date(initialState.start), 'MM/dd/yyyy') : null,
+    end: initialState.end ? format(new Date(initialState.end), 'MM/dd/yyyy') : null
   }
   const buttonDisabled = deepEqual(compareWatch, compareInitialState)
   return (
@@ -81,7 +81,7 @@ const FilterForm = () => {
         justifyContent='space-between'
         alignItems='center'
       >
-        <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>Quotations</Typography>
+        <Typography variant='subtitle1' style={{ margin: 10, marginLeft: 0 }}>{name}</Typography>
         <div>
           <IconButton aria-label='filter' onClick={handleToggleFilterOpen}>
             <FilterListIcon />
@@ -96,11 +96,11 @@ const FilterForm = () => {
                 name='start'
                 rules={{ validate: value => isValid(value) || value === null }}
                 control={filterControl}
-                defaultValue={intialState.start}
+                defaultValue={initialState.start}
                 render={props => {
                   return (
                     <DesktopDatePicker
-                      {...props}
+                      {...props.field}
                       label='Start'
                       renderInput={(params) => (
                         <TextField {...params} size='small' style={{ width: 175 }} variant='outlined' helperText={!!filterControl.start && 'Not a valid Date'} />
@@ -115,11 +115,11 @@ const FilterForm = () => {
                 name='end'
                 rules={{ validate: value => isValid(value) || value === null }}
                 control={filterControl}
-                defaultValue={intialState.end}
+                defaultValue={initialState.end}
                 render={props => {
                   return (
                     <DesktopDatePicker
-                      {...props}
+                      {...props.field}
                       label='End'
                       renderInput={(params) => (
                         <TextField {...params} size='small' style={{ width: 175 }} variant='outlined' helperText={!!filterControl.end && 'Not a valid Date'} />
@@ -133,7 +133,7 @@ const FilterForm = () => {
               <Controller
                 name='customer'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='customer'
@@ -142,7 +142,7 @@ const FilterForm = () => {
                       style={{ minWidth: 400 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.account === value.account}
+                      isOptionEqualToValue={(option, value) => option.account === value.account}
                       renderInput={(params) =>
                         <TextField
                           {...params}
@@ -175,7 +175,7 @@ const FilterForm = () => {
               <Controller
                 name='outsideSalesmen'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='outsideSalesmen'
@@ -184,7 +184,7 @@ const FilterForm = () => {
                       style={{ minWidth: 240 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.number === value.number}
+                      isOptionEqualToValue={(option, value) => option.number === value.number}
                       renderInput={(params) =>
                         <TextField
                           {...params}
@@ -216,7 +216,7 @@ const FilterForm = () => {
               <Controller
                 name='insideSalesmen'
                 control={filterControl}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value, ref } }) => {
                   return (
                     <Autocomplete
                       id='insideSalesmen'
@@ -225,7 +225,7 @@ const FilterForm = () => {
                       style={{ minWidth: 240 }}
                       onChange={(e, val) => onChange(val)}
                       getOptionLabel={(option) => option.name}
-                      getOptionSelected={(option, value) => option.number === value.number}
+                      isOptionEqualToValue={(option, value) => option.number === value.number}
                       renderInput={(params) =>
                         <TextField
                           {...params}

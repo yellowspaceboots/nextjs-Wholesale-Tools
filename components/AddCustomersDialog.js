@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import Autocomplete from '@material-ui/core/Autocomplete'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import Autocomplete from '@mui/material/Autocomplete'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
 import ListboxComponent from './VirtualizedList'
 import parse from 'autosuggest-highlight/parse'
 import match from 'autosuggest-highlight/match'
@@ -36,20 +36,19 @@ const AddCustomersDialog = ({
     setError()
   }
   const currentCustomerList = customerList.map(customer => customer.customerRef.account)
-  const intialState = {
+  const initialState = {
     customers: []
   }
   const {
-    register: addCustomerRegister,
-    errors: addCustomerErrors,
-    control: addCustomerControl,
-    handleSubmit: addCustomerHandleSubmit,
-    formState: addCustomerFormState
+    control: addCustomersControl,
+    handleSubmit: addCustomersHandleSubmit,
+    formState: addCustomersFormState
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    defaultValues: intialState
+    defaultValues: initialState
   })
+  const { errors, isValid } = addCustomersFormState
   const onSubmit = (data, e) => {
     const payload = {
       projectId: id,
@@ -91,16 +90,16 @@ const AddCustomersDialog = ({
           {mutationError && <p>Error :( Please try again</p>}
         </div>}
       <DialogTitle id='responsive-dialog-title'>Add Customer</DialogTitle>
-      <form onSubmit={addCustomerHandleSubmit(onSubmit)}>
+      <form onSubmit={addCustomersHandleSubmit(onSubmit)}>
         <DialogContent style={{ width: 500 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Controller
                 name='customers'
-                control={addCustomerControl}
-                defaultValue={intialState.customers}
+                control={addCustomersControl}
+                defaultValue={initialState.customers}
                 rules={{ validate: value => value.length > 0 }}
-                render={({ onChange, onBlur, value }) => {
+                render={({ field: { onChange, onBlur, value } }) => {
                   return (
                     <Autocomplete
                       id='customers'
@@ -109,11 +108,18 @@ const AddCustomersDialog = ({
                       options={customers}
                       filterOptions={filterOptions}
                       fullWidth
-                      getOptionSelected={(option, value) => option.account === value.account}
+                      isOptionEqualToValue={(option, value) => option.account === value.account}
                       getOptionDisabled={option => currentCustomerList.includes(option.account)}
                       getOptionLabel={(option) => option.name}
+                      renderInput={(params) =>
+                        <TextField
+                          {...params}
+                          error={!!errors.customers}
+                          helperText={!!errors.customers && 'Customers Cannot Be Blank'}
+                          label='Customers'
+                          variant='outlined'
+                        />}
                       ListboxComponent={ListboxComponent}
-                      renderInput={(params) => <TextField {...params} error={!!addCustomerErrors.customers} helperText={!!addCustomerErrors.customers && 'Customers Cannot Be Blank'} label='Customers' variant='outlined' />}
                       renderOption={(props, option, { inputValue }) => {
                         const fullOption = `${option.account} - ${option.name} - ${option.salesRef.number}`
                         const matches = match(fullOption.trim(), inputValue)
@@ -136,7 +142,7 @@ const AddCustomersDialog = ({
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button disabled={!addCustomerFormState.isValid} type='submit' color='primary'>
+          <Button disabled={!isValid} type='submit' color='primary'>
             Save
           </Button>
           <Button onClick={handleClose} type='reset' color='primary'>

@@ -1,32 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Head from 'next/head'
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import theme from '../components/theme'
 import { AuthProvider } from '../components/AuthProvider'
 import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../testApi/testApollo'
-import createCache from '@emotion/cache'
+import { useApollo } from '../lib/apollo'
 import { CacheProvider } from '@emotion/react'
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns'
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import createEmotionCache from '../utils/creatEmotionCache'
 
-export const cache = createCache({ key: 'css' })
+const clientSideEmotionCache = createEmotionCache()
 
 const MyApp = (props) => {
-  const { Component, pageProps } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   const getLayout = Component.getLayout || (page => page)
-  const client = useApollo(pageProps.initialApolloState)
-  // const apolloClient = useApollo(pageProps)
-
-  useEffect(() => {
-    const jssStyles = document.querySelector('#jss-server-side')
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles)
-    }
-  }, [])
+  const client = useApollo(pageProps)
   return (
-    <CacheProvider value={cache}>
+    <CacheProvider value={emotionCache}>
       <ApolloProvider client={client}>
         <Head>
           <title>Wholesale Electric Tools</title>

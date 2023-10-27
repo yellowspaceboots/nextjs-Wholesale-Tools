@@ -1,1 +1,5 @@
-module.exports = { future: { webpack5: true } }
+module.exports = {
+  images: {
+    domains: ['media.distributordatasolutions.com']
+  }
+}

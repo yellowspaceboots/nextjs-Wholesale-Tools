@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { format, isSameHour, eachHourOfInterval, startOfDay, endOfDay, getHours } from 'date-fns'
-import Typography from '@material-ui/core/Typography'
-import ImageList from '@material-ui/core/ImageList'
-import ImageListItem from '@material-ui/core/ImageListItem'
+import Typography from '@mui/material/Typography'
+import ImageList from '@mui/material/ImageList'
+import ImageListItem from '@mui/material/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../testApi/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
 import { useAuth } from './AuthProvider'
 import CalendarCount from './CalendarCount'
 
@@ -38,6 +38,7 @@ const CalendarDay = ({
   })
   const lowerBounds = filteredDayHours.findIndex(val => val.eventsCount > 0 || val.eventsCount > 0)
   const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.eventsCount > 0 || val.eventsCount > 0)
+  if (filteredDayList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />

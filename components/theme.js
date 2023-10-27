@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#5169a5',
@@ -17,6 +17,9 @@ const theme = createMuiTheme({
     background: {
       default: '#FFFFFF'
     }
+  },
+  zIndex: {
+    myAppBar: 1201
   }
 })
 

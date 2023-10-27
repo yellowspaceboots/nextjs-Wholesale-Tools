@@ -144,3 +144,6 @@ dist
 .pnp.*
 
 .vercel
+
+/server.js
+certificates/

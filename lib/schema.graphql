@@ -110,6 +110,16 @@ type LoginResult @embedded {
   user: User
 }
 
+type QuotationCountResult @embedded {
+  open: Int!
+  pending: Int!
+  closed: Int!
+  today: Int!
+  thisWeek: Int!
+  thisMonth: Int!
+  pastDue: Int!
+}
+
 input CreateProjectInput {
   title: String!
   description: String
@@ -176,10 +186,15 @@ input DateRangeInput @embedded  {
 input QuotationQueryInput @embedded  {
   start: String
   end: String
+  startMonth: String
+  endMonth: String
+  startWeek: String
+  endWeek: String
   account: String
   inside: String
   outsideSales: String
   status: String
+  search: String
 }
 
 input LoginUserInput {
@@ -204,10 +219,13 @@ type Query {
   getSalesmenByType(type: String!): [Salesmen!]!
   getAllOpenProjects(statusPage: String!): [Projects!]! @resolver(name: "get_all_open_jobs", paginated: true)
   getQuotations(input: QuotationQueryInput!): [Projects!]! @resolver(name: "get_quotations", paginated: true)
+  getQuotationCounts(input: QuotationQueryInput!): QuotationCountResult! @resolver(name: "get_quotation_counts")
   getAllPendingProjects: [Projects!]! @resolver(name: "get_all_pending_jobs", paginated: true)
   getAllClosedProjects: [Projects!]! @resolver(name: "get_all_closed_jobs", paginated: true)
   getQuotationsByDateRange(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range", paginated: true)
   projectSearch(input: String!): [Projects!]! @resolver(name: "projectSearch", paginated: true)
+  projectSearchV2(input: String!): [Projects!]! @resolver(name: "projectSearchV2", paginated: true)
+  getQuotationsByDateRangeWithClosed(input: DateRangeInput!): [Projects!]! @resolver(name: "get_quotations_by_date_range_with_closed", paginated: true)
 }
 
 type Mutation {

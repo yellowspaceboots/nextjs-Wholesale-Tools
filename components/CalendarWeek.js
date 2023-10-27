@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { format, startOfWeek, endOfWeek, eachDayOfInterval, eachHourOfInterval, startOfDay, endOfDay, isSameWeek, isSameHour, getHours } from 'date-fns'
-import Typography from '@material-ui/core/Typography'
-import ImageList from '@material-ui/core/ImageList'
-import ImageListItem from '@material-ui/core/ImageListItem'
+import Typography from '@mui/material/Typography'
+import ImageList from '@mui/material/ImageList'
+import ImageListItem from '@mui/material/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../testApi/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
 import { useAuth } from './AuthProvider'
 import CalendarCount from './CalendarCount'
 
@@ -66,6 +66,7 @@ const CalendarWeek = ({
   })
   const lowerBounds = filteredDayHours.findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
   const upperBounds = filteredDayHours.slice().reverse().findIndex(val => val.hourEventCount > 0 || val.hourEventCount > 0)
+  if (weekProjectList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
       <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
@@ -85,8 +86,8 @@ const CalendarWeek = ({
               border: '1px solid lightgrey',
               justifyContent: 'center',
               alignItems: 'center',
-              maxWidth: (i === 0 || i === 6) ? 'none' : 275,
-              minWidth: (i === 0 || i === 6) ? 'none' : 275
+              maxWidth: (i === 0 || i === 6) ? 'none' : 250,
+              minWidth: (i === 0 || i === 6) ? 'none' : 250
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>

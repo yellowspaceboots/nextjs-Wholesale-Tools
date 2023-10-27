@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { getLayout } from '../../../../components/Layout'
 import CommercialEditCustomerToggle from '../../../../components/CommercialEditCustomerToggle'
-import TextField from '@material-ui/core/TextField'
-import { GET_ALL_CUSTOMERS } from '../../../../testApi/queries/getAllCustomers'
+import TextField from '@mui/material/TextField'
+import { GET_ALL_CUSTOMERS } from '../../../../lib/queries/getAllCustomers'
 import { useQuery, useMutation } from '@apollo/client'
-import { UPDATE_CUSTOMERS } from '../../../../testApi/mutations/updateCustomer'
+import { UPDATE_CUSTOMERS } from '../../../../lib/mutations/updateCustomer'
 import DataTable from '../../../../components/TableTest'
 import Link from '../../../../components/Link'
 
@@ -38,6 +38,7 @@ const EditCustomerList = () => {
       field: 'account',
       headerName: 'Account',
       width: 80,
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => (
         <Link href={`edit-customer-list/${params.getValue('_id')}`} variant='body2'>
           {params.value}
@@ -55,6 +56,7 @@ const EditCustomerList = () => {
     {
       field: 'used',
       headerName: 'Assignable',
+      // eslint-disable-next-line react/display-name
       renderCell: (params) => <CommercialEditCustomerToggle id={params.getValue('_id')} currentState={Boolean(params.value)} updateCustomers={updateCustomers} />
     }
   ]

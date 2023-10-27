@@ -1,42 +1,45 @@
 import React, { useState } from 'react'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Paper from '@material-ui/core/Paper'
-import { getStatusColor, amountShortFormat } from '../testApi/utils'
-import GroupAddIcon from '@material-ui/icons/GroupAdd'
-import IconButton from '@material-ui/core/IconButton'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import Popper from '@material-ui/core/Popper'
-import Fade from '@material-ui/core/Fade'
-import Button from '@material-ui/core/Button'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
-import CancelIcon from '@material-ui/icons/Cancel'
-import Grid from '@material-ui/core/Grid'
-import Radio from '@material-ui/core/Radio'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Paper from '@mui/material/Paper'
+import { getStatusColor, amountShortFormat } from '../lib/utils'
+import GroupAddIcon from '@mui/icons-material/GroupAdd'
+import IconButton from '@mui/material/IconButton'
+import CardActionArea from '@mui/material/CardActionArea'
+import Popper from '@mui/material/Popper'
+import Fade from '@mui/material/Fade'
+import Button from '@mui/material/Button'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import CancelIcon from '@mui/icons-material/Cancel'
+import BusinessIcon from '@mui/icons-material/Business'
+import Grid from '@mui/material/Grid'
+import Radio from '@mui/material/Radio'
 import { motion } from 'framer-motion'
-import { FIND_PROJECTS_BY_ID } from '../testApi/queries/findProjectsById'
-import { DELETE_CUSTOMER_PROJECT_STATE } from '../testApi/mutations/deleteCustomerProjectState'
-import { ADD_CUSTOMERS_TO_PROJECT } from '../testApi/mutations/addCustomersToProject'
-import { UPDATE_CUSTOMER_PROJECT_STATE } from '../testApi/mutations/updateCustomerProjectState'
+import { FIND_PROJECTS_BY_ID } from '../lib/queries/findProjectsById'
+import { DELETE_CUSTOMER_PROJECT_STATE } from '../lib/mutations/deleteCustomerProjectState'
+import { ADD_CUSTOMERS_TO_PROJECT } from '../lib/mutations/addCustomersToProject'
+import { UPDATE_CUSTOMER_PROJECT_STATE } from '../lib/mutations/updateCustomerProjectState'
 import { useMutation } from '@apollo/client'
-import LoadingButton from '@material-ui/lab/LoadingButton'
+import LoadingButton from '@mui/lab/LoadingButton'
 import AddCustomersDialog from './AddCustomersDialog'
-import Tooltip from '@material-ui/core/Tooltip'
-import CardHeader from '@material-ui/core/CardHeader'
-import CloseIcon from '@material-ui/icons/Close'
+import Tooltip from '@mui/material/Tooltip'
+import CardHeader from '@mui/material/CardHeader'
+import CloseIcon from '@mui/icons-material/Close'
 import TimeReleaseButton from './TimeReleaseButton'
-import FormControl from '@material-ui/core/FormControl'
-import InputLabel from '@material-ui/core/InputLabel'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import OutlinedInput from '@material-ui/core/OutlinedInput'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import InputAdornment from '@mui/material/InputAdornment'
+import FormHelperText from '@mui/material/FormHelperText'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import { Controller, useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
 
 const CustomerStatusBoard = ({ id, customerList }) => {
+  const router = useRouter()
   const statuses = ['Open', 'Pending', 'Won', 'Lost'].map(name => {
     const color = getStatusColor(name)
     return {
@@ -78,15 +81,15 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     updateCustomerProjectStatus({ variables: { id: activeCustomer._id, data: { status: newStatus } } })
   }
   const {
-    register: amountChangeRegister,
-    errors: amountChangeErrors,
     control: amountChangeControl,
     handleSubmit: amountHandleSubmit,
-    reset: amountReset
+    reset: amountReset,
+    formState: amountFormState
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange'
   })
+  const { errors: amountChangeErrors, isValid } = amountFormState
   const onSubmit = (data, e) => {
     setAnchorElAmount(null)
     updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000, note: data.note } } })
@@ -129,7 +132,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
       <div style={{ display: 'flex' }}>
         {statuses.map(status => {
           return (
-            <Card key={status.name} style={{ minWidth: 300, maxWidth: 300, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
+            <Card key={status.name} style={{ minWidth: 270, maxWidth: 270, backgroundColor: status.color, marginRight: status.name === 'Lost' ? 0 : 20 }}>
               <CardContent style={{ padding: 8 }}>
                 <div style={{ display: 'flex', alignItems: 'center', height: 40 }}>
                   <Typography
@@ -139,10 +142,17 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     {status.name}
                   </Typography>
                   {status.name === 'Open' && (
-                    <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
-                      <GroupAddIcon style={{ color: 'white' }} />
-                    </IconButton>
+                    <Tooltip title='Add Customer'>
+                      <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
+                        <GroupAddIcon style={{ color: 'white' }} />
+                      </IconButton>
+                    </Tooltip>
                   )}
+                  <Tooltip title='Move All'>
+                    <IconButton aria-label='edit' onClick={() => setAddCustomersDialogOpen(true)}>
+                      <ArrowForwardIcon style={{ color: 'white' }} />
+                    </IconButton>
+                  </Tooltip>
                 </div>
                 <div style={{ height: 400, overflow: 'auto' }}>
                   {status.customerList.map(customer => {
@@ -199,6 +209,18 @@ const CustomerStatusBoard = ({ id, customerList }) => {
               direction='column'
               alignItems={activeCustomer.status === 'Lost' ? 'flex-end' : 'flex-start'}
             >
+              <Grid item style={{ padding: 4, paddingTop: 0 }}>
+                <motion.div whileHover={{ x: activeCustomer.status === 'Lost' ? -6 : 6 }}>
+                  <Button
+                    variant='contained'
+                    size='small'
+                    startIcon={<BusinessIcon />}
+                    onClick={() => router.push(`/settings/commercial-projects/edit-customer-list/${activeCustomer.customerRef._id}`)}
+                    >
+                    Customer
+                    </Button>
+                </motion.div>
+              </Grid>
               {[
                 {
                   onClick: (event) => setAnchorElAmount(event.currentTarget === anchorElAmount ? null : event.currentTarget),
@@ -226,8 +248,8 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                       size='small'
                       onClick={(event) => component.onClick(event)}
                       startIcon={component.icon}
-                      pendingPosition='start'
-                      pending={component.pending}
+                      loadingPosition='start'
+                      loading={component.pending}
                     >
                       {component.text}
                     </LoadingButton>
@@ -319,10 +341,10 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                         name='amount'
                         control={amountChangeControl}
                         rules={{ required: true }}
-                        render={props => {
+                        render={({ field }) => {
                           return (
                             <OutlinedInput
-                              {...props}
+                              {...field}
                               autoComplete='off'
                               id='outlined-adornment-amount'
                               startAdornment={<InputAdornment position='start'>$</InputAdornment>}
@@ -338,17 +360,25 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                       />
                       {!!amountChangeErrors.amount && <FormHelperText id='component-error-text'>Amount Cannot Be Blank</FormHelperText>}
                     </FormControl>
-                    <TextField
-                      variant='outlined'
+                    <Controller
                       name='note'
-                      id='note'
-                      label='Note'
-                      margin='normal'
-                      autoComplete='off'
-                      error={!!amountChangeErrors.note}
-                      inputRef={amountChangeRegister()}
-                      InputLabelProps={{
-                        shrink: true
+                      control={amountChangeControl}
+                      render={({ field }) => {
+                        return (
+                          <TextField
+                            {...field}
+                            variant='outlined'
+                            name='note'
+                            id='note'
+                            label='Note'
+                            margin='normal'
+                            autoComplete='off'
+                            error={!!amountChangeErrors.note}
+                            InputLabelProps={{
+                              shrink: true
+                            }}
+                          />
+                        )
                       }}
                     />
                     <Button variant='contained' type='submit' size='small' style={{ marginTop: 10 }} disableElevation>Save</Button>
