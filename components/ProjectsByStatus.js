@@ -1,6 +1,6 @@
 import React from 'react'
 import Grid from '@mui/material/Grid'
-import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
+import { GET_QUOTATIONSV10 } from '../lib/queries/getQuotations'
 import { useQuery } from '@apollo/client'
 import EventTile from './EventTile2'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -9,8 +9,8 @@ import Image from 'next/image'
 import Box from '@mui/material/Box'
 
 const ProjectsByStatus = ({ input }) => {
-  const { error, data, fetchMore, networkStatus } = useQuery(GET_QUOTATIONS, {
-    variables: { cursor: null, input },
+  const { error, data, fetchMore, networkStatus } = useQuery(GET_QUOTATIONSV10, {
+    variables: { input },
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-first'
@@ -23,11 +23,11 @@ const ProjectsByStatus = ({ input }) => {
     )
   }
   if (error) return `Error! ${error.message}`
-  const projectList = data?.getQuotations?.data || []
+  const projectList = data?.getQuotationsV10?.data || []
   const wayPointHandler = () => {
-    const cursor = data.getQuotations.after
+    const cursor = data.getQuotationsV10.after
     fetchMore({
-      variables: { cursor, input }
+      variables: { input: { ...cursor, ...input} }
     })
   }
   return (
@@ -37,9 +37,9 @@ const ProjectsByStatus = ({ input }) => {
           <>
             <Grid container item spacing={1} alignItems='stretch' sx={{ flexShrink: 1, mt: 1 }}>
               {projectList.map((event, i) =>
-                <React.Fragment key={event._id}>
+                <React.Fragment key={event.id}>
                   <EventTile event={event} />
-                  {data.getQuotations.after && i === projectList.length - 10 && (
+                  {data.getQuotationsV10.after && i === projectList.length - 10 && (
                     <Waypoint
                       onEnter={wayPointHandler}
                     />

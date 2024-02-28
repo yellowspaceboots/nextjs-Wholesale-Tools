@@ -19,10 +19,10 @@ import BusinessIcon from '@mui/icons-material/Business'
 import Grid from '@mui/material/Grid'
 import Radio from '@mui/material/Radio'
 import { motion } from 'framer-motion'
-import { FIND_PROJECTS_BY_ID } from '../lib/queries/findProjectsById'
-import { DELETE_CUSTOMER_PROJECT_STATE } from '../lib/mutations/deleteCustomerProjectState'
-import { ADD_CUSTOMERS_TO_PROJECT } from '../lib/mutations/addCustomersToProject'
-import { UPDATE_CUSTOMER_PROJECT_STATE } from '../lib/mutations/updateCustomerProjectState'
+import { FIND_PROJECTS_BY_IDV10 } from '../lib/queries/findProjectsById'
+import { DELETE_CUSTOMER_PROJECT_STATEV10 } from '../lib/mutations/deleteCustomerProjectState'
+import { ADD_CUSTOMERS_TO_PROJECTV10 } from '../lib/mutations/addCustomersToProject'
+import { UPDATE_CUSTOMER_PROJECT_STATEV10 } from '../lib/mutations/updateCustomerProjectState'
 import { useMutation } from '@apollo/client'
 import LoadingButton from '@mui/lab/LoadingButton'
 import AddCustomersDialog from './AddCustomersDialog'
@@ -78,7 +78,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
   }
   const handleStatusChange = (newStatus) => {
     setAnchorElMove(null)
-    updateCustomerProjectStatus({ variables: { id: activeCustomer._id, data: { status: newStatus } } })
+    updateCustomerProjectStatus({ variables: { id: activeCustomer.id, data: { status: newStatus } } })
   }
   const {
     control: amountChangeControl,
@@ -92,12 +92,12 @@ const CustomerStatusBoard = ({ id, customerList }) => {
   const { errors: amountChangeErrors, isValid } = amountFormState
   const onSubmit = (data, e) => {
     setAnchorElAmount(null)
-    updateCustomerProjectAmount({ variables: { id: activeCustomer._id, data: { amount: data.amount * 10000, note: data.note } } })
+    updateCustomerProjectAmount({ variables: { id: activeCustomer.id, data: { amount: data.amount * 10000, note: data.note } } })
   }
-  const [deleteCustomerProjectState, { loading: deleteMutationLoading }] = useMutation(DELETE_CUSTOMER_PROJECT_STATE, {
-    refetchQueries: [{ query: FIND_PROJECTS_BY_ID, variables: { id } }],
+  const [deleteCustomerProjectState, { loading: deleteMutationLoading }] = useMutation(DELETE_CUSTOMER_PROJECT_STATEV10, {
+    refetchQueries: [{ query: FIND_PROJECTS_BY_IDV10, variables: { id } }],
     variables: {
-      id: activeCustomer ? activeCustomer._id : null
+      id: activeCustomer ? activeCustomer.id : null
     },
     onError: (error) => {
       console.log(error)
@@ -105,21 +105,21 @@ const CustomerStatusBoard = ({ id, customerList }) => {
     },
     onCompleted: () => handlePopperClose()
   })
-  const [addCustomersToProject, { loading: addMutationLoading, error: addMutationError }] = useMutation(ADD_CUSTOMERS_TO_PROJECT, {
+  const [addCustomersToProject, { loading: addMutationLoading, error: addMutationError }] = useMutation(ADD_CUSTOMERS_TO_PROJECTV10, {
     onError: (error) => {
       console.log(error)
       setError(error)
     },
     onCompleted: () => handleClose()
   })
-  const [updateCustomerProjectStatus, { loading: updateStatusMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATE, {
+  const [updateCustomerProjectStatus, { loading: updateStatusMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATEV10, {
     onError: (error) => {
       console.log(error)
       setError(error)
     },
     onCompleted: () => handlePopperClose()
   })
-  const [updateCustomerProjectAmount, { loading: updateAmountMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATE, {
+  const [updateCustomerProjectAmount, { loading: updateAmountMutationLoading }] = useMutation(UPDATE_CUSTOMER_PROJECT_STATEV10, {
     onError: (error) => {
       console.log(error)
       setError(error)
@@ -215,7 +215,7 @@ const CustomerStatusBoard = ({ id, customerList }) => {
                     variant='contained'
                     size='small'
                     startIcon={<BusinessIcon />}
-                    onClick={() => router.push(`/settings/commercial-projects/edit-customer-list/${activeCustomer.customerRef._id}`)}
+                    onClick={() => router.push(`/settings/commercial-projects/edit-customer-list/${activeCustomer.customerRef.id}`)}
                     >
                     Customer
                     </Button>

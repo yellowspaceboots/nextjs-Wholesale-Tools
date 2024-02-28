@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 
 const EventTile = ({ event }) => (
   useMemo(() => {
-    const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
+    const quotedCustomerList = event.customerList.filter(customer => customer.amount && customer.amount > 0)
     const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
     const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
     return (
@@ -27,14 +27,14 @@ const EventTile = ({ event }) => (
           <DateIcon event={event} status />
           <Box sx={{ flexDirection: 'column', flexGrow: 1 }}>
             <Box sx={{ color: 'text.primary', fontSize: 20, fontWeight: 'bold', minWidth: 400 }}>
-            <NextLinkComposed to={`/quotations/${event._id}`} style={{color: '#1e3f76'}}>
+            <NextLinkComposed to={`/quotations/${event.id}`} style={{color: '#1e3f76'}}>
               {event.title}
               </NextLinkComposed>
             </Box>
             <Box sx={{ flexDirection: 'column', flexGrow: 1 }}>
             {event.description
               ? (
-                <Box sx={{ color: 'text.primary', fontSize: 16, maxWidth: 800 }}>
+                <Box sx={{ color: 'text.primary', fontSize: 16, maxWidth: 600 }}>
                   {event.description}
                 </Box>
                 )
@@ -48,14 +48,14 @@ const EventTile = ({ event }) => (
           </Box>
           </Box>
           <Box sx={{ flexDirection: 'column' }}>
-            {event.customerList.data.map(customer => {
+            {event.customerList.map(customer => {
               const customerStatusColor = getStatusColor(customer.status)
               const customerStatusFontColor = getStatusFontColor(customer.status)
               const customerAmount = customer.amount ? customer.amount : 0
               const customerFormattedAmount = amountShortFormat(customerAmount)
               return (
                 <Box key={customer.customerRef.account} sx={{ display: 'flex', flexDirection: 'row', gap: 0.5 }}>
-                <NextLinkComposed to={`/settings/commercial-projects/edit-customer-list/${customer.customerRef._id}`} style={{textDecoration: 'none'}}>
+                <NextLinkComposed to={`/settings/commercial-projects/edit-customer-list/${customer.customerRef.id}`} style={{textDecoration: 'none'}}>
                   <Box
                     sx={{
                       flexGrow: 1,

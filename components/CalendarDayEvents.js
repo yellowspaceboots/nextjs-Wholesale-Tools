@@ -7,7 +7,7 @@ const CalendarDayEvents = ({ events, wrap, showSalesName, fullWidth }) => {
   return (
     <>
       {events.slice().sort((a, b) => compareAsc(new Date(a.dateDue), new Date(b.dateDue))).map(event => (
-        <CalendarEventButton key={event._id} event={event} title salesman={showSalesName} wrap fullWidth={fullWidth} />
+        <CalendarEventButton key={event.id} event={event} title salesman={showSalesName} wrap fullWidth={fullWidth} />
       ))}
     </>
   )

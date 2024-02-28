@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles'
 import EditProjectForm from './EditProjectForm'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { UPDATE_PROJECT } from '../lib/mutations/updateProject'
+import { UPDATE_PROJECTV10 } from '../lib/mutations/updateProject'
 import { useMutation } from '@apollo/client'
 
 const EditProjectDialog = ({ dialogOpen, setDialogOpen, event }) => {
@@ -17,7 +17,7 @@ const EditProjectDialog = ({ dialogOpen, setDialogOpen, event }) => {
     setDialogOpen(false)
     setError()
   }
-  const [updateProject, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_PROJECT, {
+  const [updateProject, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_PROJECTV10, {
     onError: (error) => setError(error),
     onCompleted: () => {
       handleClose()

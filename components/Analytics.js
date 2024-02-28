@@ -21,9 +21,9 @@ const Analytics = ({ data, start, end }) => {
   }
   }
 
-  const customers = data.getQuotationsByDateRangeWithClosed.data.map((event) => {
+  const customers = data.getQuotationsByDateRangeWithClosedV10.map((event) => {
     const eventObj = {
-      _id: event._id,
+      id: event.id,
       Quote: event.requestId,
       'Job Name': event.title,
       Status: event.status,
@@ -33,9 +33,9 @@ const Analytics = ({ data, start, end }) => {
       'Assigned Name': event.salesRef.name,
       'Assigned Number': event.salesRef.number
     }
-    const customerList = event.customerList.data.map((customer) => {
+    const customerList = event.customerList.map((customer) => {
       const customerObj = {
-        customerId: customer.customerRef._id,
+        customerId: customer.customerRef.id,
         'Customer Account': customer.customerRef.account,
         'Customer Name': customer.customerRef.name,
         'Customer Amount': customer.amount / 10000,
@@ -55,6 +55,7 @@ const Analytics = ({ data, start, end }) => {
     const totalLost = merged.filter(job => job['Customer Account'] === item && job['Customer Status'] === 'Lost').length
     const percent = Math.round((100 * totalWon) / totalCount)
     const test = {
+      _id: item,
       customerId: custObj.customerId,
       customerAccount: item,
       customerName: custObj['Customer Name'],

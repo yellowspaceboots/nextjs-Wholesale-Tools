@@ -5,7 +5,7 @@ import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGEV10 } from '../lib/queries/getQuotationsByDateRange'
 import { useAuth } from './AuthProvider'
 import CalendarCount from './CalendarCount'
 
@@ -20,13 +20,13 @@ const CalendarDay = ({
   const { user } = useAuth()
   const start = startOfDay(viewDate)
   const end = endOfDay(viewDate)
-  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE, { variables: { input: { start, end } } })
+  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGEV10, { variables: { input: { start, end } } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const dayHours = eachHourOfInterval({ start, end })
   const isEven = (x) => !(x & 1)
-  const filteredDayList = salesmanFilter.length === 0 ? data.getQuotationsByDateRange.data : data.getQuotationsByDateRange.data.filter(event => salesmanFilter.includes(event.salesRef.name))
-  const filteredDayHours = dayHours.map((time, i) => {
+ const filteredDayList = salesmanFilter.length === 0 ? data.getQuotationsByDateRangeV10 : data.getQuotationsByDateRangeV10.filter(event => salesmanFilter.includes(event.salesRef.name))
+ const filteredDayHours = dayHours.map((time, i) => {
     const events = filteredDayList.filter(event => isSameHour(new Date(event.dateDue), time))
     return {
       time,
@@ -41,7 +41,7 @@ const CalendarDay = ({
   if (filteredDayList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
-      <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
+      <CalendarCount data={data.getQuotationsByDateRangeV10} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
       <ImageList rowHeight='auto' cols={23} gap={6}>
         <ImageListItem
           cols={1}

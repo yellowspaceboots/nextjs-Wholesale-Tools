@@ -82,7 +82,7 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
         ? (
           <Button
             {...props}
-            to={{ pathname: `/quotations/${event._id}` }}
+            to={{ pathname: `/quotations/${event.id}` }}
             component={NextLinkComposed}
             onClick={(e) => e.stopPropagation()}
             variant='contained'
@@ -107,7 +107,7 @@ const CalendarEventButton = ({ event, time, title, salesman, wrap, ...props }) =
         : (
           <Button
             {...props}
-            to={{ pathname: `/quotations/${event._id}` }}
+            to={{ pathname: `/quotations/${event.id}` }}
             component={NextLinkComposed}
             color={selectedButton.color}
             onClick={(e) => e.stopPropagation()}

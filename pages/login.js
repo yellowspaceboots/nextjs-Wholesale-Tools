@@ -13,8 +13,6 @@ import { makeStyles } from '@mui/styles'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useMutation } from '@apollo/client'
 import cookie from 'js-cookie'
-import { LOGIN_USER } from '../lib/mutations/loginUser'
-import { GET_ME } from '../lib/queries/getMe'
 import { useAuth } from '../components/AuthProvider'
 import Router from 'next/router'
 import { useForm, Controller } from 'react-hook-form'
@@ -73,19 +71,7 @@ const Login = () => {
 
     Router.reload(window.location.pathname)
   }
-  /*
-  const [loginUser, { loading: mutationLoading, error: mutationError }] = useMutation(LOGIN_USER, {
-    onCompleted: data => {
-      cookie.set('token', data.loginUser.token, {
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-        expires: 2
-      })
-      // Router.reload(window.location.pathname)
-    },
-    onError: (error) => console.log(error)
-  })
-*/
+
   const initialState = {
     email: '',
     password: ''
@@ -219,15 +205,4 @@ const Login = () => {
     </>
   )
 }
-/*
-export async function getServerSideProps (ctx) {
-  const apolloClient = initializeApollo(ctx, null)
-  await apolloClient.query({ query: GET_ME })
-  return {
-    props: {
-      initialApolloState: apolloClient.cache.extract()
-    }
-  }
-}
-*/
 export default Login

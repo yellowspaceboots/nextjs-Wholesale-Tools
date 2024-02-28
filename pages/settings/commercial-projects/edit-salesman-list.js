@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { getLayout } from '../../../components/Layout'
 import CommercialEditSalesmanToggle from '../../../components/CommercialEditSalesmanToggle'
 import TextField from '@mui/material/TextField'
-import { GET_ALL_SALESMEN } from '../../../lib/queries/getAllSalesmen'
+import { GET_ALL_SALESMENV10 } from '../../../lib/queries/getAllSalesmen'
 import { useQuery, useMutation } from '@apollo/client'
-import { UPDATE_SALESMAN } from '../../../lib/mutations/updateSalesman'
+import { UPDATE_SALESMANV10 } from '../../../lib/mutations/updateSalesman'
 import DataTable from '../../../components/TableTest'
 
 const EditSalesmanList = () => {
@@ -13,17 +13,18 @@ const EditSalesmanList = () => {
   const handleChange = (event) => {
     setSearch(event.target.value)
   }
-  const [updateSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_SALESMAN, {
+  const [updateSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_SALESMANV10, {
     onError: (error) => {
       setUpdateError(error)
     }
   })
-  const { loading, error, data } = useQuery(GET_ALL_SALESMEN)
+  const { loading, error, data } = useQuery(GET_ALL_SALESMENV10)
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
-  const rows = data.getAllSalesmen.data.map(salesman => {
+  const rows = data.getAllSalesmenV10.map(salesman => {
     return {
       ...salesman,
+      _id: salesman.id,
       id: salesman.number,
       search: `${salesman.number} ${salesman.name}`,
       used: salesman.usedByCommercial

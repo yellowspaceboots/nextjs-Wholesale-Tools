@@ -34,7 +34,7 @@ const CalendarMonthEvents = ({ events, day, dateCount }) => {
   return (
     <>
       {events.slice().sort((a, b) => compareAsc(new Date(a.dateDue), new Date(b.dateDue))).slice(0, sliceNumber).map(event => (
-        <CalendarEventButton key={event._id} event={event} time title fullWidth wrap={false} />
+        <CalendarEventButton key={event.id} event={event} time title fullWidth wrap={false} />
       ))}
       {needsSlicing &&
         <Button

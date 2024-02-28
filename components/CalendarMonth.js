@@ -6,7 +6,7 @@ import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import CalendarMonthEvents from './CalendarMonthEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGEV10 } from '../lib/queries/getQuotationsByDateRange'
 import CircularProgress from '@mui/material/CircularProgress'
 import { NextLinkComposed } from './Link'
 import CalendarCount from './CalendarCount'
@@ -27,7 +27,7 @@ const CalendarMonth = ({
   const handleClickOpen = (day) => setSelectedDate(day)
   const start = startOfDay(calendarDates[0]).toISOString()
   const end = endOfDay(calendarDates[calendarDates.length - 1]).toISOString()
-  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE, { variables: { input: { start, end } } })
+  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGEV10, { variables: { input: { start, end } } })
   if (loading) {
     return (
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -36,7 +36,7 @@ const CalendarMonth = ({
     )
   }
   if (error) return `Error! ${error.message}`
-  const filteredMonthList = salesmanFilter.length === 0 ? data.getQuotationsByDateRange.data : data.getQuotationsByDateRange.data.filter(event => salesmanFilter.includes(event.salesRef.name))
+  const filteredMonthList = salesmanFilter.length === 0 ? data.getQuotationsByDateRangeV10 : data.getQuotationsByDateRangeV10.filter(event => salesmanFilter.includes(event.salesRef.name))
   const calendarDatesWithQuotations = calendarDates.map(day => {
     return {
       day,
@@ -45,7 +45,7 @@ const CalendarMonth = ({
   })
   return (
     <>
-      <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
+      <CalendarCount data={data.getQuotationsByDateRangeV10} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
       <ImageList rowHeight='auto' cols={7} gap={1} style={{ maxWidth: '100%' }}>
         <>
           {weekdays.map((day, i) => (
