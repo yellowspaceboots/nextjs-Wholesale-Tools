@@ -8,7 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { CREATE_PROJECTV10 } from '../lib/mutations/createProject'
 import { useMutation } from '@apollo/client'
-import { GET_QUOTATIONSV10 } from '../lib/queries/getAllOpenProjects'
+import { GET_QUOTATIONSV10 } from '../lib/queries/getQuotations'
 
 const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
   const theme = useTheme()
