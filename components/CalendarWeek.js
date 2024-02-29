@@ -5,7 +5,7 @@ import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
 import CalendarDayEvents from './CalendarDayEvents'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATIONS_BY_DATE_RANGE } from '../lib/queries/getQuotationsByDateRange'
+import { GET_QUOTATIONS_BY_DATE_RANGEV10 } from '../lib/queries/getQuotationsByDateRange'
 import { useAuth } from './AuthProvider'
 import CalendarCount from './CalendarCount'
 
@@ -20,14 +20,14 @@ const CalendarWeek = ({
   const { user } = useAuth()
   const start = startOfWeek(viewDate)
   const end = endOfWeek(viewDate)
-  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE, { variables: { input: { start, end } } })
+  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGEV10, { variables: { input: { start, end } } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const dayHours = eachHourOfInterval({
     start: startOfDay(viewDate),
     end: endOfDay(viewDate)
   })
-  const weekProjectList = data.getQuotationsByDateRange.data.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
+  const weekProjectList = data.getQuotationsByDateRangeV10.filter(event => isSameWeek(new Date(event.dateDue), viewDate))
   const filteredWeekProjectList = salesmanFilter.length === 0 ? weekProjectList : weekProjectList.filter(event => salesmanFilter.includes(event.salesRef.name))
   const weekdayData = eachDayOfInterval({ start: startOfWeek(viewDate), end: endOfWeek(viewDate) })
   const isEven = (x) => !(x & 1)
@@ -69,7 +69,7 @@ const CalendarWeek = ({
   if (weekProjectList.length === 0) return <Typography>No Quotes Scheduled</Typography>
   return (
     <>
-      <CalendarCount data={data.getQuotationsByDateRange.data} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
+      <CalendarCount data={data.getQuotationsByDateRangeV10} handleSalesmanFilter={handleSalesmanFilter} salesmanFilter={salesmanFilter} />
       <ImageList rowHeight='auto' cols={8} gap={2} style={{ maxWidth: '100%' }}>
         <ImageListItem
           cols={1}

@@ -59,7 +59,7 @@ const DateIcon = ({ event, status }) => {
   const iconColor = 'grey'
   const iconBorder = `solid 2px ${iconColor}`
   const classes = useStyles({ color: statusColor, isLate, isClosed })
-  const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
+  const quotedCustomerList = event.customerList.data ? event.customerList.data.filter(customer => customer.amount && customer.amount > 0) : event.customerList.filter(customer => customer.amount && customer.amount > 0)
   const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
   const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
   const formattedAmount = amountShortFormat(avgAmount)

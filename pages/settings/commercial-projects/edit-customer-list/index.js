@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { getLayout } from '../../../../components/Layout'
 import CommercialEditCustomerToggle from '../../../../components/CommercialEditCustomerToggle'
 import TextField from '@mui/material/TextField'
-import { GET_ALL_CUSTOMERS } from '../../../../lib/queries/getAllCustomers'
+import { GET_ALL_CUSTOMERSV10 } from '../../../../lib/queries/getAllCustomers'
 import { useQuery, useMutation } from '@apollo/client'
-import { UPDATE_CUSTOMERS } from '../../../../lib/mutations/updateCustomer'
+import { UPDATE_CUSTOMERSV10 } from '../../../../lib/mutations/updateCustomer'
 import DataTable from '../../../../components/TableTest'
 import Link from '../../../../components/Link'
 
@@ -14,18 +14,19 @@ const EditCustomerList = () => {
   const handleChange = (event) => {
     setSearch(event.target.value)
   }
-  const [updateCustomers, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_CUSTOMERS, {
+  const [updateCustomers, { loading: mutationLoading, error: mutationError }] = useMutation(UPDATE_CUSTOMERSV10, {
     onError: (error) => {
       setUpdateError(error)
     }
   })
-  const { loading, error, data } = useQuery(GET_ALL_CUSTOMERS)
+  const { loading, error, data } = useQuery(GET_ALL_CUSTOMERSV10)
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
-  const rows = data.getAllCustomers.data.map(customer => {
+  const rows = data.getAllCustomersV10.map(customer => {
     const salesman = customer.salesRef ? customer.salesRef.name : ''
     return {
       ...customer,
+      _id: customer.id,
       id: customer.account,
       search: `${customer.account} ${customer.name} ${salesman}`,
       used: customer.usedByCommercial,

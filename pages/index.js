@@ -10,7 +10,7 @@ import {
   startOfMonth,
   endOfMonth
 } from 'date-fns'
-import { GET_QUOTATIONS_BY_DATE_RANGE_WITH_CLOSED } from '../lib/queries/getQuotationsByDateRangeWithClosed'
+import { GET_QUOTATIONS_BY_DATE_RANGE_WITH_CLOSEDV10 } from '../lib/queries/getQuotationsByDateRangeWithClosed'
 import { useQuery } from '@apollo/client'
 
 const IndexPage = () => {
@@ -29,7 +29,7 @@ const IndexPage = () => {
   const title = format(viewDate, 'MMMM yyyy')
   const start = startOfMonth(viewDate)
   const end = endOfMonth(viewDate)
-  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE_WITH_CLOSED, { variables: { input: { start, end } } })
+  const { loading, error, data } = useQuery(GET_QUOTATIONS_BY_DATE_RANGE_WITH_CLOSEDV10, { variables: { input: { start, end } } })
       return (
         <ManagerDashboard
         viewDate={viewDate}

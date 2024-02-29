@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation, useApolloClient } from '@apollo/client'
 import cookie from 'js-cookie'
-import { LOGIN_USER } from '../lib/mutations/loginUser'
+import { LOGIN_USERV10 } from '../lib/mutations/loginUser'
 import { Button } from '@mui/material'
 
 const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
@@ -9,7 +9,7 @@ const LoginForm = ({ setLoginError, setLoginData, getAllFiles }) => {
   const client = useApolloClient()
   const [username, setUsername] = useState('')
   const [pwd, setPwd] = useState('')
-  const [loginUser] = useMutation(LOGIN_USER, {
+  const [loginUser] = useMutation(LOGIN_USERV10, {
     variables: {
       input: {
         username,

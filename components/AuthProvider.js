@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
-import { GET_ME } from '../lib/queries/getMe'
+import { GET_MEV10 } from '../lib/queries/getMe'
 
 const AuthContext = createContext()
 
@@ -10,12 +10,12 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState()
   const [checked, setChecked] = useState(false)
   const userMemo = useMemo(() => ({ user, setUser }), [user, setUser])
-  const { loading, error, data, refetch: refetchUser } = useQuery(GET_ME, {
+  const { loading, error, data, refetch: refetchUser } = useQuery(GET_MEV10, {
     onCompleted: data => {
       console.log('running user query')
-      console.log(data)
+      console.log(data.getMeV10)
       setChecked(true)
-      setUser(data.getMe)
+      setUser(data.getMeV10)
     },
     onError: error => {
       setUser()

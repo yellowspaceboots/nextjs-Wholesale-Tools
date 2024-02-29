@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
 import { useLazyQuery } from '@apollo/client'
 import { PROJECT_SEARCHV2 } from '../lib/queries/projectSearchV2'
-import { GET_QUOTATIONS } from '../lib/queries/getQuotations'
+import { GET_QUOTATIONSV10 } from '../lib/queries/getQuotations'
 import useDebounce from '../utils/useDebounce'
 import CircularProgress from '@mui/material/CircularProgress'
 import AssessmentIcon from '@mui/icons-material/Assessment'
@@ -73,11 +73,11 @@ const SearchBar = ({ id }) => {
   const searchValue = searchWatch('search')
   const debouncedSearch = useDebounce((nextValue) => getQuotations({ variables: { input: nextValue } }), 700)
   
-  const [getQuotations, { loading, data }] = useLazyQuery(GET_QUOTATIONS, {
+  const [getQuotations, { loading, data }] = useLazyQuery(GET_QUOTATIONSV10, {
     fetchPolicy: 'network-only',
     onCompleted: (data) => {
       if (searchValue) {
-        const myOptions = data.getQuotations.data.splice(5)
+        const myOptions = data.getQuotationsV10.splice(5)
         setOptions(myOptions)
       }
     },
@@ -157,7 +157,7 @@ const SearchBar = ({ id }) => {
               }
               const avatarIcon = avatarSelector[option.status] || classes.avatar
               return (
-                <Link key={option._id} href={'/quotations/' + option._id} passHref>
+                <Link key={option.id} href={'/quotations/' + option.id} passHref>
                   <li {...props}>
                     <Grid container alignItems='center'>
                       <Grid item>

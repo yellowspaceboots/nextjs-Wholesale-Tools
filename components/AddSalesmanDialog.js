@@ -6,8 +6,8 @@ import { useTheme } from '@mui/material/styles'
 import AddSalesmanForm from './AddSalesmanForm'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { CREATE_SALESMEN } from '../lib/mutations/createSalesmen'
-import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
+import { CREATE_SALESMENV10 } from '../lib/mutations/createSalesmen'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10 } from '../lib/queries/salesmenUsedByCommercialProjects'
 import { useMutation } from '@apollo/client'
 
 const AddSalesmanDialog = ({ dialogOpen, setDialogOpen }) => {
@@ -18,9 +18,9 @@ const AddSalesmanDialog = ({ dialogOpen, setDialogOpen }) => {
     setDialogOpen(false)
     setError()
   }
-  const [createSalesmen, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_SALESMEN, {
+  const [createSalesmen, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_SALESMENV10, {
     onError: (error) => setError(error),
-    refetchQueries: [{ query: SALESMEN_USED_BY_COMMERCIAL_PROJECTS }],
+    refetchQueries: [{ query: SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10 }],
     awaitRefetchQueries: true,
     onCompleted: () => {
       handleClose()

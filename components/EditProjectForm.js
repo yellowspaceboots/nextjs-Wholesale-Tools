@@ -42,7 +42,7 @@ const EdiProjectForm = ({ handleClose, updateProject, mutationError, event }) =>
   })
   const onSubmit = (data, e) => {
     const payload = {
-      projectId: event._id,
+      projectId: event.id,
       title: data.projectName.trim(),
       description: data.description.trim(),
       status: data.status,

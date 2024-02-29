@@ -6,9 +6,9 @@ import { useTheme } from '@mui/material/styles'
 import AddProjectForm from './AddProjectForm'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { CREATE_PROJECT } from '../lib/mutations/createProject'
+import { CREATE_PROJECTV10 } from '../lib/mutations/createProject'
 import { useMutation } from '@apollo/client'
-import { GET_ALL_OPEN_PROJECTS } from '../lib/queries/getAllOpenProjects'
+import { GET_QUOTATIONSV10 } from '../lib/queries/getQuotations'
 
 const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
   const theme = useTheme()
@@ -18,9 +18,9 @@ const AddProjectDialog = ({ dialogOpen, setDialogOpen }) => {
     setDialogOpen(false)
     setError()
   }
-  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECT, {
+  const [createProject, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_PROJECTV10, {
     onError: (error) => setError(error),
-    refetchQueries: [{ query: GET_ALL_OPEN_PROJECTS }],
+    refetchQueries: [{ query: GET_QUOTATIONSV10, variables: { input: { status: "Open" }} }],
     awaitRefetchQueries: true,
     onCompleted: () => {
       handleClose()

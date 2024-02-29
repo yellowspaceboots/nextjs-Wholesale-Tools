@@ -6,8 +6,8 @@ import { useTheme } from '@mui/material/styles'
 import AddCustomerForm from './AddCustomerForm'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
-import { ADD_NEW_CUSTOMER } from '../lib/mutations/addNewCustomer'
-import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/customersUsedByCommercialProjects'
+import { ADD_NEW_CUSTOMERV10 } from '../lib/mutations/addNewCustomer'
+import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTSV10 } from '../lib/queries/customersUsedByCommercialProjects'
 import { useMutation } from '@apollo/client'
 
 const AddCustomerDialog = ({ dialogOpen, setDialogOpen }) => {
@@ -18,9 +18,9 @@ const AddCustomerDialog = ({ dialogOpen, setDialogOpen }) => {
     setDialogOpen(false)
     setError()
   }
-  const [addNewCustomer, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_NEW_CUSTOMER, {
+  const [addNewCustomer, { loading: mutationLoading, error: mutationError }] = useMutation(ADD_NEW_CUSTOMERV10, {
     onError: (error) => setError(error),
-    refetchQueries: [{ query: CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS }],
+    refetchQueries: [{ query: CUSTOMERS_USED_BY_COMMERCIAL_PROJECTSV10 }],
     awaitRefetchQueries: true,
     onCompleted: () => {
       handleClose()

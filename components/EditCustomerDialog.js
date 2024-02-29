@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -69,3 +70,4 @@ const EditCustomerDialog = ({ dialogOpen, setDialogOpen, customer }) => {
 }
 
 export default EditCustomerDialog
+*/

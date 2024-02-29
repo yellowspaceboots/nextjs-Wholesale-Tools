@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { useQuery } from '@apollo/client'
-import { GET_QUOTATION_COUNTS } from '../lib/queries/getQuotationCounts'
+import { GET_QUOTATION_COUNTSV10 } from '../lib/queries/getQuotationCounts'
 import { useAuth } from './AuthProvider'
 import {
   format,
@@ -33,12 +33,11 @@ const DrawerDataProvider = ({ children }) => {
     startWeek: startWeek,
     endWeek: endWeek
   }
-  const { loading, error, data } = useQuery(GET_QUOTATION_COUNTS, {
-    variables: { input }
-  })
+
+  const { loading, error, data } = useQuery(GET_QUOTATION_COUNTSV10, { variables: { input } })
   if (loading) return null
   if (error) return <p>{error.message}</p>
-  const quotationCounts = data.getQuotationCounts
+  const quotationCounts = data.getQuotationCountsV10
   return (
     <DrawerDataContext.Provider value={{ counts: quotationCounts }}>{children}</DrawerDataContext.Provider>
   )

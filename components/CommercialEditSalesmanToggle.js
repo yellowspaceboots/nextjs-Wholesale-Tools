@@ -1,6 +1,6 @@
 import React from 'react'
 import Switch from '@mui/material/Switch'
-import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10 } from '../lib/queries/salesmenUsedByCommercialProjects'
 
 const CommercialEditSalesmanToggle = ({ id, currentState, updateSalesman }) => {
   return (
@@ -8,7 +8,7 @@ const CommercialEditSalesmanToggle = ({ id, currentState, updateSalesman }) => {
       checked={currentState}
       onChange={() =>
         updateSalesman({
-          refetchQueries: [{ query: SALESMEN_USED_BY_COMMERCIAL_PROJECTS }],
+          refetchQueries: [{ query: SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10 }],
           awaitRefetchQueries: true,
           variables: {
             id,

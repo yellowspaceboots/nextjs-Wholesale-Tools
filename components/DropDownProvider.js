@@ -1,19 +1,20 @@
 import React, { createContext, useContext } from 'react'
 import { useQuery } from '@apollo/client'
-import { SALESMEN_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/salesmenUsedByCommercialProjects'
-import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS } from '../lib/queries/customersUsedByCommercialProjects'
+import { SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10 } from '../lib/queries/salesmenUsedByCommercialProjects'
+import { CUSTOMERS_USED_BY_COMMERCIAL_PROJECTSV10 } from '../lib/queries/customersUsedByCommercialProjects'
 
 const DropDownContext = createContext()
 
 const DropDownProvider = ({ children }) => {
-  const { loading: salesmenLoading, error: salesmenError, data: salesmenData } = useQuery(SALESMEN_USED_BY_COMMERCIAL_PROJECTS)
-  const { loading: customerLoading, error: customerError, data: customerData } = useQuery(CUSTOMERS_USED_BY_COMMERCIAL_PROJECTS)
-  if (salesmenLoading) return null
-  if (customerLoading) return null
-  const salesmen = salesmenData.salesmenUsedByCommercialProjects.data
-  const customers = customerData.customersUsedByCommercialProjects.data
+  const { loading: apiSalesmenLoading, error: apiSalesmenError, data: apiSalesmenData } = useQuery(SALESMEN_USED_BY_COMMERCIAL_PROJECTSV10)
+  const { loading: apiCustomerLoading, error: apiCustomerError, data: apiCustomerData } = useQuery(CUSTOMERS_USED_BY_COMMERCIAL_PROJECTSV10)
+  if (apiSalesmenLoading) return null
+  if (apiCustomerLoading) return null
+  const salesmen = apiSalesmenData.salesmenUsedByCommercialProjectsV10
+  const customers = apiCustomerData.customersUsedByCommercialProjectsV10
+
   const outsideSalesmen = [...new Map(customers.map(customer => customer.salesRef).map(item =>
-    [item._id, item])).values()]
+    [item.id, item])).values()]
   return (
     <DropDownContext.Provider value={{ salesmen, customers, outsideSalesmen }}>{children}</DropDownContext.Provider>
   )

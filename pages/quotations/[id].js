@@ -15,17 +15,16 @@ import EditIcon from '@mui/icons-material/Edit'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import { useQuery, useMutation } from '@apollo/client'
-import { FIND_PROJECTS_BY_ID } from '../../lib/queries/findProjectsById'
-import { CREATE_COMMENT } from '../../lib/mutations/createComment'
+import { FIND_PROJECTS_BY_IDV10 } from '../../lib/queries/findProjectsById'
+import { CREATE_COMMENTV10 } from '../../lib/mutations/createComment'
 import { useAuth } from '../../components/AuthProvider'
 import CircularProgress from '@mui/material/CircularProgress'
 import { compareDesc } from 'date-fns'
-import { groupBy, parseCookies } from '../../lib/utils'
+import { groupBy, parseCookies, pad } from '../../lib/utils'
 import CustomerStatusBoard from '../../components/CustomerStatusBoard'
 import { initializeApollo, addApolloState } from '../../lib/apollo'
 
 const Event = (props) => {
-  console.log(props)
   const router = useRouter()
   const { id } = router.query
   const [comment, setComment] = useState()
@@ -37,15 +36,15 @@ const Event = (props) => {
     setDialogOpen(true)
   }
   const { user } = useAuth()
-  const [createComments, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_COMMENT, {
-    refetchQueries: [{ query: FIND_PROJECTS_BY_ID, variables: { id } }],
+  const [createComments, { loading: mutationLoading, error: mutationError }] = useMutation(CREATE_COMMENTV10, {
+    refetchQueries: [{ query: FIND_PROJECTS_BY_IDV10, variables: { id } }],
     awaitRefretchQueries: true,
     variables: {
       data: {
-        project: { connect: id },
+        project: id,
         dateCreated: new Date().toISOString(),
         message: comment,
-        user: { connect: user._id },
+        user: user.id,
         edited: false,
         replyTo: null
       }
@@ -53,18 +52,22 @@ const Event = (props) => {
     onCompleted: () => setComment('')
   })
 
-  const { loading, error, data } = useQuery(FIND_PROJECTS_BY_ID, { variables: { id } })
+  const { loading, error, data } = useQuery(FIND_PROJECTS_BY_IDV10, { variables: { id } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
-  const event = data.findProjectsByID
-  const sortedComments = data.findProjectsByID?.comments.data.slice().sort((a, b) => compareDesc(new Date(a.dateCreated), new Date(b.dateCreated)))
+  
+  const event = data.findProjectsByIDV10
+  const sortedComments = event?.comments.slice().sort((a, b) => compareDesc(new Date(a.dateCreated), new Date(b.dateCreated)))
+  
   const groupedComments = groupBy(sortedComments, 'replyTo')
   const fullComments = groupedComments.null || []
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
-  const quotedCustomerList = event.customerList.data.filter(customer => customer.amount && customer.amount > 0)
+  const quotedCustomerList = event.customerList.filter(customer => customer.amount && customer.amount > 0)
+
   const totalAmount = quotedCustomerList.reduce((acc, obj) => acc + obj.amount, 0)
   const avgAmount = quotedCustomerList.length === 0 ? 0 : Math.round(totalAmount / quotedCustomerList.length)
   const fullAmount = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(avgAmount / 10000)
+  const formattedId = pad(event.requestId, 5)
   return (
     <AnimatePresence>
       <>
@@ -75,7 +78,7 @@ const Event = (props) => {
           variants={pageVariants}
         >
           <Grid container alignItems='center'>
-            <Typography variant='h5' style={{ fontWeight: 'light', marginRight: 10, flexGrow: 1 }}>{event.title}</Typography>
+            <Typography variant='h5' style={{ fontWeight: 'light', marginRight: 10, flexGrow: 1 }}># {formattedId} - {event.title}</Typography>
             <Typography variant='h6' style={{ fontWeight: 'light', color: 'green', marginRight: 12 }}>Average Quotation Value: {fullAmount}</Typography>
             <Tooltip title='Edit Project' placement='right'>
               <IconButton aria-label='edit' onClick={() => handleClickOpen()}>
@@ -83,17 +86,18 @@ const Event = (props) => {
               </IconButton>
             </Tooltip>
           </Grid>
+          <Typography variant='body2' color='textSecondary' style={{ fontStyle: 'italic' }}>{event.description}</Typography>
           <Divider style={{ marginBottom: 12, marginTop: 4 }} />
           <Grid container>
             <Grid item xs={2} style={{ flex: 1, marginRight: 10, minWidth: 250 }}>
               <EventTitle event={event} />
             </Grid>
             <Grid item style={{ maxWidth: '100%' }}>
-              <CustomerStatusBoard id={id} customerList={event.customerList.data} />
+              <CustomerStatusBoard id={id} customerList={event.customerList} />
             </Grid>
           </Grid>
           <Divider style={{ marginTop: 20, marginBottom: 20 }} />
-          <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{data.findProjectsByID.comments.data.length} Comments</Typography>
+          <Typography variant='subtitle1' style={{ marginBottom: 15 }}>{event.comments.length} Comments</Typography>
           <Grid item style={{ marginBottom: 20, marginLeft: -8 }}>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
               <Avatar alt='Jon Busch' src='/broken-image.jpg' style={{ marginRight: 12 }} />
@@ -124,7 +128,7 @@ const Event = (props) => {
           </Grid>
           <Grid container spacing={2} style={{ marginLeft: -60 }}>
             {fullComments.map((comment) =>
-              <Comment key={comment._id} comment={comment} groupedComments={groupedComments} id={id} />
+              <Comment key={comment.id} comment={comment} groupedComments={groupedComments} id={id} />
             )}
           </Grid>
         </motion.div>
@@ -135,20 +139,5 @@ const Event = (props) => {
 }
 
 Event.getLayout = getLayout
-/*
-export async function getServerSideProps(context) {
-  const cookies = parseCookies(context.req)
-  console.log(cookies)
-  const apolloClient = initializeApollo(context, null, cookies)
 
-  await apolloClient.query({
-    query: FIND_PROJECTS_BY_ID,
-    variables: {...context.params},
-  })
-  
-  return addApolloState(apolloClient, {
-    props: {},
-  })
-}
-*/
 export default Event

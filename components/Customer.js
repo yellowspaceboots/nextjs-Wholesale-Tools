@@ -4,10 +4,10 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useQuery, useMutation } from '@apollo/client'
-import { FIND_CUSTOMERS_BY_ID } from '../lib/queries/findCustomersById'
+import { FIND_CUSTOMERS_BY_IDV10 } from '../lib/queries/findCustomersById'
 import { Controller, useForm } from 'react-hook-form'
 import LoadingButton from '@mui/lab/LoadingButton'
-import { CHANGE_CUSTOMER_SALESMAN } from '../lib/mutations/changeCustomerSalesman'
+import { CHANGE_CUSTOMER_SALESMANV10 } from '../lib/mutations/changeCustomerSalesman'
 
 const Customer = ({ id }) => {
   const initialState = {
@@ -23,7 +23,7 @@ const Customer = ({ id }) => {
     reValidateMode: 'onChange',
     defaultValues: initialState
   })
-  const [changeCustomerSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(CHANGE_CUSTOMER_SALESMAN, {
+  const [changeCustomerSalesman, { loading: mutationLoading, error: mutationError }] = useMutation(CHANGE_CUSTOMER_SALESMANV10, {
     onError: (error) => console.log(error),
     onCompleted: () => {
       newSalesReset()
@@ -31,11 +31,11 @@ const Customer = ({ id }) => {
   })
   const { errors: newSalesErrors, isValid: isValidState } = newSalesFormState
   const onSubmit = (data, e) => changeCustomerSalesman({ variables: { input: { id, salesmanNumber: data.newSalesNumber.toUpperCase() } } })
-  const { loading, error, data } = useQuery(FIND_CUSTOMERS_BY_ID, { variables: { id } })
+  const { loading, error, data } = useQuery(FIND_CUSTOMERS_BY_IDV10, { variables: { id } })
   if (loading) return 'Loading...'
   if (error) return `Error! ${error.message}`
   const pageVariants = { initial: { opacity: 0 }, in: { opacity: 1 }, out: { opacity: 0 } }
-  const customerObj = data.findCustomersByID
+  const customerObj = data.findCustomersByIDV10
   return (
     <AnimatePresence>
       <>
