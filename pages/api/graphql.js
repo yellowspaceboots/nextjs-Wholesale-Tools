@@ -3,6 +3,10 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { gql } from 'graphql-tag';
 import { Client, fql } from 'fauna'
 
+const options = {
+  query_timeout_ms: 60_000
+}
+
 const resolvers = {
   Query: {
     log: async (parent, args, contextValue, info) => {
@@ -76,7 +80,7 @@ const resolvers = {
         return response.data
       },
     getQuotationCountsV10: async (parent, args, contextValue, info) => {
-        const response = await contextValue.db.query( fql`get_quotation_counts(${args.input})` )
+        const response = await contextValue.db.query( fql`get_quotation_counts(${args.input})`, options )
         return response.data
       },
     getQuotationsByDateRangeV10: async (parent, args, contextValue, info) => {
